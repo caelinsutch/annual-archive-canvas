@@ -2,20 +2,21 @@ import { cx } from "../styles/ui";
 import { motion } from "../lib/motion";
 const animations = new WeakMap<HTMLElement, Animation>();
 function updateIndicator(dock: HTMLElement) {
-  const group = dock.querySelector<HTMLElement>(".view-switch");
-  const active = group?.querySelector<HTMLElement>(
-    '[aria-pressed="true"],.selected',
-  );
-  if (!group || !active) return;
-  let indicator = group.querySelector<HTMLElement>(".dock-selection");
-  if (!indicator) {
-    indicator = document.createElement("span");
-    indicator.className = "dock-selection " + cx("dockSelection");
-    indicator.setAttribute("aria-hidden", "true");
-    group.prepend(indicator);
+  for (const group of dock.querySelectorAll<HTMLElement>(".view-switch")) {
+    const active = group?.querySelector<HTMLElement>(
+      '[aria-pressed="true"],.selected',
+    );
+    if (!active) continue;
+    let indicator = group.querySelector<HTMLElement>(".dock-selection");
+    if (!indicator) {
+      indicator = document.createElement("span");
+      indicator.className = "dock-selection " + cx("dockSelection");
+      indicator.setAttribute("aria-hidden", "true");
+      group.prepend(indicator);
+    }
+    indicator.style.width = active.offsetWidth + "px";
+    indicator.style.transform = `translateX(${active.offsetLeft}px)`;
   }
-  indicator.style.width = active.offsetWidth + "px";
-  indicator.style.transform = `translateX(${active.offsetLeft}px)`;
 }
 /** Measure the current interpolated width so rapid reversals continue in place. */
 export function changeDock(selector: string) {
@@ -55,8 +56,7 @@ export function initDockMotion() {
     .querySelectorAll<HTMLElement>(".dock,.reader-dock")
     .forEach((dock) => {
       updateIndicator(dock);
-      new ResizeObserver(() => updateIndicator(dock)).observe(
-        dock.querySelector(".view-switch")!,
-      );
+      for (const group of dock.querySelectorAll(".view-switch"))
+        new ResizeObserver(() => updateIndicator(dock)).observe(group);
     });
 }

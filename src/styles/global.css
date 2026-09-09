@@ -168,6 +168,7 @@ dialog::backdrop {
   background: none;
 }
 .report-loading {
+  pointer-events: none;
   position: fixed;
   bottom: 35px;
   left: 50%;
@@ -383,5 +384,30 @@ dialog.dialog-exiting:not(.reader)::backdrop {
 @media (prefers-reduced-motion: reduce) {
   dialog::backdrop {
     transition: none !important;
+  }
+}
+
+.command-scopes button[aria-pressed="true"] {
+  color: #242424;
+  background: #f3f3f3;
+}
+.command-result > span:not(.command-detail) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.command-result:active {
+  scale: 1;
+}
+@media (max-width: 700px) {
+  .dock > .view-switch:not(.archive-content-switch) button {
+    width: 38px;
+  }
+  .dock > .view-switch:not(.archive-content-switch) button span {
+    display: none;
+  }
+  .dock .zoom-controls,
+  .dock > .dock-line {
+    display: none;
   }
 }

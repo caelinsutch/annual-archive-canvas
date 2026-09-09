@@ -12,6 +12,8 @@ import { cx, syncStyles } from "../styles/ui";
 import { motion } from "../lib/motion";
 import type {
   Report,
+  ArchiveItem,
+  ArchivePage,
   ReportPage,
   ReaderManifest,
   GalleryView,
@@ -79,7 +81,7 @@ const esc = (s: unknown) =>
   );
 let data: Report[] = [],
   filtered: Report[] = [],
-  canvas: ArchiveCanvas<Report> | null = null,
+  canvas: ArchiveCanvas<ArchiveItem> | null = null,
   view: GalleryView = "canvas",
   saved = new Set<string>(),
   savedOnly = false,
@@ -183,43 +185,36 @@ function openSearch() {
   showDialog("search-dialog");
   $("#search-input").value = query;
   $("#search-input").focus();
+  if (searchScope === "reports") renderReportResults();
 }
 $("#open-search").onclick = openSearch;
-$("#search-done").onclick = () => closeDialog($("#search-dialog"));
+$("#search-done").onclick = async () => {
+  if (searchScope === "pages") await setArchiveContent("pages");
+  await closeDialog($("#search-dialog"));
+};
 $("#search-input").oninput = (e) => {
   query = (e.target as HTMLInputElement).value;
   applyFilters();
 };
 $("#search-input").onkeydown = (e) => {
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    e.stopPropagation();
+    $("#search-dialog .command-results:not(.hidden) button")?.focus();
+  }
   if (e.key === "Enter") {
-    if (searchScope === "pages") $("#page-search-results button")?.focus();
-    else closeDialog($("#search-dialog"));
+    e.preventDefault();
+    const first = $("#search-dialog .command-results:not(.hidden) button");
+    if (first) first.click();
+    else void closeDialog($("#search-dialog"));
   }
 };
-document.querySelectorAll<HTMLElement>("[data-search]").forEach(
-  (b) =>
-    (b.onclick = () => {
-      query = b.dataset.search || "";
-      $("#search-input").value = query;
-      applyFilters();
-      if (searchScope === "reports") closeDialog($("#search-dialog"));
-    }),
-);
-for (const name of ["decade", "industry", "color"] as const)
-  $("#" + name).onchange = () => {
-    decade = $("#decade").value;
-    industry = $("#industry").value;
-    color = $("#color").value;
-    applyFilters();
-  };
 function resetFilters() {
   query = decade = industry = color = "";
   savedOnly = false;
-  $("#decade").value = $("#industry").value = $("#color").value = "";
   $("#saved").setAttribute("aria-pressed", "false");
   applyFilters();
 }
-$("#clear").onclick = resetFilters;
 $("#empty-clear").onclick = resetFilters;
 $("#saved").onclick = () => {
   savedOnly = !savedOnly;
@@ -235,13 +230,16 @@ let searchRequest: AbortController | undefined;
 let searchScope: "reports" | "pages" = "reports";
 let pageSearchTimer: ReturnType<typeof setTimeout>;
 let pageSearchAbort: AbortController | undefined;
+let matchedPages: ArchivePage[] | undefined;
 function searchPages() {
   const generation = pageGeneration.next();
   clearTimeout(pageSearchTimer);
   pageSearchAbort?.abort();
   const results = $("#page-search-results");
-  results.className = cx("pageResults");
+  results.className = "command-results";
   if (query.trim().length < 2) {
+    matchedPages = undefined;
+    updateGallery();
     results.replaceChildren();
     $("#search-count").textContent =
       "Search page layouts, typography, or imagery";
@@ -273,6 +271,7 @@ function searchPages() {
         return;
       if (!response.ok) throw new Error("Index preparing");
       results.replaceChildren();
+      matchedPages = [];
       for (const hit of result.hits) {
         const report = data.find((r) => r.id === hit.reportId);
         if (
@@ -280,31 +279,34 @@ function searchPages() {
           !matchesFilters(report, { decade, industry, color, savedOnly, saved })
         )
           continue;
+        matchedPages.push(hit);
         const button = document.createElement("button");
-        button.className = cx("pageResult");
+        button.className = "command-result";
         button.setAttribute(
           "aria-label",
           `${report.o}, page ${hit.pageIndex + 1}: ${hit.tags.map((t) => t.label).join(", ")}`,
         );
         const image = document.createElement("img");
-        image.className = cx("pageResultImage");
+        image.className = "command-thumbnail";
         image.src = hit.image;
         image.alt = "";
         image.loading = "lazy";
-        button.append(image);
+        image.draggable = false;
+        const label = document.createElement("span");
+        label.textContent = report.o;
+        const detail = document.createElement("span");
+        detail.className = "command-detail";
+        detail.textContent = `Page ${hit.pageIndex + 1} · ${report.y}`;
+        button.append(image, label, detail);
         button.onclick = async () => {
           await closeDialog($("#search-dialog"));
-          await openReport(report);
-          if (active?.id === report.id && manifest?.pages[hit.pageIndex]) {
-            page = hit.pageIndex;
-            setReaderMode("read");
-          }
+          await openReport(report, undefined, hit.pageIndex, hit.image);
         };
         results.append(button);
       }
-      $("#result-count").textContent = `${results.childElementCount} pages`;
-      $("#search-count").textContent =
-        `${results.childElementCount} matches · ${result.indexedPages.toLocaleString()} pages indexed`;
+      updateGallery();
+      $("#search-count").textContent = `${results.childElementCount} pages`;
+      syncStyles();
     } catch {
       if (searchScope === "pages" && query === requested)
         $("#search-count").textContent =
@@ -322,13 +324,10 @@ for (const scope of ["reports", "pages"] as const) {
     clearTimeout(searchTimer);
     clearTimeout(pageSearchTimer);
     for (const item of ["reports", "pages"]) {
-      $("#search-" + item).className = cx(
-        "switchButton",
-        ...(item === scope ? ["selected" as const] : []),
-      );
       $("#search-" + item).setAttribute("aria-pressed", String(item === scope));
     }
     $("#page-search-results").classList.toggle("hidden", scope === "reports");
+    $("#report-search-results").classList.toggle("hidden", scope === "pages");
     applyFilters();
   };
 }
@@ -337,9 +336,9 @@ function applyFilters(semanticUpdate = false) {
     filtered = data.filter((r) =>
       matchesFilters(r, { decade, industry, color, savedOnly, saved }),
     );
-    canvas?.setItems(filtered);
+    updateGallery();
     $("#empty").classList.toggle("hidden", filtered.length > 0);
-    $("#search-done").classList.add("hidden");
+    $("#search-done").classList.remove("hidden");
     searchPages();
     return;
   }
@@ -390,23 +389,180 @@ function applyFilters(semanticUpdate = false) {
     const order = new Map(semanticHits.map((id, index) => [id, index]));
     filtered.sort((a, b) => order.get(a.id)! - order.get(b.id)!);
   }
-  $("#result-count").textContent =
-    `${filtered.length.toLocaleString()} ${savedOnly ? "collected" : "artifacts"}`;
   $("#search-count").textContent =
-    `${filtered.length.toLocaleString()} artifacts to explore`;
-  $("#clear").classList.toggle(
-    "hidden",
-    !(query || decade || industry || color || savedOnly),
-  );
+    `${filtered.length.toLocaleString()} reports`;
+  renderReportResults();
   $("#empty").classList.toggle("hidden", filtered.length > 0);
-  if (canvas) canvas.setItems(filtered);
+  updateGallery();
   $("#open-search").classList.toggle("has-query", !!query);
   $("#open-search span").textContent = query || "Search the archive";
   syncStyles();
 }
+let archiveContent: "covers" | "pages" = "covers";
+let archivePages: ArchivePage[] | undefined;
+let loadingArchivePages: Promise<void> | undefined;
+let contentRequest = 0;
+function updateGallery() {
+  if (!canvas) return;
+  if (archiveContent === "covers") {
+    canvas.setItems(filtered);
+    return;
+  }
+  if (!archivePages) return;
+  const reports = new Map(filtered.map((report) => [report.id, report]));
+  const scans =
+    searchScope === "pages" && query.trim().length > 1 && matchedPages
+      ? matchedPages
+      : archivePages;
+  const items: ArchiveItem[] = scans.flatMap((scan) => {
+    const report = reports.get(scan.reportId);
+    return report
+      ? [
+          {
+            ...report,
+            id: `${report.id}--page-${scan.pageIndex}`,
+            reportId: report.id,
+            pageIndex: scan.pageIndex,
+            preview: scan.image,
+          },
+        ]
+      : [];
+  });
+  canvas.setItems(items);
+  $("#empty").classList.toggle("hidden", items.length > 0);
+}
+async function setArchiveContent(next: "covers" | "pages") {
+  const current = ++contentRequest;
+  if (next === "pages" && !archivePages) {
+    const button = $("#pages-content");
+    button.setAttribute("aria-busy", "true");
+    button.textContent = "Loading…";
+    loadingArchivePages ||= fetch("/api/pages")
+      .then(async (response) => {
+        if (!response.ok) throw new Error("Pages unavailable");
+        archivePages = ((await response.json()) as { pages: ArchivePage[] })
+          .pages;
+      })
+      .finally(() => {
+        loadingArchivePages = undefined;
+      });
+    try {
+      await loadingArchivePages;
+      const reportIds = new Set(filtered.map((report) => report.id));
+      const scans = archivePages!.filter((scan) =>
+        reportIds.has(scan.reportId),
+      );
+      const indexes = new Set<number>();
+      for (let row = 0; row < Math.ceil(innerHeight / 345); row++)
+        for (let col = 0; col < Math.ceil(innerWidth / 285); col++)
+          indexes.add(
+            view === "grid"
+              ? row * Math.max(2, Math.floor(innerWidth / 250)) + col
+              : row * 17 + col,
+          );
+      await Promise.allSettled(
+        [...indexes].map(async (index) => {
+          const scan = scans[index % scans.length];
+          if (!scan) return;
+          const image = new Image();
+          image.src = scan.image;
+          await image.decode();
+        }),
+      );
+    } catch {
+      toast("Could not load pages. Please try again.");
+      return;
+    } finally {
+      button.textContent = "Pages";
+      button.removeAttribute("aria-busy");
+    }
+  }
+  if (current !== contentRequest) return;
+  archiveContent = next;
+  $("#gallery").dataset.content = next;
+  for (const content of ["covers", "pages"]) {
+    $("#" + content + "-content").classList.toggle(
+      "selected",
+      content === next,
+    );
+    $("#" + content + "-content").setAttribute(
+      "aria-pressed",
+      String(content === next),
+    );
+  }
+  const finish = changeDock(".dock");
+  syncStyles();
+  finish();
+  updateGallery();
+}
+$("#covers-content").onclick = () => {
+  void setArchiveContent("covers");
+};
+$("#pages-content").onclick = () => {
+  void setArchiveContent("pages");
+};
+function renderReportResults() {
+  const results = $("#report-search-results");
+  const focused = results.contains(document.activeElement)
+    ? (document.activeElement as HTMLElement).dataset.report
+    : undefined;
+  results.replaceChildren();
+  for (const report of filtered.slice(0, 5)) {
+    const button = document.createElement("button");
+    button.dataset.report = report.id;
+    button.className = "command-result";
+    const image = document.createElement("img");
+    image.className = "command-thumbnail";
+    image.src = "/api/cover?id=" + encodeURIComponent(report.id);
+    image.alt = "";
+    image.draggable = false;
+    const label = document.createElement("span");
+    label.textContent = report.o;
+    const detail = document.createElement("span");
+    detail.className = "command-detail";
+    detail.textContent = report.y;
+    button.append(image, label, detail);
+    button.onclick = async () => {
+      await closeDialog($("#search-dialog"));
+      await openReport(report);
+    };
+    results.append(button);
+    if (report.id === focused) button.focus();
+  }
+  if (!filtered.length) {
+    const empty = document.createElement("p");
+    empty.className = "command-empty";
+    empty.textContent = "No matches. Try another search.";
+    results.append(empty);
+  }
+  syncStyles();
+}
+$("#search-dialog").addEventListener("keydown", (event) => {
+  if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+  const buttons = [
+    ...document.querySelectorAll<HTMLButtonElement>(
+      "#search-dialog .command-results:not(.hidden) button",
+    ),
+  ];
+  const index = buttons.indexOf(document.activeElement as HTMLButtonElement);
+  if (index < 0) return;
+  event.preventDefault();
+  if (event.key === "ArrowUp" && index === 0) $("#search-input").focus();
+  else
+    buttons[
+      Math.max(
+        0,
+        Math.min(
+          buttons.length - 1,
+          index + (event.key === "ArrowDown" ? 1 : -1),
+        ),
+      )
+    ]?.focus();
+});
+
 function visibleCovers(_mode: GalleryView) {
   const entries = [...(canvas?.cards.values() || [])].map((c) => ({
-    id: c.item.id,
+    id: c.item.reportId || c.item.id,
     el: c.el,
     src: c.el.querySelector("img")?.src,
   }));
@@ -466,9 +622,13 @@ $("#zoom-out").onclick = () => canvas?.setZoom(canvas.tz - 0.15);
 $("#zoom-in").onclick = () => canvas?.setZoom(canvas.tz + 0.15);
 $("#zoom-value").onclick = () => canvas?.reset();
 function initCanvas() {
-  canvas = new ArchiveCanvas($("#gallery"), {
+  canvas = new ArchiveCanvas<ArchiveItem>($("#gallery"), {
     items: filtered,
-    onSelect: openReport,
+    onSelect: async (item, origin) => {
+      const report = data.find((r) => r.id === (item.reportId || item.id));
+      if (!report) return;
+      await openReport(report, origin, item.pageIndex, item.preview);
+    },
     onZoom: (z) => ($("#zoom-value").textContent = Math.round(z * 100) + "%"),
   });
 }
@@ -498,7 +658,12 @@ $("#save-report").onclick = () => {
   updateSaved();
   if (savedOnly) applyFilters();
 };
-async function openReport(report: Report | undefined, origin?: CoverRect) {
+async function openReport(
+  report: Report | undefined,
+  origin?: CoverRect,
+  selectedPage?: number,
+  preview?: string,
+) {
   if (!report) return;
   const current = ++requestId;
   manifest?.pdfTask?.destroy();
@@ -506,19 +671,19 @@ async function openReport(report: Report | undefined, origin?: CoverRect) {
   active = report;
   if (canvas) canvas.paused = true;
   manifest = null;
-  page = 0;
-  readerMode = "pages";
+  page = selectedPage ?? 0;
+  readerMode = selectedPage === undefined ? "pages" : "read";
   previousFocus = document.activeElement as HTMLElement | null;
   readerCanvas?.destroy();
   readerCanvas = null;
   $("#page-canvas").innerHTML = "";
   $("#reader").classList.remove("details-open", "transitioning");
   $("#reader").showModal();
-  const arrival = beginReportTransition(report, origin);
+  const arrival = beginReportTransition(report, origin, preview, selectedPage);
   $("#report-info").innerHTML =
     `<div class="eyebrow">THE ANNUAL REPORT / ${esc(report.y || "UNDATED")}</div><h2>${esc(report.o)}</h2><span class="report-industry">${esc(report.i)}</span><div class="report-cover"><img src="/api/cover?id=${encodeURIComponent(report.id)}" alt="${esc(report.o)} cover"></div><p class="report-description">${esc(report.d)}</p>${report.dsg ? `<div class="info-pair"><span>DESIGN</span><strong>${esc(report.dsg)}</strong></div>` : ""}<div class="info-pair"><span>COLLECTION</span><strong>${esc(report.c)}</strong></div><a class="source-link" href="${esc(report.s)}" target="_blank" rel="noreferrer">Visit original source ${icon("arrow-up-right")}</a><p class="availability" id="availability">Finding the original pages…</p><div id="page-design"></div>`;
   updateSaved();
-  setReaderMode("pages");
+  setReaderMode(selectedPage === undefined ? "pages" : "read");
   $("#report-status").innerHTML =
     '<span class="loading-orbit"></span><h3>Unfolding the archive.</h3><p>Retrieving the original pages from their collection.</p>';
   $("#report-status").classList.remove("hidden");
@@ -555,7 +720,7 @@ async function openReport(report: Report | undefined, origin?: CoverRect) {
           ($("#page-reset").textContent = Math.round(z * 100) + "%"),
       });
       if (innerWidth < 700) readerCanvas.setZoom(0.7);
-      setReaderMode("pages");
+      setReaderMode(selectedPage === undefined ? "pages" : "read");
       await arrival.finish();
     } else {
       await arrival.finish();
@@ -897,18 +1062,13 @@ try {
   const r = await fetch("/catalog.json");
   if (!r.ok) throw new Error();
   data = await r.json();
-  const industries = [...new Set(data.map((e) => e.i))].sort();
-  $("#industry").insertAdjacentHTML(
-    "beforeend",
-    industries.map((i) => `<option>${esc(i)}</option>`).join(""),
-  );
   applyFilters();
   initCanvas();
   await appSplash.finish($("#gallery"));
   const id = new URLSearchParams(location.hash.slice(1)).get("report");
   if (id) openReport(data.find((e) => e.id === id));
 } catch {
-  $("#result-count").textContent = "Archive unavailable";
+  $("#search-count").textContent = "Archive unavailable";
   $("#empty").classList.remove("hidden");
   $("#empty p").textContent =
     "The catalogue couldn’t load. Please refresh to try again.";
@@ -923,13 +1083,20 @@ window.addEventListener("hashchange", () => {
   else if (!id && $("#reader").open) void closeReader();
 });
 
-function beginReportTransition(report: Report, origin?: CoverRect) {
+function beginReportTransition(
+  report: Report,
+  origin?: CoverRect,
+  preview?: string,
+  selectedPage = 0,
+) {
   const dialog = $("#reader");
   dialog.classList.add("opening-report");
-  const end = fitArtwork(report.a || 1.3);
+  const end = fitArtwork(
+    preview && origin ? origin.height / origin.width : report.a || 1.3,
+  );
   const start = origin && origin.width > 0 ? origin : end;
   const hero = imageGhost(
-    "/api/cover?id=" + encodeURIComponent(report.id),
+    preview || "/api/cover?id=" + encodeURIComponent(report.id),
     start,
     dialog,
   );
@@ -1000,7 +1167,7 @@ function beginReportTransition(report: Report, origin?: CoverRect) {
         height: from.height + "px",
       });
       const target = [...(readerCanvas?.cards.values() || [])].find(
-        (card) => card.item.index === 0,
+        (card) => card.item.index === selectedPage,
       )?.el;
       dialog.classList.remove("opening-report");
       if (!reducedMotion())

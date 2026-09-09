@@ -1,7 +1,7 @@
 import { cx } from "../styles/ui";
 import { motion } from "../lib/motion";
-import type { Report, ReportPage, CoverRect } from "../lib/types";
-type CanvasItem = Report | ReportPage;
+import type { Report, ArchiveItem, ReportPage, CoverRect } from "../lib/types";
+type CanvasItem = ArchiveItem | ReportPage;
 interface Card<T> {
   el: HTMLButtonElement;
   item: T;
@@ -273,7 +273,7 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
       "aria-label",
       "label" in item
         ? "Read page " + item.label
-        : `Open ${item.o}, ${item.y || "undated"}`,
+        : `Open ${item.o}, ${item.y || "undated"}${item.pageIndex === undefined ? "" : ", page " + (item.pageIndex + 1)}`,
     );
     const picture = document.createElement("span");
     picture.className = "artifact-paper " + cx("paper");
@@ -284,7 +284,7 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
     img.src =
       "thumb" in item
         ? item.thumb
-        : "/api/cover?id=" + encodeURIComponent(item.id);
+        : item.preview || "/api/cover?id=" + encodeURIComponent(item.id);
     picture.append(img);
     el.append(picture);
     this.layer.append(el);

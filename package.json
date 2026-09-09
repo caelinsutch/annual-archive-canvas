@@ -16,7 +16,8 @@
     "test:browser": "node --import tsx scripts/browser-smoke.ts",
     "index:pages": "node --import tsx scripts/index-pages.ts",
     "index:catalog": "node --import tsx scripts/embed-catalog.ts",
-    "test:motion": "node --import tsx scripts/qa-motion.ts"
+    "test:motion": "node --import tsx scripts/qa-motion.ts",
+    "test:command": "node --import tsx scripts/qa-command.ts"
   },
   "dependencies": {
     "@astrojs/node": "^11.1.5",

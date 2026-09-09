@@ -62,3 +62,39 @@ test(
     assert.equal(result.hits[0].reportId, "paulrand-cummins-1966");
   },
 );
+
+test(
+  "home page catalogue contains unique, routable scans without embedding payloads",
+  options,
+  async () => {
+    const response = await fetch(base + "/api/pages");
+    assert.equal(response.status, 200);
+    const result = await response.json();
+    const pages = result.pages as {
+      reportId: string;
+      pageIndex: number;
+      image: string;
+    }[];
+    assert.ok(pages.length > 2500);
+    assert.equal(
+      new Set(pages.map((p) => `${p.reportId}:${p.pageIndex}`)).size,
+      pages.length,
+    );
+    assert.ok(
+      pages.every(
+        (p) =>
+          Number.isInteger(p.pageIndex) &&
+          p.pageIndex >= 0 &&
+          /^(\/api\/page\?|\/search\/)/.test(p.image),
+      ),
+    );
+    assert.equal(result.vectors, undefined);
+    const cummins = await (
+      await fetch(base + "/api/report?id=paulrand-cummins-1966")
+    ).json();
+    assert.equal(
+      pages.filter((p) => p.reportId === "paulrand-cummins-1966").length,
+      cummins.pages.length,
+    );
+  },
+);

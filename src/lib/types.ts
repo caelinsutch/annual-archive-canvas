@@ -15,6 +15,16 @@ export interface Report {
   dsg?: string;
   d?: string;
 }
+export interface ArchiveItem extends Report {
+  reportId?: string;
+  pageIndex?: number;
+  preview?: string;
+}
+export interface ArchivePage {
+  reportId: string;
+  pageIndex: number;
+  image: string;
+}
 export interface ReportPage {
   index: number;
   leaf?: number;

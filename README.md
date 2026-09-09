@@ -85,3 +85,7 @@ The bottom dock uses equal-width segments and one sliding active pill. Its outer
 Archive Canvas and Grid also use the same persistent cover scene: every report retains its button, image node, and WebGL mesh during layout changes. Grid browsing scrolls that scene vertically; there is no duplicated grid DOM or cloned transition layer.
 
 - `npm run test:motion`: checks responsive control alignment from 320–1440px, persistent reader modes, image selection, and reduced motion. Samples intermediate return-transition animation states to verify the backdrop clears before the dialog closes. Saves results to `outputs/motion-qa.json`.
+
+The home dock separates **Covers / Pages** from **Canvas / Grid**. Pages combines the available source manifests and indexed scans (currently 2,692 unique pages), with a stable mix across reports. The initial page thumbnails decode before covers are replaced. Selecting a scan opens that exact page directly in Read mode. Cmd-K uses compact report/page result rows with arrow-key navigation; semantic styles and page-role search remain available without dropdown filters or suggestion chips.
+
+- `npm run test:command`: verifies the minimal command menu, keyboard navigation, content toggles, persistent page layouts, responsive controls, exact-page opening, and returning to covers.
