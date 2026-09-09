@@ -81,3 +81,5 @@ The initial splash has an 800 ms minimum and fades once visible images settle. O
 Pill controls use a shared glass material, keyboard ring, and mouse proximity response capped at 2.5 pixels per axis. Pointer attraction resets for keyboard focus and is disabled on touch and with reduced motion. Report loading carries the selected cover into a large preview, shows restrained progress, and settles it into the loaded page grid.
 
 The bottom dock uses equal-width segments and one sliding active pill. Its outer width interpolates from the current size when controls change; rapid reversals continue from the current animation position. Source verification and remaining discovery candidates are documented in [source discovery](docs/source-discovery.md).
+
+Archive Canvas and Grid also use the same persistent cover scene: every report retains its button, image node, and WebGL mesh during layout changes. Grid browsing scrolls that scene vertically; there is no duplicated grid DOM or cloned transition layer.

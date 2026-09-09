@@ -51,7 +51,7 @@ export const controls = stylex.defineVars({
   radius: "999px",
   text: "12px",
   focus: "#343434",
-  hover: "#dedee2c9",
-  selection: "#eeeeefb8",
+  hover: "#f0f0f2c9",
+  selection: "#f5f5f6",
   pressed: "#ccccd2d9",
 });

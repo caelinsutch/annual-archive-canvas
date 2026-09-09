@@ -230,16 +230,68 @@ dialog::backdrop {
   transition: transform 160ms ease;
 }
 
-.reader.closing-report::backdrop {backdrop-filter:blur(0);background-color:transparent;}
-#page-canvas .webgl {transition:filter 380ms cubic-bezier(.22,1,.36,1),opacity 380ms ease;}
-#page-canvas.page-focus .webgl {filter:blur(14px);opacity:.38;}
-#page-canvas .artifact {transition:filter 380ms ease,opacity 380ms ease;}
-#page-canvas.page-focus .artifact:not(.focused-page) {pointer-events:none;filter:blur(14px);opacity:.38;}
-#page-canvas .focused-page {z-index:3;}
-:is(.dock,.reader-dock) {overflow:hidden;}
-:is(.dock,.reader-dock)>* {flex-shrink:0;}
-:is(.dock,.reader-dock) .view-switch {position:relative;isolation:isolate;}
-:is(.dock,.reader-dock) .view-switch button {translate:none!important;}
-#page-navigation:not(.hidden),#page-zoom:not(.hidden) {animation:dock-controls-enter 280ms cubic-bezier(.22,1,.36,1) both;}
-@keyframes dock-controls-enter {from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:translateX(0)}}
-@media(prefers-reduced-motion:reduce){.reader::backdrop,#page-canvas .webgl,#page-canvas .artifact,.dock-selection {transition:none!important;}#page-navigation,#page-zoom {animation:none!important;}}
+.reader.closing-report::backdrop {
+  backdrop-filter: blur(0);
+  background-color: transparent;
+}
+#page-canvas .webgl {
+  transition:
+    filter 380ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 380ms ease;
+}
+#page-canvas.page-focus .webgl {
+  filter: blur(14px);
+  opacity: 0.38;
+}
+#page-canvas .artifact {
+  transition:
+    filter 380ms ease,
+    opacity 380ms ease;
+}
+#page-canvas.page-focus .artifact:not(.focused-page) {
+  pointer-events: none;
+  filter: blur(14px);
+  opacity: 0.38;
+}
+#page-canvas .focused-page {
+  z-index: 3;
+}
+:is(.dock, .reader-dock) {
+  overflow: hidden;
+}
+:is(.dock, .reader-dock) > * {
+  flex-shrink: 0;
+}
+:is(.dock, .reader-dock) .view-switch {
+  position: relative;
+  isolation: isolate;
+}
+:is(.dock, .reader-dock) .view-switch button {
+  translate: none !important;
+}
+#page-navigation:not(.hidden),
+#page-zoom:not(.hidden) {
+  animation: dock-controls-enter 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes dock-controls-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reader::backdrop,
+  #page-canvas .webgl,
+  #page-canvas .artifact,
+  .dock-selection {
+    transition: none !important;
+  }
+  #page-navigation,
+  #page-zoom {
+    animation: none !important;
+  }
+}

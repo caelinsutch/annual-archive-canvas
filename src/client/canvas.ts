@@ -5,6 +5,7 @@ type CanvasItem = Report | ReportPage;
 interface Card<T> {
   el: HTMLButtonElement;
   item: T;
+  loadingTexture?: boolean;
   hover: number;
   target: number;
   aspect?: number;
@@ -24,6 +25,12 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
   root: HTMLElement;
   items: T[];
   pages: boolean;
+  coverLayout: "canvas" | "grid" = "canvas";
+  coverCamera = { x: 0, y: -60, zoom: 1 };
+  coverPositions = new Map<
+    string,
+    { x: number; y: number; width: number; height: number }
+  >();
   pageLayout: "pages" | "strip" | "read" = "pages";
   selectedPage = 0;
   readBackground = new Map<
@@ -242,6 +249,8 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
   }
   setItems(items: T[]) {
     this.items = items;
+    this.coverPositions.clear();
+    this.pagePositions.clear();
     this.clear();
     this.reset();
   }
@@ -351,74 +360,179 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
       this.tickPages();
       return;
     }
-    const cellW = this.pages ? 270 : 285,
-      cellH = this.pages ? 380 : 345;
-    const startC = Math.floor((this.x - 240) / cellW),
-      endC = Math.ceil((this.x + this.w / this.zoom + 100) / cellW),
-      startR = Math.floor((this.y - 280) / cellH),
-      endR = Math.ceil((this.y + this.h / this.zoom + 120) / cellH);
-    const visible = new Set();
-    for (let row = startR; row <= endR; row++)
-      for (let col = startC; col <= endC; col++) {
+    this.tickCovers();
+  }
+  setCoverLayout(layout: "canvas" | "grid") {
+    if (this.pages || layout === this.coverLayout) return;
+    if (layout === "grid")
+      this.coverCamera = { x: this.tx, y: this.ty, zoom: this.tz };
+    this.coverLayout = layout;
+    const target =
+      layout === "canvas" ? this.coverCamera : { x: 0, y: 0, zoom: 1 };
+    this.x = this.tx = target.x;
+    this.y = this.ty = target.y;
+    this.zoom = this.tz = target.zoom;
+    this.root.dataset.layout = layout;
+  }
+  tickCovers() {
+    type Position = { x: number; y: number; width: number; height: number };
+    const targets = new Map<string, { item: T; position: Position }>();
+    const positionFor = (
+      item: T,
+      x: number,
+      y: number,
+      maxWidth: number,
+      maxHeight: number,
+      zoom: number,
+    ): Position => {
+      const key = (item as Report).id;
+      const aspect = cardAspect(this.cards.get(key) || {}, item);
+      const height = Math.min(maxHeight, maxWidth * aspect) * zoom;
+      return { x, y, width: height / aspect, height };
+    };
+    const columns = Math.max(2, Math.floor(this.w / 250));
+    const cellW = this.w / columns;
+    if (this.coverLayout === "grid") {
+      this.tx = this.x = 0;
+      this.tz = this.zoom = 1;
+      const maxScroll = Math.max(
+        0,
+        Math.ceil(this.items.length / columns) * 330 + 180 - this.h,
+      );
+      this.ty = Math.max(0, Math.min(maxScroll, this.ty));
+      for (let i = 0; i < this.items.length; i++) {
+        const item = this.items[i],
+          key = (item as Report).id;
+        targets.set(key, {
+          item,
+          position: positionFor(
+            item,
+            ((i % columns) + 0.5) * cellW,
+            Math.floor(i / columns) * 330 + 230 - this.y,
+            Math.min(202, cellW - 40),
+            250,
+            1,
+          ),
+        });
+      }
+    } else {
+      const startC = Math.floor((this.x - 240) / 285),
+        endC = Math.ceil((this.x + this.w / this.zoom + 100) / 285);
+      const startR = Math.floor((this.y - 280) / 345),
+        endR = Math.ceil((this.y + this.h / this.zoom + 120) / 345);
+      for (let row = startR; row <= endR; row++)
+        for (let col = startC; col <= endC; col++) {
+          const item = this.items[mod(row * 17 + col, this.items.length)],
+            key = (item as Report).id;
+          const position = positionFor(
+            item,
+            (col * 285 + 145 - this.x) * this.zoom,
+            (row * 345 + 150 - this.y) * this.zoom,
+            202,
+            250,
+            this.zoom,
+          );
+          const old = targets.get(key)?.position;
+          if (
+            !old ||
+            Math.hypot(position.x - this.w / 2, position.y - this.h / 2) <
+              Math.hypot(old.x - this.w / 2, old.y - this.h / 2)
+          )
+            targets.set(key, { item, position });
+        }
+      // Visited objects outside this viewport travel out of view, without being replaced.
+      for (const [key, card] of this.cards)
+        if (!targets.has(key)) {
+          const current = this.coverPositions.get(key);
+          if (current)
+            targets.set(key, {
+              item: card.item,
+              position: {
+                ...current,
+                y: current.y < this.h / 2 ? -500 : this.h + 500,
+              },
+            });
+        }
+    }
+    const visibleKeys = new Set<string>();
+    const near = (p: Position) =>
+      p.x + p.width / 2 > -100 &&
+      p.x - p.width / 2 < this.w + 100 &&
+      p.y + p.height / 2 > -100 &&
+      p.y - p.height / 2 < this.h + 100;
+    for (const [key, { item, position: target }] of targets) {
+      let card = this.cards.get(key);
+      const current = this.coverPositions.get(key) || {
+        ...target,
+        y: this.coverLayout === "grid" ? this.h + target.height : target.y,
+      };
+      const ease = this.reduced ? 1 : 1 - Math.pow(0.84, this.frameRatio);
+      for (const axis of ["x", "y", "width", "height"] as const)
+        current[axis] += (target[axis] - current[axis]) * ease;
+      this.coverPositions.set(key, current);
+      if (!card && !near(current) && !near(target)) continue;
+      card ||= this.create(key, item);
+      const visible =
+        current.x + current.width / 2 > 0 &&
+        current.x - current.width / 2 < this.w &&
+        current.y + current.height / 2 > 0 &&
+        current.y - current.height / 2 < this.h;
+      if (visible) visibleKeys.add(key);
+      card.el.style.visibility = visible ? "visible" : "hidden";
+      card.el.tabIndex = visible ? 0 : -1;
+      card.el.style.width = current.width + "px";
+      card.el.style.height = current.height + "px";
+      card.el.style.transform = `translate3d(${current.x - current.width / 2}px,${current.y - current.height / 2}px,0)`;
+      if (card.mesh) {
+        card.mesh.position.set(
+          current.x - this.w / 2,
+          this.h / 2 - current.y,
+          0,
+        );
+        card.mesh.scale.set(current.width, current.height, 1);
+        card.mesh.visible =
+          visible && !!card.mesh.material.uniforms.uTexture.value;
+        const img = card.el.querySelector("img")!;
+        img.style.opacity = card.mesh.material.uniforms.uTexture.value
+          ? "0"
+          : "1";
         if (
-          this.pages &&
-          (col < 0 || col >= 5 || row < 0 || row * 5 + col >= this.items.length)
-        )
-          continue;
-        const index = this.pages
-          ? row * 5 + col
-          : mod(row * 17 + col, this.items.length);
-        const item = this.items[index];
-        const key = row + ":" + col;
-        visible.add(key);
-        const c = this.cards.get(key) || this.create(key, item);
-        const aspect = cardAspect(c, item);
-        const maxW = this.pages ? 210 : 202;
-        const height = Math.min(this.pages ? 300 : 250, maxW * aspect);
-        const width = height / aspect;
-        const stagger = 0;
-        const cx = (col * cellW + 145 - this.x) * this.zoom,
-          cy = (row * cellH + 150 + stagger - this.y) * this.zoom;
-        c.hover += (c.target - c.hover) * (this.reduced ? 1 : 0.16);
-        const scale = 1;
-        const dw = width * this.zoom * scale,
-          dh = height * this.zoom * scale;
-        c.el.style.visibility = cy + dh / 2 < 0 ? "hidden" : "visible";
-        const tabbable =
-          cx + dw / 2 > 0 &&
-          cx - dw / 2 < this.w &&
-          cy + dh / 2 > 0 &&
-          cy - dh / 2 < this.h;
-        if (c.el.tabIndex !== (tabbable ? 0 : -1))
-          c.el.tabIndex = tabbable ? 0 : -1;
-        c.el.style.width = dw + "px";
-        c.el.style.height = dh + "px";
-        c.el.style.transform = `translate3d(${cx - dw / 2}px,${cy - dh / 2}px,0)`;
-
-        if (c.mesh) {
-          c.mesh.position.set(cx - this.w / 2, this.h / 2 - cy, c.hover);
-          c.mesh.scale.set(dw, dh, 1);
+          visible &&
+          !card.mesh.material.uniforms.uTexture.value &&
+          !card.loadingTexture
+        ) {
+          card.loadingTexture = true;
+          let promise = this.textures.get(img.src);
+          if (!promise) {
+            promise = new THREE.TextureLoader().loadAsync(img.src);
+            this.textures.set(img.src, promise);
+          }
+          const material = card.mesh.material;
+          void promise
+            .then((texture) => {
+              if (!this.disposed) material.uniforms.uTexture.value = texture;
+            })
+            .catch(() => this.textures.delete(img.src))
+            .finally(() => {
+              card!.loadingTexture = false;
+            });
         }
       }
-    for (const [key, c] of this.cards)
-      if (!visible.has(key)) {
-        c.el.remove();
-        if (c.mesh) {
-          this.scene.remove(c.mesh);
-          c.mesh.material.dispose();
-        }
-        this.cards.delete(key);
-      }
+    }
     if (this.textures.size > 120) {
-      const used = new Set(
-        [...this.cards.values()].map((c) => c.el.querySelector("img")?.src),
+      const visibleUrls = new Set(
+        [...visibleKeys].map(
+          (key) => this.cards.get(key)!.el.querySelector("img")!.src,
+        ),
       );
       for (const [url, promise] of this.textures) {
-        if (!used.has(url)) {
-          this.textures.delete(url);
-          promise.then((t) => t.dispose()).catch(() => {});
-          if (this.textures.size <= 90) break;
-        }
+        if (visibleUrls.has(url)) continue;
+        this.textures.delete(url);
+        for (const card of this.cards.values())
+          if (card.el.querySelector("img")!.src === url && card.mesh)
+            card.mesh.material.uniforms.uTexture.value = null;
+        void promise.then((texture) => texture.dispose()).catch(() => {});
+        if (this.textures.size <= 90) break;
       }
     }
     this.renderer?.render(this.scene, this.camera);

@@ -238,37 +238,6 @@ export const styles = stylex.create({
     alignItems: "center",
     fontSize: 20,
   },
-  grid: {
-    position: "absolute",
-    inset: 0,
-    overflow: "auto",
-    paddingTop: 100,
-    paddingBottom: 140,
-    paddingInline: { default: 60, [mobile]: 24 },
-    display: "grid",
-    gridTemplateColumns: {
-      default: "repeat(5,minmax(0,1fr))",
-      "@media (max-width:1100px)": "repeat(4,minmax(0,1fr))",
-      [mobile]: "repeat(2,minmax(0,1fr))",
-    },
-    gap: { default: "45px 55px", [mobile]: "32px 25px" },
-    alignItems: "start",
-    backgroundColor: colors.canvas,
-  },
-  gridCard: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "stretch",
-    padding: 0,
-    textAlign: "left",
-  },
-  gridImage: {
-    width: "100%",
-    height: { default: 240, [mobile]: 215 },
-    objectFit: "contain",
-    filter: "drop-shadow(2px 5px 5px #28282010)",
-  },
-  loadMore: { gridColumn: "1 / -1", justifySelf: "center" },
   dock: {
     position: "fixed",
     zIndex: 10,
@@ -303,7 +272,8 @@ export const styles = stylex.create({
     fontWeight: 550,
   },
   segmentButton: {
-    width: { default: 100, [mobile]: 68 },
+    width: { default: 112, [mobile]: 68 },
+    flexShrink: 0,
     backgroundColor: {
       default: "transparent",
       ":hover": "transparent",
@@ -321,6 +291,7 @@ export const styles = stylex.create({
     justifyContent: "center",
     outlineOffset: -3,
   },
+  gallerySegment: { width: { default: 112, [mobile]: 96 } },
   compactNavigation: {
     width: { default: 40, [mobile]: 26 },
     minWidth: { default: 40, [mobile]: 26 },
@@ -678,13 +649,6 @@ export const styles = stylex.create({
     transformOrigin: "top left",
     pointerEvents: "none",
   },
-  layoutCover: {
-    position: "fixed",
-    zIndex: 6,
-    pointerEvents: "none",
-    objectFit: "contain",
-    transformOrigin: "top left",
-  },
 });
 export type Slot = keyof typeof styles;
 const controlSlots = new Set<Slot>([
@@ -720,6 +684,7 @@ function controlStyles(slots: Slot[]): Slot[] {
   if (slots.includes("navButton")) result.push("compactNavigation");
   if (slots.includes("pageNumber")) result.push("pageNumber");
   if (slots.includes("segmentButton")) result.push("segmentButton");
+  if (slots.includes("gallerySegment")) result.push("gallerySegment");
   return result;
 }
 export function cx(slot: Slot, ...variants: Slot[]): string {
@@ -749,14 +714,11 @@ const bindings: [string, Slot][] = [
   [".artifact-paper", "paper"],
   [".artifact img", "artifactImage"],
   [".image-failed", "failed"],
-  [".grid-view", "grid"],
-  [".grid-card", "gridCard"],
-  [".grid-card img", "gridImage"],
-  [".load-more", "loadMore"],
   [".dock", "dock"],
   [".view-switch", "switch"],
   [".view-switch button", "switchButton"],
   [".view-switch button", "segmentButton"],
+  [".dock .view-switch button", "gallerySegment"],
   [".dock-line", "dockLine"],
   [".zoom-controls", "zoom"],
   [".zoom-controls button", "zoomButton"],
@@ -816,8 +778,12 @@ const bindings: [string, Slot][] = [
   [".unavailable-cover", "unavailable"],
   [".toast", "toast"],
   [".transition-cover", "transitionCover"],
-  [".layout-cover", "layoutCover"],
 ];
+const compiledClasses = new Set(
+  Object.values(styles).flatMap((slot) =>
+    (stylex.props(slot).className || "").split(" "),
+  ),
+);
 const applied = new WeakMap<Element, string[]>();
 export function syncStyles(root: ParentNode = document): void {
   const groups = new Map<Element, Slot[]>();
@@ -835,7 +801,9 @@ export function syncStyles(root: ParentNode = document): void {
       slots.push("infoOpen");
     if (slots.some((slot) => controlSlots.has(slot)))
       el.classList.add("glass-control");
-    const previous = applied.get(el) || [];
+    const previous =
+      applied.get(el) ||
+      [...el.classList].filter((name) => compiledClasses.has(name));
     const next = (
       stylex.props(...controlStyles(slots).map((s) => styles[s])).className ||
       ""

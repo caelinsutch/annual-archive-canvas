@@ -93,8 +93,7 @@ let data: Report[] = [],
   page = 0,
   readerMode: ReaderView = "pages",
   requestId = 0,
-  previousFocus: HTMLElement | null = null,
-  gridLimit = 90;
+  previousFocus: HTMLElement | null = null;
 try {
   saved = new Set(JSON.parse(localStorage.getItem("annual-saved") || "[]"));
 } catch {}
@@ -308,7 +307,6 @@ function applyFilters(semanticUpdate = false) {
       matchesFilters(r, { decade, industry, color, savedOnly, saved }),
     );
     canvas?.setItems(filtered);
-    if (view === "grid") renderGrid();
     $("#empty").classList.toggle("hidden", filtered.length > 0);
     $("#search-done").classList.add("hidden");
     searchPages();
@@ -370,57 +368,17 @@ function applyFilters(semanticUpdate = false) {
     !(query || decade || industry || color || savedOnly),
   );
   $("#empty").classList.toggle("hidden", filtered.length > 0);
-  gridLimit = 90;
   if (canvas) canvas.setItems(filtered);
-  if (view === "grid") renderGrid();
   $("#open-search").classList.toggle("has-query", !!query);
   $("#open-search span").textContent = query || "Search the archive";
   syncStyles();
 }
-function renderGrid() {
-  const grid = $("#grid");
-  grid.innerHTML =
-    filtered
-      .slice(0, gridLimit)
-      .map(
-        (e) =>
-          `<button class="grid-card" data-id="${esc(e.id)}"><img src="/api/cover?id=${encodeURIComponent(e.id)}" loading="lazy" alt="${esc(e.o)} annual report cover, ${esc(e.y)}"></button>`,
-      )
-      .join("") +
-    (filtered.length > gridLimit
-      ? '<button class="load-more primary">More to discover ↓</button>'
-      : "");
-  grid.querySelectorAll<HTMLElement>("[data-id]").forEach(
-    (b) =>
-      (b.onclick = () =>
-        openReport(
-          data.find((e) => e.id === b.dataset.id),
-          b.getBoundingClientRect(),
-        )),
-  );
-  grid.querySelector(".load-more")?.addEventListener("click", () => {
-    gridLimit += 90;
-    renderGrid();
-  });
-  syncStyles();
-}
-let layoutRun = 0;
-let layoutAnimations: Animation[] = [];
-function visibleCovers(mode: GalleryView) {
-  const entries =
-    mode === "canvas"
-      ? [...(canvas?.cards.values() || [])].map((c) => ({
-          id: c.item.id,
-          el: c.el,
-          src: c.el.querySelector("img")?.src,
-        }))
-      : [...$("#grid").querySelectorAll<HTMLElement>(".grid-card")].map(
-          (el) => ({
-            id: el.dataset.id!,
-            el: el.querySelector("img")!,
-            src: el.querySelector("img")!.src,
-          }),
-        );
+function visibleCovers(_mode: GalleryView) {
+  const entries = [...(canvas?.cards.values() || [])].map((c) => ({
+    id: c.item.id,
+    el: c.el,
+    src: c.el.querySelector("img")?.src,
+  }));
   const result = new Map<string, CoverPosition>();
   for (const entry of entries) {
     if (!entry.src) continue;
@@ -458,113 +416,18 @@ function visibleCovers(mode: GalleryView) {
   }
   return result;
 }
-async function setView(next: GalleryView) {
+function setView(next: GalleryView) {
   if (next === view) return;
   const finishDock = changeDock(".dock");
-  const run = ++layoutRun;
-  const from = visibleCovers(view);
-  document.querySelectorAll<HTMLImageElement>(".layout-cover").forEach((el) => {
-    const rect = el.getBoundingClientRect();
-    if (rect.width <= 0 || rect.height <= 0) return;
-    from.set(el.dataset.id!, {
-      id: el.dataset.id!,
-      src: el.src,
-      left: rect.left,
-      top: rect.top,
-      width: rect.width,
-      height: rect.height,
-    });
-  });
-  layoutAnimations.forEach((animation) => animation.cancel());
-  layoutAnimations = [];
-  document
-    .querySelectorAll<HTMLImageElement>(".layout-cover")
-    .forEach((el) => el.remove());
-  for (const el of [$("#gallery"), $("#grid")]) {
-    el.style.opacity = "";
-    el.style.pointerEvents = "";
-  }
-  const ghosts: HTMLImageElement[] = [];
-  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    for (const [id, start] of from) {
-      const img = document.createElement("img");
-      img.className = "layout-cover " + cx("layoutCover");
-      img.dataset.id = id;
-      img.src = start.src;
-      img.alt = "";
-      Object.assign(img.style, {
-        left: start.left + "px",
-        top: start.top + "px",
-        width: start.width + "px",
-        height: start.height + "px",
-      });
-      document.body.append(img);
-      ghosts.push(img);
-    }
-  }
   view = next;
-  $("#gallery").classList.toggle("hidden", next !== "canvas");
-  $("#grid").classList.toggle("hidden", next !== "grid");
   document.body.classList.toggle("is-grid", next === "grid");
-  for (const v of ["canvas", "grid"]) {
-    $("#" + v + "-view").classList.toggle("selected", v === next);
-    $("#" + v + "-view").setAttribute("aria-pressed", String(v === next));
+  for (const mode of ["canvas", "grid"]) {
+    $("#" + mode + "-view").classList.toggle("selected", mode === next);
+    $("#" + mode + "-view").setAttribute("aria-pressed", String(mode === next));
   }
-  finishDock();
-  if (next === "grid") renderGrid();
-  else if (!canvas) initCanvas();
+  canvas?.setCoverLayout(next);
   syncStyles();
-  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const destination = next === "grid" ? $("#grid") : $("#gallery");
-  destination.style.opacity = "0";
-  destination.style.pointerEvents = "none";
-  await new Promise((resolve) =>
-    requestAnimationFrame(() => requestAnimationFrame(resolve)),
-  );
-  if (run !== layoutRun) return;
-  const to = visibleCovers(next);
-  const options: KeyframeAnimationOptions = {
-    duration: motion.layout,
-    easing: motion.ease,
-    fill: "forwards",
-  };
-  for (const [id, start] of from) {
-    const end = to.get(id);
-    const img = ghosts.find((image) => image.dataset.id === id)!;
-    const transform = end
-      ? `translate(${end.left - start.left}px,${end.top - start.top}px) scale(${end.width / start.width})`
-      : "translateY(-12px)";
-    layoutAnimations.push(
-      img.animate(
-        [
-          { transform: "none", opacity: 1 },
-          { transform, opacity: end ? 1 : 0, offset: 0.8 },
-          { transform, opacity: 0 },
-        ],
-        options,
-      ),
-    );
-  }
-  layoutAnimations.push(
-    destination.animate(
-      [{ opacity: 0 }, { opacity: 0, offset: 0.22 }, { opacity: 1 }],
-      options,
-    ),
-  );
-  let completionTimeout: ReturnType<typeof setTimeout>;
-  await Promise.race([
-    Promise.allSettled(layoutAnimations.map((animation) => animation.finished)),
-    new Promise<void>((resolve) => {
-      completionTimeout = setTimeout(resolve, motion.layout + 250);
-    }),
-  ]);
-  clearTimeout(completionTimeout!);
-  if (run !== layoutRun) return;
-  destination.style.opacity = "";
-  destination.style.pointerEvents = "";
-  layoutAnimations.forEach((animation) => animation.cancel());
-  layoutAnimations = [];
-  ghosts.forEach((el) => el.remove());
+  finishDock();
 }
 $("#canvas-view").onclick = () => setView("canvas");
 $("#grid-view").onclick = () => setView("grid");
