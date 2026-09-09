@@ -1,11 +1,11 @@
 {
   "scope": "20 editorial known-item paraphrases (10 development + 10 held out); not a comprehensive human relevance evaluation. Warm CPU latency excludes model loading.",
   "metrics": {
-    "hybridMRR10": 0.8,
+    "hybridMRR10": 0.825,
     "lexicalMRR10": 0.8016666666666665,
     "hybridRecall10": 0.85,
     "lexicalRecall10": 0.9,
-    "meanWarmLatencyMs": 14.522427099999964
+    "meanWarmLatencyMs": 384.97349155000006
   },
   "heldOutMetrics": {
     "MRR10": 0.85,
@@ -18,27 +18,27 @@
       "target": "daytonhudsontargetannualreports__dayton1967",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 15.397874999999999,
+      "latencyMs": 213.1272909999998,
       "top5": [
         "daytonhudsontargetannualreports__dayton1967",
         "woolworthvenatorfootlockerannualreports__woolworth1992",
         "nationaltoolcompanyannualreports__nationaltool1945a",
-        "McGillLibrary-636465-33304",
-        "paulrand-westinghouse-1971"
+        "mccroryrapidamericanannualreports__rapidamerican-1968",
+        "McGillLibrary-636465-33304"
       ]
     },
     {
       "query": "oversized colorful overlapping numbers",
       "target": "paulrand-cummins-1966",
-      "rank": 13,
+      "rank": 15,
       "lexicalRank": 1,
-      "latencyMs": 16.911333000000013,
+      "latencyMs": 263.17133300000023,
       "top5": [
+        "cromptonandknowlescorporationannualreports__cromptonandknowles1953",
         "McGillLibrary-631870-24061",
         "uw15648",
-        "cromptonandknowlescorporationannualreports__cromptonandknowles1953",
-        "archiveofannualreports_misc_201911__rutlandrailway1957",
-        "generalmillsincannualreports__generalmills1981"
+        "generalmillsincannualreports__generalmills1981",
+        "McGillLibrary-633829-35399"
       ]
     },
     {
@@ -46,27 +46,27 @@
       "target": "generalelectriccompanyannualreports__generalelectric1972",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 14.082084000000009,
+      "latencyMs": 262.108166,
       "top5": [
         "generalelectriccompanyannualreports__generalelectric1972",
         "McGillLibrary-639923-41731",
+        "unionpremierfoodfairpantryprideannualreports__foodfairprop1965",
         "babcockandwilcoxannualreports__babcockandwilcox1973",
-        "bannerindustriesincannualreports__bannerindustries1975",
-        "unionpremierfoodfairpantryprideannualreports__foodfairprop1965"
+        "bannerindustriesincannualreports__bannerindustries1975"
       ]
     },
     {
       "query": "orange numerals cropped into abstract shapes",
       "target": "McGillLibrary-633092-42460",
-      "rank": 2,
+      "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 13.340915999999993,
+      "latencyMs": 335.43174999999974,
       "top5": [
-        "archiveofannualreports_misc_201911__ussteel1980",
         "McGillLibrary-633092-42460",
         "McGillLibrary-634901-41182",
-        "McGillLibrary-633388-32788",
-        "manpowerincannualreports__manpowerinc1973"
+        "pepsicofritolayannualreports__pepsicola1964",
+        "manpowerincannualreports__manpowerinc1973",
+        "McGillLibrary-633388-32788"
       ]
     },
     {
@@ -74,27 +74,27 @@
       "target": "McGillLibrary-638502-31519",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 13.915250000000015,
+      "latencyMs": 369.4230829999997,
       "top5": [
         "McGillLibrary-638502-31519",
         "McGillLibrary-634098-39995",
         "McGillLibrary-631730-31597",
-        "addressographmultigraphcorporationannualreports__addressograph1962",
-        "McGillLibrary-631936-29417"
+        "americanbroadcastingcompanyannualreports__abc1961",
+        "addressographmultigraphcorporationannualreports__addressograph1962"
       ]
     },
     {
       "query": "silvery coils in monochrome industrial photography",
       "target": "McGillLibrary-637328-32323",
-      "rank": 323,
+      "rank": 348,
       "lexicalRank": 209,
-      "latencyMs": 14.259167000000048,
+      "latencyMs": 465.3951670000006,
       "top5": [
         "McGillLibrary-635299-38596",
         "McGillLibrary-631731-31600",
         "bethlehemsteelcompanyannualreports__bethlehemsteel1962",
-        "bannerindustriesincannualreports__bannerindustries1977",
-        "McGillLibrary-639525-44327"
+        "kfcheubleinannualreports__heublein1979",
+        "bannerindustriesincannualreports__bannerindustries1977"
       ]
     },
     {
@@ -102,7 +102,7 @@
       "target": "McGillLibrary-630610-30787",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 15.67091599999992,
+      "latencyMs": 544.6423340000001,
       "top5": [
         "McGillLibrary-630610-30787",
         "McGillLibrary-638779-33955",
@@ -116,13 +116,13 @@
       "target": "generalelectriccompanyannualreports__generalelectric1965",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 13.719791999999984,
+      "latencyMs": 331.63091600000007,
       "top5": [
         "generalelectriccompanyannualreports__generalelectric1965",
         "McGillLibrary-631722-31573",
         "uw44314",
-        "castleandcookeltdannualreports__castleandcooke1973",
-        "neisnerbrothersannualreports__neisner1971"
+        "neisnerbrothersannualreports__neisner1971",
+        "jonesbrothersgrandunionteaannualreports__grandunion1980"
       ]
     },
     {
@@ -130,7 +130,7 @@
       "target": "McGillLibrary-635085-40246",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 21.8527499999999,
+      "latencyMs": 342.4606670000012,
       "top5": [
         "McGillLibrary-635085-40246",
         "McGillLibrary-631733-31606",
@@ -144,21 +144,21 @@
       "target": "generalelectriccompanyannualreports__generalelectric1951",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 15.397042000000056,
+      "latencyMs": 89.23104199999943,
       "top5": [
         "generalelectriccompanyannualreports__generalelectric1951",
         "shkressgeneralshoegenescoannualreports__genesco1971",
         "cromptonandknowlescorporationannualreports__cromptonandknowles1960",
-        "archiveofannualreports_misc_201911__dairyqueen1975",
-        "americantelephoneandtelegraphannualreports__att1960"
+        "cromptonandknowlescorporationannualreports__cromptonandknowles1964",
+        "woolworthvenatorfootlockerannualreports__woolworth1990"
       ]
     },
     {
       "query": "large colorful digits containing a nighttime city photograph",
       "target": "paulrand-westinghouse-1974",
       "rank": 53,
-      "lexicalRank": 142,
-      "latencyMs": 14.451791000000071,
+      "lexicalRank": 143,
+      "latencyMs": 866.891791,
       "top5": [
         "southlandcorp7elevenannualreports__southland1983",
         "southlandcorp7elevenannualreports__southland1972",
@@ -172,13 +172,13 @@
       "target": "mammothmartkingsstoresannualreports__kingsdeptstores1964",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 13.390582999999992,
+      "latencyMs": 505.6773750000011,
       "top5": [
         "mammothmartkingsstoresannualreports__kingsdeptstores1964",
         "funco-land-1998-annual-report",
         "uw17014",
-        "mammothmartkingsstoresannualreports__kingsdeptstores1967",
-        "wdp-annual-report-1974"
+        "wdp-annual-report-1974",
+        "funco-1993"
       ]
     },
     {
@@ -186,7 +186,7 @@
       "target": "McGillLibrary-639558-44792",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 11.724583999999936,
+      "latencyMs": 536.1850000000013,
       "top5": [
         "McGillLibrary-639558-44792",
         "McGillLibrary-636211-28820",
@@ -200,7 +200,7 @@
       "target": "cromptonandknowlescorporationannualreports__cromptonandknowles1956",
       "rank": 1,
       "lexicalRank": 3,
-      "latencyMs": 13.199166999999989,
+      "latencyMs": 287.54683300000033,
       "top5": [
         "cromptonandknowlescorporationannualreports__cromptonandknowles1956",
         "McGillLibrary-633392-32794",
@@ -214,12 +214,12 @@
       "target": "walgreensWBAannualreports__walgreens1965",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 17.338083999999867,
+      "latencyMs": 170.69316699999945,
       "top5": [
         "walgreensWBAannualreports__walgreens1965",
         "walgreensWBAannualreports__walgreens1969",
-        "walgreensWBAannualreports__walgreens1966",
         "walgreensWBAannualreports__walgreens1968",
+        "walgreensWBAannualreports__walgreens1966",
         "walgreensWBAannualreports__walgreens1967"
       ]
     },
@@ -228,13 +228,13 @@
       "target": "nationaldairykraftcounitedrexalldrugdartannualreports__kraftco1970",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 18.73758299999986,
+      "latencyMs": 323.03049999999894,
       "top5": [
         "nationaldairykraftcounitedrexalldrugdartannualreports__kraftco1970",
         "redowlstoresannualreports__redowl1952",
-        "economygrocerystopandshopannualreports__stopandshop1978",
         "generalmillsincannualreports__generalmills1973",
-        "wtgrantcoannualreports__wtgrant1969"
+        "wtgrantcoannualreports__wtgrant1969",
+        "economygrocerystopandshopannualreports__stopandshop1978"
       ]
     },
     {
@@ -242,13 +242,13 @@
       "target": "wrgracecoannualreports__wrgrace1974",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 12.392791999999872,
+      "latencyMs": 407.1804579999989,
       "top5": [
         "wrgracecoannualreports__wrgrace1974",
         "McGillLibrary-634278-44207",
         "generalmillsincannualreports__generalmills1970",
         "searsannualreports__sears1976",
-        "McGillLibrary-634115-40001"
+        "jewelteacoannualreports__jeweltea1972"
       ]
     },
     {
@@ -256,7 +256,7 @@
       "target": "McGillLibrary-633431-32413",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 11.372124999999869,
+      "latencyMs": 43.03837500000009,
       "top5": [
         "McGillLibrary-633431-32413",
         "uw4363",
@@ -270,13 +270,13 @@
       "target": "tandyradioshackannualreports__tandy1974",
       "rank": 1,
       "lexicalRank": 5,
-      "latencyMs": 11.148457999999891,
+      "latencyMs": 633.3327080000017,
       "top5": [
         "tandyradioshackannualreports__tandy1974",
         "paulrand-westinghouse-1970",
-        "intel-history-1989-annual-report",
+        "mccroryrapidamericanannualreports__rapidamerican-1971",
         "mccroryrapidamericanannualreports__rapidamerican-1969",
-        "mccroryrapidamericanannualreports__rapidamerican-1971"
+        "intel-history-1989-annual-report"
       ]
     },
     {
@@ -284,13 +284,13 @@
       "target": "uw39535",
       "rank": 2,
       "lexicalRank": 2,
-      "latencyMs": 12.146250000000009,
+      "latencyMs": 709.2718749999985,
       "top5": [
         "uw25045",
         "uw39535",
         "luckystoresannualreports__lucky1966",
-        "wrgracecoannualreports__wrgrace1989",
-        "winnlovettwinndixieannualreports__winndixie1972"
+        "winnlovettwinndixieannualreports__winndixie1972",
+        "wrgracecoannualreports__wrgrace1989"
       ]
     }
   ]

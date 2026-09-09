@@ -98,3 +98,26 @@ test(
     );
   },
 );
+
+test(
+  "corrected issuer names are discoverable in semantic search",
+  options,
+  async () => {
+    const response = await fetch(
+      base + "/api/search?q=" + encodeURIComponent("O'Brien Gold Mines"),
+    );
+    assert.equal(response.status, 200);
+    const result = await response.json();
+    assert.ok(
+      result.hits
+        .slice(0, 5)
+        .some((hit: { id: string }) =>
+          [
+            "McGillLibrary-640204-44432",
+            "McGillLibrary-640202-44426",
+            "McGillLibrary-640200-44420",
+          ].includes(hit.id),
+        ),
+    );
+  },
+);

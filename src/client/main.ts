@@ -1,6 +1,6 @@
 import { changeDock, initDockMotion } from "./dock-motion";
 import { initMagneticControls } from "./magnetic-controls";
-import { matchesFilters, SearchGeneration } from "../search/control";
+import { SearchGeneration } from "../search/control";
 import { manageSplash, waitForArtwork, frame } from "./loading";
 import {
   imageGhost,
@@ -86,9 +86,6 @@ let data: Report[] = [],
   saved = new Set<string>(),
   savedOnly = false,
   query = "",
-  decade = "",
-  industry = "",
-  color = "",
   readerCanvas: ArchiveCanvas<ReportPage> | null = null,
   active: Report | null = null,
   manifest: ReaderManifest | null = null,
@@ -185,16 +182,12 @@ function openSearch() {
   showDialog("search-dialog");
   $("#search-input").value = query;
   $("#search-input").focus();
-  if (searchScope === "reports") renderReportResults();
+  updateSearch();
 }
 $("#open-search").onclick = openSearch;
-$("#search-done").onclick = async () => {
-  if (searchScope === "pages") await setArchiveContent("pages");
-  await closeDialog($("#search-dialog"));
-};
 $("#search-input").oninput = (e) => {
   query = (e.target as HTMLInputElement).value;
-  applyFilters();
+  updateSearch();
 };
 $("#search-input").onkeydown = (e) => {
   if (e.key === "ArrowDown") {
@@ -210,16 +203,15 @@ $("#search-input").onkeydown = (e) => {
   }
 };
 function resetFilters() {
-  query = decade = industry = color = "";
   savedOnly = false;
   $("#saved").setAttribute("aria-pressed", "false");
-  applyFilters();
+  applyArchiveFilter();
 }
 $("#empty-clear").onclick = resetFilters;
 $("#saved").onclick = () => {
   savedOnly = !savedOnly;
   $("#saved").setAttribute("aria-pressed", String(savedOnly));
-  applyFilters();
+  applyArchiveFilter();
 };
 const searchGeneration = new SearchGeneration();
 const pageGeneration = new SearchGeneration();
@@ -230,7 +222,7 @@ let searchRequest: AbortController | undefined;
 let searchScope: "reports" | "pages" = "reports";
 let pageSearchTimer: ReturnType<typeof setTimeout>;
 let pageSearchAbort: AbortController | undefined;
-let matchedPages: ArchivePage[] | undefined;
+let paletteResults: Report[] = [];
 function searchPages() {
   const generation = pageGeneration.next();
   clearTimeout(pageSearchTimer);
@@ -238,8 +230,6 @@ function searchPages() {
   const results = $("#page-search-results");
   results.className = "command-results";
   if (query.trim().length < 2) {
-    matchedPages = undefined;
-    updateGallery();
     results.replaceChildren();
     $("#search-count").textContent =
       "Search page layouts, typography, or imagery";
@@ -271,15 +261,9 @@ function searchPages() {
         return;
       if (!response.ok) throw new Error("Index preparing");
       results.replaceChildren();
-      matchedPages = [];
       for (const hit of result.hits) {
         const report = data.find((r) => r.id === hit.reportId);
-        if (
-          !report ||
-          !matchesFilters(report, { decade, industry, color, savedOnly, saved })
-        )
-          continue;
-        matchedPages.push(hit);
+        if (!report) continue;
         const button = document.createElement("button");
         button.className = "command-result";
         button.setAttribute(
@@ -304,7 +288,6 @@ function searchPages() {
         };
         results.append(button);
       }
-      updateGallery();
       $("#search-count").textContent = `${results.childElementCount} pages`;
       syncStyles();
     } catch {
@@ -328,21 +311,20 @@ for (const scope of ["reports", "pages"] as const) {
     }
     $("#page-search-results").classList.toggle("hidden", scope === "reports");
     $("#report-search-results").classList.toggle("hidden", scope === "pages");
-    applyFilters();
+    updateSearch();
   };
 }
-function applyFilters(semanticUpdate = false) {
+function applyArchiveFilter() {
+  filtered = data.filter((report) => !savedOnly || saved.has(report.id));
+  $("#empty").classList.toggle("hidden", filtered.length > 0);
+  updateGallery();
+}
+function updateSearch(semanticUpdate = false) {
+  syncStyles();
   if (searchScope === "pages") {
-    filtered = data.filter((r) =>
-      matchesFilters(r, { decade, industry, color, savedOnly, saved }),
-    );
-    updateGallery();
-    $("#empty").classList.toggle("hidden", filtered.length > 0);
-    $("#search-done").classList.remove("hidden");
     searchPages();
     return;
   }
-  $("#search-done").classList.remove("hidden");
   if (!semanticUpdate) {
     const generation = searchGeneration.next();
     clearTimeout(searchTimer);
@@ -355,7 +337,7 @@ function applyFilters(semanticUpdate = false) {
           $("#search-count").textContent = "Finding related styles…";
           const response = await fetch(
             `/api/search?q=${encodeURIComponent(requestedQuery)}`,
-            { signal: searchRequest.signal },
+            { signal: searchRequest.signal, cache: "no-cache" },
           );
           if (!response.ok) throw new Error("Search unavailable");
           const result = (await response.json()) as { hits: { id: string }[] };
@@ -366,36 +348,29 @@ function applyFilters(semanticUpdate = false) {
             return;
           semanticQuery = requestedQuery;
           semanticHits = result.hits.map((hit) => hit.id);
-          applyFilters(true);
+          updateSearch(true);
         } catch {
           if (query === requestedQuery)
             $("#search-count").textContent =
-              `${filtered.length.toLocaleString()} matching artifacts`;
+              `${paletteResults.length.toLocaleString()} matching artifacts`;
         }
       }, 220);
     }
   }
   const terms = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
-  filtered = data.filter((e) => {
+  paletteResults = data.filter((e) => {
     const hay = [e.o, e.y, e.i, e.d, e.dsg, e.k].join(" ").toLowerCase();
-    return (
-      (query && semanticQuery === query
-        ? semanticHits.includes(e.id)
-        : terms.every((t) => hay.includes(t))) &&
-      matchesFilters(e, { decade, industry, color, savedOnly, saved })
-    );
+    return query && semanticQuery === query
+      ? semanticHits.includes(e.id)
+      : terms.every((t) => hay.includes(t));
   });
   if (query && semanticQuery === query) {
     const order = new Map(semanticHits.map((id, index) => [id, index]));
-    filtered.sort((a, b) => order.get(a.id)! - order.get(b.id)!);
+    paletteResults.sort((a, b) => order.get(a.id)! - order.get(b.id)!);
   }
   $("#search-count").textContent =
-    `${filtered.length.toLocaleString()} reports`;
+    `${paletteResults.length.toLocaleString()} reports`;
   renderReportResults();
-  $("#empty").classList.toggle("hidden", filtered.length > 0);
-  updateGallery();
-  $("#open-search").classList.toggle("has-query", !!query);
-  $("#open-search span").textContent = query || "Search the archive";
   syncStyles();
 }
 let archiveContent: "covers" | "pages" = "covers";
@@ -410,10 +385,7 @@ function updateGallery() {
   }
   if (!archivePages) return;
   const reports = new Map(filtered.map((report) => [report.id, report]));
-  const scans =
-    searchScope === "pages" && query.trim().length > 1 && matchedPages
-      ? matchedPages
-      : archivePages;
+  const scans = archivePages;
   const items: ArchiveItem[] = scans.flatMap((scan) => {
     const report = reports.get(scan.reportId);
     return report
@@ -507,7 +479,7 @@ function renderReportResults() {
     ? (document.activeElement as HTMLElement).dataset.report
     : undefined;
   results.replaceChildren();
-  for (const report of filtered.slice(0, 5)) {
+  for (const report of paletteResults.slice(0, query.trim() ? 40 : 5)) {
     const button = document.createElement("button");
     button.dataset.report = report.id;
     button.className = "command-result";
@@ -529,7 +501,7 @@ function renderReportResults() {
     results.append(button);
     if (report.id === focused) button.focus();
   }
-  if (!filtered.length) {
+  if (!paletteResults.length) {
     const empty = document.createElement("p");
     empty.className = "command-empty";
     empty.textContent = "No matches. Try another search.";
@@ -656,7 +628,7 @@ $("#save-report").onclick = () => {
     toast("Browser storage is unavailable. Saved for this visit.");
   }
   updateSaved();
-  if (savedOnly) applyFilters();
+  if (savedOnly) applyArchiveFilter();
 };
 async function openReport(
   report: Report | undefined,
@@ -1062,7 +1034,7 @@ try {
   const r = await fetch("/catalog.json");
   if (!r.ok) throw new Error();
   data = await r.json();
-  applyFilters();
+  applyArchiveFilter();
   initCanvas();
   await appSplash.finish($("#gallery"));
   const id = new URLSearchParams(location.hash.slice(1)).get("report");

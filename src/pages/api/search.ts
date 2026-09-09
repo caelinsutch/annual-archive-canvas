@@ -44,7 +44,7 @@ export const GET: APIRoute = async ({ url }) => {
       });
       const [vector, vectors] = await Promise.all([embed(query, true), index]);
       hits = rank(query, vector, catalogue as Report[], vectors)
-        .filter((hit) => hit.score >= 0.2)
+        .filter((hit) => hit.score >= 0.22)
         .slice(0, 120);
       results.set(query, hits);
       if (results.size > 200) results.delete(results.keys().next().value!);

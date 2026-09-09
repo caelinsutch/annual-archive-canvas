@@ -27,6 +27,10 @@ async function until(code: string) {
 try {
   await b("open", base);
   await until(`!document.querySelector('#app-splash')`);
+  await b(
+    "eval",
+    `window.unfilteredCards=[...document.querySelectorAll("#gallery .artifact")];window.unfilteredImages=window.unfilteredCards.map(n=>n.querySelector("img"))`,
+  );
   await b("press", "Meta+k");
   assert.equal(
     await e(
@@ -38,6 +42,19 @@ try {
   await until(
     `document.querySelector('#report-search-results button')?.textContent.includes('Cummins')`,
   );
+  await delay(1000);
+  assert.equal(
+    await e(
+      `window.unfilteredCards.every((node,i)=>node.isConnected&&node.querySelector('img')===window.unfilteredImages[i])`,
+    ),
+    true,
+    "Search must retain every canvas node",
+  );
+  assert.equal(
+    await e(`document.querySelector('#open-search span').textContent`),
+    "Search the archive",
+  );
+  assert.equal(await e(`document.querySelector('#search-done')===null`), true);
   await b("press", "ArrowDown");
   assert.equal(
     await e(
@@ -47,9 +64,24 @@ try {
   );
   await b("press", "ArrowUp");
   assert.equal(await e(`document.activeElement.id`), "search-input");
-  await b("fill", "#search-input", "");
-  await b("press", "Escape");
-  await until(`!document.querySelector('#search-dialog').open`);
+  await b("press", "Enter");
+  await until(
+    `document.querySelector('#reader').open&&!document.querySelector('.report-hero')`,
+  );
+  assert.equal(
+    await e(
+      `document.querySelector('#report-info h2').textContent.includes('Cummins')`,
+    ),
+    true,
+  );
+  await b("eval", `document.querySelector('#close-reader').click()`);
+  await until(`!document.querySelector('#reader').open`);
+  assert.equal(
+    await e(`window.unfilteredCards.every(node=>node.isConnected)`),
+    true,
+    "Returning from a palette result restores the original canvas",
+  );
+
   await b("click", "#pages-content");
   await until(`document.querySelector('#gallery').dataset.content==='pages'`);
   assert.equal(
@@ -58,6 +90,21 @@ try {
     ),
     true,
   );
+  await b(
+    "eval",
+    `window.pageSearchBackground=[...document.querySelectorAll('#gallery .artifact')]`,
+  );
+  await b("press", "Meta+k");
+  await b("click", "#search-pages");
+  await b("fill", "#search-input", "financial table");
+  await until(`document.querySelector('#page-search-results button')!==null`);
+  assert.equal(
+    await e(`window.pageSearchBackground.every(node=>node.isConnected)`),
+    true,
+    "Page search must not filter or recreate background pages",
+  );
+  await b("press", "Escape");
+  await until(`!document.querySelector('#search-dialog').open`);
   await b(
     "eval",
     `window.pageCards=[...document.querySelectorAll('#gallery .artifact')];window.pageImages=window.pageCards.map(n=>n.querySelector('img'));document.querySelector('#grid-view').click()`,
