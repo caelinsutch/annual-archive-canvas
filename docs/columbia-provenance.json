@@ -1,0 +1,165 @@
+{
+  "verifiedAt": "2026-09-09",
+  "reports": [
+    {
+      "id": "columbia-new-york-airways-1954",
+      "year": 1954,
+      "archiveItem": "ldpd_6283902_000",
+      "source": "https://archive.org/details/ldpd_6283902_000/page/n0/mode/1up",
+      "startLeaf": 0,
+      "endLeafInclusive": 15,
+      "pageCount": 16,
+      "coverFile": "covers/columbia-new-york-airways-1954.jpg",
+      "manifestFile": "manifests/columbia-new-york-airways-1954.json",
+      "titleLeaf": 2,
+      "titlePageOCR": "NEW YORK AIRWAYS, INC. THE FIRST HELICOPTER AIRLINE 3v ANNUAL REPORT 1954",
+      "yearVerified": "Visually verified year on front cover and title page;1955/1957 OCR years are misrecognized, visual text confirms actual years.",
+      "boundaryVerified": "Front/back covers visually matched in contact.jpg, next front cover belongs to subsequent year.",
+      "nextReportCoverLeaf": 16,
+      "downloadedEvidenceLeaves": [
+        0,
+        2,
+        15
+      ],
+      "designTagsSuggested": [
+        "minimalist",
+        "serif typography",
+        "illustration",
+        "monochrome background"
+      ],
+      "pdf": null,
+      "verifiedInteriorLeaf": 7,
+      "interiorImageValid": true
+    },
+    {
+      "id": "columbia-new-york-airways-1955",
+      "year": 1955,
+      "archiveItem": "ldpd_6283902_000",
+      "source": "https://archive.org/details/ldpd_6283902_000/page/n16/mode/1up",
+      "startLeaf": 16,
+      "endLeafInclusive": 31,
+      "pageCount": 16,
+      "coverFile": "covers/columbia-new-york-airways-1955.jpg",
+      "manifestFile": "manifests/columbia-new-york-airways-1955.json",
+      "titleLeaf": 18,
+      "titlePageOCR": "NEW YORK AIRWAYS, IIVC. THE FIRST HELICOPTER AIRLINE 4t ANNUAL REPORT lOSS",
+      "yearVerified": "Visually verified year on front cover and title page;1955/1957 OCR years are misrecognized, visual text confirms actual years.",
+      "boundaryVerified": "Front/back covers visually matched in contact.jpg, next front cover belongs to subsequent year.",
+      "nextReportCoverLeaf": 32,
+      "downloadedEvidenceLeaves": [
+        16,
+        18,
+        31
+      ],
+      "designTagsSuggested": [
+        "minimalist",
+        "serif typography",
+        "illustration",
+        "monochrome background"
+      ],
+      "pdf": null,
+      "verifiedInteriorLeaf": 23,
+      "interiorImageValid": true
+    },
+    {
+      "id": "columbia-new-york-airways-1956",
+      "year": 1956,
+      "archiveItem": "ldpd_6283902_000",
+      "source": "https://archive.org/details/ldpd_6283902_000/page/n32/mode/1up",
+      "startLeaf": 32,
+      "endLeafInclusive": 47,
+      "pageCount": 16,
+      "coverFile": "covers/columbia-new-york-airways-1956.jpg",
+      "manifestFile": "manifests/columbia-new-york-airways-1956.json",
+      "titleLeaf": 34,
+      "titlePageOCR": "NEW YORK AIRWAYS. I X \\ THE FIRST HELICOPTER AIRLINE ANNUAL report 1956",
+      "yearVerified": "Visually verified year on front cover and title page;1955/1957 OCR years are misrecognized, visual text confirms actual years.",
+      "boundaryVerified": "Front/back covers visually matched in contact.jpg, next front cover belongs to subsequent year.",
+      "nextReportCoverLeaf": 48,
+      "downloadedEvidenceLeaves": [
+        32,
+        34,
+        47
+      ],
+      "designTagsSuggested": [
+        "minimalist",
+        "serif typography",
+        "illustration",
+        "monochrome background"
+      ],
+      "pdf": null,
+      "verifiedInteriorLeaf": 39,
+      "interiorImageValid": true
+    },
+    {
+      "id": "columbia-new-york-airways-1957",
+      "year": 1957,
+      "archiveItem": "ldpd_6283902_000",
+      "source": "https://archive.org/details/ldpd_6283902_000/page/n48/mode/1up",
+      "startLeaf": 48,
+      "endLeafInclusive": 63,
+      "pageCount": 16,
+      "coverFile": "covers/columbia-new-york-airways-1957.jpg",
+      "manifestFile": "manifests/columbia-new-york-airways-1957.json",
+      "titleLeaf": 50,
+      "titlePageOCR": "NEW YORK AIRWAYS, INC. ANNUAL REPORT 1057",
+      "yearVerified": "Visually verified year on front cover and title page;1955/1957 OCR years are misrecognized, visual text confirms actual years.",
+      "boundaryVerified": "Front/back covers visually matched in contact.jpg, next front cover belongs to subsequent year.",
+      "nextReportCoverLeaf": 64,
+      "downloadedEvidenceLeaves": [
+        48,
+        50,
+        63
+      ],
+      "designTagsSuggested": [
+        "minimalist",
+        "serif typography",
+        "illustration",
+        "monochrome background"
+      ],
+      "pdf": null,
+      "verifiedInteriorLeaf": 55,
+      "interiorImageValid": true
+    },
+    {
+      "id": "columbia-new-york-airways-1958",
+      "year": 1958,
+      "archiveItem": "ldpd_6283902_000",
+      "source": "https://archive.org/details/ldpd_6283902_000/page/n64/mode/1up",
+      "startLeaf": 64,
+      "endLeafInclusive": 83,
+      "pageCount": 20,
+      "coverFile": "covers/columbia-new-york-airways-1958.jpg",
+      "manifestFile": "manifests/columbia-new-york-airways-1958.json",
+      "titleLeaf": 66,
+      "titlePageOCR": "NEW YORK AIRWAYS. INC. THE FIRST HELICOPTER AIRLINE yu AN IV UAL REPORT 1958",
+      "yearVerified": "Visually verified year on front cover and title page;1955/1957 OCR years are misrecognized, visual text confirms actual years.",
+      "boundaryVerified": "Front/back covers visually matched in contact.jpg, next front cover belongs to subsequent year.",
+      "nextReportCoverLeaf": 84,
+      "downloadedEvidenceLeaves": [
+        64,
+        66,
+        83
+      ],
+      "designTagsSuggested": [
+        "minimalist",
+        "serif typography",
+        "illustration",
+        "monochrome background"
+      ],
+      "pdf": null,
+      "verifiedInteriorLeaf": 73,
+      "interiorImageValid": true
+    }
+  ],
+  "reportCount": 5,
+  "totalPages": 84,
+  "notes": [
+    "Only individually bounded reports are proposed. No whole-volume PDF is attached.",
+    "All16 requested cover/boundary images downloaded successfully. All five covers and their title pages were visually inspected.",
+    "BookReaderURLs follow repository scanPages convention using verified archive metadata and scan leaf dimensions.",
+    "Reader must use these cached manifests before generic archive resolution or it will load all250volume pages.",
+    "Original scans include their original library marks.",
+    "Five additional interior images downloaded and decoded successfully, one per report. Total21images verified through endpoint downloads."
+  ]
+}

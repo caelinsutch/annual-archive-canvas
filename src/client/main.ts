@@ -1,6 +1,7 @@
+import { changeDock, initDockMotion } from "./dock-motion";
 import { initMagneticControls } from "./magnetic-controls";
 import { matchesFilters, SearchGeneration } from "../search/control";
-import { manageSplash, waitForArtwork, frame } from "./loading";
+import { manageSplash, waitForArtwork } from "./loading";
 import {
   imageGhost,
   moveImage,
@@ -106,15 +107,13 @@ type ElementFor<S extends string> = S extends
       ? HTMLSelectElement
       : S extends "#read-mode" | "#strip-mode" | "#prev-page" | "#next-page"
         ? HTMLButtonElement
-        : S extends "#page-reader img"
-          ? HTMLImageElement
-          : HTMLElement;
+        : HTMLElement;
 function $<S extends string>(selector: S): ElementFor<S> {
   return document.querySelector(selector) as ElementFor<S>;
 }
 paintIcons();
 let toastTimer: ReturnType<typeof setTimeout>;
-let snapTimer: ReturnType<typeof setTimeout>;
+
 function toast(message: string) {
   $("#toast").textContent = message;
   $("#toast").classList.add("show");
@@ -461,6 +460,7 @@ function visibleCovers(mode: GalleryView) {
 }
 async function setView(next: GalleryView) {
   if (next === view) return;
+  const finishDock = changeDock(".dock");
   const run = ++layoutRun;
   const from = visibleCovers(view);
   document.querySelectorAll<HTMLImageElement>(".layout-cover").forEach((el) => {
@@ -510,6 +510,7 @@ async function setView(next: GalleryView) {
     $("#" + v + "-view").classList.toggle("selected", v === next);
     $("#" + v + "-view").setAttribute("aria-pressed", String(v === next));
   }
+  finishDock();
   if (next === "grid") renderGrid();
   else if (!canvas) initCanvas();
   syncStyles();
@@ -607,6 +608,7 @@ async function openReport(report: Report | undefined, origin?: CoverRect) {
   if (!report) return;
   const current = ++requestId;
   manifest?.pdfTask?.destroy();
+  pdfRenders.clear();
   active = report;
   if (canvas) canvas.paused = true;
   manifest = null;
@@ -615,8 +617,6 @@ async function openReport(report: Report | undefined, origin?: CoverRect) {
   previousFocus = document.activeElement as HTMLElement | null;
   readerCanvas?.destroy();
   readerCanvas = null;
-  $("#page-reader").innerHTML = "";
-  $("#page-strip").innerHTML = "";
   $("#page-canvas").innerHTML = "";
   $("#reader").classList.remove("details-open", "transitioning");
   $("#reader").showModal();
@@ -646,7 +646,9 @@ async function openReport(report: Report | undefined, origin?: CoverRect) {
     if (!manifest) return;
     if (manifest.pages.length) {
       $("#availability").textContent =
-        `${manifest.pages.length} original pages · click any page to read`;
+        manifest.pages.length === 1
+          ? "Click to read"
+          : `${manifest.pages.length} original pages · click any page to read`;
       $("#report-status").classList.add("hidden");
       readerCanvas = new ArchiveCanvas($("#page-canvas"), {
         items: manifest.pages,
@@ -659,7 +661,6 @@ async function openReport(report: Report | undefined, origin?: CoverRect) {
           ($("#page-reset").textContent = Math.round(z * 100) + "%"),
       });
       if (innerWidth < 700) readerCanvas.setZoom(0.7);
-      renderStrip();
       setReaderMode("pages");
       await arrival.finish();
     } else {
@@ -732,78 +733,36 @@ async function loadPDF(report: Report, current: number) {
       `Preparing page ${i + 1} of ${pdf.numPages}…`;
   }
 }
-let pageMotion = 0;
-function setReaderMode(mode: ReaderView, origin?: CoverRect) {
-  const run = ++pageMotion;
-  const previousMode = readerMode;
-  const previousImage = $("#page-reader img");
-  const card = [...(readerCanvas?.cards.values() || [])].find(
-    (card) => card.item.index === page,
-  )?.el;
-  const start =
-    origin ||
-    (previousMode === "read"
-      ? previousImage?.getBoundingClientRect()
-      : card?.getBoundingClientRect());
-  const source = manifest?.pages[page]?.thumb;
-  $("#reader")
-    .querySelectorAll(".page-transition")
-    .forEach((el) => el.remove());
-  const ghost =
-    previousMode !== mode &&
-    source &&
-    start &&
-    start.width > 0 &&
-    !reducedMotion()
-      ? imageGhost(source, start, $("#reader"))
-      : null;
-  ghost?.classList.add("page-transition");
+function setReaderMode(mode: ReaderView, _origin?: CoverRect) {
+  const finishDock = changeDock(".reader-dock");
+  if (readerMode === "strip" && mode !== "strip" && !_origin && readerCanvas)
+    page = readerCanvas.nearestPage();
   readerMode = mode;
   for (const option of ["strip", "pages", "read"]) {
     $("#" + option + "-mode").setAttribute(
       "aria-pressed",
       String(option === mode),
     );
+    $("#" + option + "-mode").classList.toggle("selected", option === mode);
   }
-  $("#page-strip").classList.toggle("hidden", mode !== "strip");
-  $("#strip-mode").classList.toggle("selected", mode === "strip");
   $("#strip-mode").disabled = !manifest?.pages.length;
-  $("#page-canvas").classList.toggle("hidden", mode === "strip");
-  $("#page-canvas").inert = mode !== "pages";
-  $("#reader").classList.toggle("reading-page", mode === "read");
-  if (readerCanvas) readerCanvas.paused = mode === "read";
-  $("#page-reader").classList.toggle("hidden", mode !== "read");
-  $("#pages-mode").classList.toggle("selected", mode === "pages");
-  $("#read-mode").classList.toggle("selected", mode === "read");
   $("#read-mode").disabled = !manifest?.pages.length;
+  $("#page-canvas").classList.remove("hidden");
+  $("#page-canvas").inert = false;
+  $("#reader").classList.toggle("reading-page", mode === "read");
   $("#page-navigation").classList.toggle("hidden", mode !== "read");
   $("#page-zoom").classList.toggle("hidden", mode !== "pages");
+  document
+    .querySelector(".reader-dock .dock-line")
+    ?.classList.toggle("hidden", mode === "strip");
+  if (readerCanvas) {
+    readerCanvas.paused = false;
+    readerCanvas.setPageLayout(mode, page);
+  }
   if (mode === "read") renderPage();
   updatePageDesign();
   syncStyles();
-  if (ghost && start) {
-    const target = mode === "read" ? $("#page-reader img") : card;
-    if (mode === "read" && target) target.style.visibility = "hidden";
-    void (async () => {
-      await frame();
-      if (run !== pageMotion || !ghost.isConnected) return;
-      if (target instanceof HTMLImageElement)
-        await target.decode().catch(() => {});
-      if (run !== pageMotion || !ghost.isConnected) return;
-      if (target)
-        await moveImage(
-          ghost,
-          start,
-          target.getBoundingClientRect(),
-          mode === "read" ? 460 : 320,
-        );
-      if (run === pageMotion && target) {
-        target.style.visibility = "";
-        if (mode !== "read") target.focus({ preventScroll: true });
-      }
-      ghost.remove();
-    })();
-  }
+  finishDock();
 }
 function updatePageDesign() {
   const container = $("#page-design");
@@ -829,92 +788,46 @@ function updatePageDesign() {
   }
   container.append(title, group);
 }
+const pdfRenders = new Map<number, Promise<string>>();
 function renderPage() {
   if (!manifest?.pages.length) return;
   page = Math.max(0, Math.min(page, manifest.pages.length - 1));
-  const p = manifest.pages[page];
-  updatePageDesign();
-  $("#page-reader").innerHTML =
-    `<img src="${esc(p.thumb)}" alt="${esc(active?.o)}, page ${esc(p.label)}"><p>PAGE ${esc(p.label)} / ${manifest.pages.length}</p>`;
-  $("#page-reader").scrollTop = 0;
+  readerCanvas?.setPageLayout("read", page);
   $("#page-number").textContent = `${page + 1} / ${manifest.pages.length}`;
   $("#prev-page").disabled = page === 0;
   $("#next-page").disabled = page === manifest.pages.length - 1;
-  $("#page-reader img").onerror = () => {
-    $("#page-reader").innerHTML =
-      '<div class="page-error"><h3>This scan couldn’t load.</h3><p>Try another page, or visit the original source.</p><button class="primary" id="retry-page">Retry page</button></div>';
-    $("#retry-page").onclick = renderPage;
-  };
-  const preview = $("#page-reader img");
-  if (p.image !== p.thumb) {
-    const full = new Image();
-    full.src = p.image;
-    full
-      .decode()
-      .then(() => {
-        if (preview.isConnected) preview.src = p.image;
-      })
-      .catch(() => {});
+  updatePageDesign();
+  if (manifest.pdfDocument) void renderPDFPage(page).catch(() => {});
+  else {
+    const item = manifest.pages[page];
+    if (item.image !== item.thumb)
+      void readerCanvas?.upgradePage(page, item.image).catch(() => {});
   }
-  if (manifest.pdfDocument) renderPDFPage(page).catch(() => {});
-  syncStyles();
 }
 async function renderPDFPage(index: number) {
   const pdf = manifest?.pdfDocument;
   if (!pdf) return;
-  const pdfPage = await pdf.getPage(index + 1);
-  const v = pdfPage.getViewport({ scale: 1.8 });
-  const c = document.createElement("canvas");
-  c.width = v.width;
-  c.height = v.height;
-  await pdfPage.render({
-    canvas: c,
-    canvasContext: c.getContext("2d")!,
-    viewport: v,
-  }).promise;
-  if (manifest?.pdfDocument === pdf && page === index && readerMode === "read")
-    $("#page-reader img").src = c.toDataURL("image/jpeg", 0.94);
+  let rendered = pdfRenders.get(index);
+  if (!rendered) {
+    rendered = (async () => {
+      const p = await pdf.getPage(index + 1);
+      const v = p.getViewport({ scale: 1.8 });
+      const canvas = document.createElement("canvas");
+      canvas.width = v.width;
+      canvas.height = v.height;
+      await p.render({
+        canvas,
+        canvasContext: canvas.getContext("2d")!,
+        viewport: v,
+      }).promise;
+      return canvas.toDataURL("image/jpeg", 0.94);
+    })();
+    pdfRenders.set(index, rendered);
+  }
+  const image = await rendered;
+  if (manifest?.pdfDocument === pdf)
+    await readerCanvas?.upgradePage(index, image);
 }
-function renderStrip() {
-  if (!manifest) return;
-  const strip = $("#page-strip");
-  strip.innerHTML = manifest.pages
-    .map(
-      (p) =>
-        `<button class="strip-page" data-page="${p.index}" aria-label="Read page ${esc(p.label)}"><img src="${esc(p.thumb)}" alt="Page ${esc(p.label)}" loading="lazy" width="${p.width}" height="${p.height}"><span>PAGE ${esc(p.label)} ${icon("arrow-up-right")}</span></button>`,
-    )
-    .join("");
-  strip.querySelectorAll("img").forEach((img) =>
-    img.addEventListener("error", () => {
-      img.alt = "Scan unavailable — click to retry in reader";
-      img.classList.add("scan-failed");
-    }),
-  );
-  strip.querySelectorAll("button").forEach(
-    (b) =>
-      (b.onclick = () => {
-        page = Number(b.dataset.page);
-        setReaderMode("read", b.querySelector("img")?.getBoundingClientRect());
-      }),
-  );
-  paintIcons();
-}
-$("#page-strip").addEventListener(
-  "wheel",
-  (e) => {
-    if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && !e.ctrlKey) {
-      e.preventDefault();
-      const strip = $("#page-strip");
-      strip.style.scrollSnapType = "none";
-      strip.scrollLeft += e.deltaY;
-      clearTimeout(snapTimer);
-      snapTimer = setTimeout(() => {
-        strip.style.scrollSnapType = "";
-      }, 250);
-    }
-  },
-  { passive: false },
-);
 $("#strip-mode").onclick = () => setReaderMode("strip");
 $("#pages-mode").onclick = () => setReaderMode("pages");
 $("#read-mode").onclick = () => setReaderMode("read");
@@ -938,13 +851,26 @@ async function closeReader() {
   const openingHero = $("#reader").querySelector<HTMLElement>(".report-hero");
   const pageElement =
     openingHero ||
-    $("#page-canvas").querySelector<HTMLElement>('[data-tile="0:0"]') ||
-    $("#page-reader img");
+    $("#page-canvas").querySelector<HTMLElement>(".focused-page") ||
+    [...$("#page-canvas").querySelectorAll<HTMLElement>(".artifact")].find(
+      (el) => {
+        const r = el.getBoundingClientRect();
+        return (
+          r.right > 0 &&
+          r.left < innerWidth &&
+          r.bottom > 0 &&
+          r.top < innerHeight
+        );
+      },
+    );
   const from = pageElement?.getBoundingClientRect();
   const ghost = document.createElement("img");
   ghost.className = cx("transitionCover");
   ghost.alt = "";
-  if (report) ghost.src = "/api/cover?id=" + encodeURIComponent(report.id);
+  const visibleImage = pageElement?.querySelector<HTMLImageElement>("img");
+  if (report)
+    ghost.src =
+      visibleImage?.src || "/api/cover?id=" + encodeURIComponent(report.id);
   const start =
     from && from.width > 0
       ? from
@@ -962,6 +888,7 @@ async function closeReader() {
     zIndex: "101",
   });
   const dialog = $("#reader");
+  dialog.classList.add("closing-report");
   dialog.append(ghost);
   if (openingHero) openingHero.style.visibility = "hidden";
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -981,8 +908,12 @@ async function closeReader() {
       }).finished,
     ]);
     dialog.close();
+    dialog.classList.remove("closing-report");
     fade.cancel();
-  } else dialog.close();
+  } else {
+    dialog.close();
+    dialog.classList.remove("closing-report");
+  }
   ghost.remove();
   closingReader = false;
 }
@@ -1005,7 +936,6 @@ $("#reader").addEventListener("close", () => {
     "opening-report",
     "reading-page",
   );
-  ++pageMotion;
   $("#reader")
     .querySelectorAll(".image-transition,.report-loading")
     .forEach((el) => el.remove());
@@ -1174,6 +1104,7 @@ function beginReportTransition(report: Report, origin?: CoverRect) {
 }
 
 initMagneticControls();
+initDockMotion();
 
 const macKeyboard = /Mac|iPhone|iPad/.test(navigator.platform);
 $("#open-search kbd").textContent = macKeyboard ? "⌘ K" : "Ctrl K";

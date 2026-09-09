@@ -72,12 +72,26 @@ export const GET: APIRoute = async ({ url, params }) => {
         45000,
       );
     }
-    if (params.action === "cover")
+    if (params.action === "cover") {
+      // Catalogue paths are controlled at import time; local covers extend the original archive.
+      if (/^covers\/[a-zA-Z0-9_.-]+\.jpg$/.test(report.img)) {
+        const local = await readFile(`public/${report.img}`)
+          .catch(() => readFile(`dist/client/${report.img}`))
+          .catch(() => null);
+        if (local)
+          return new Response(new Uint8Array(local), {
+            headers: {
+              "Content-Type": "image/jpeg",
+              "Cache-Control": "public, max-age=604800",
+            },
+          });
+      }
       return await proxy(
         "https://annualreport.gallery/" + report.img,
         "image/jpeg",
         20000,
       );
+    }
     if (params.action === "pdf") {
       const result = await manifest(report);
       const pdf =

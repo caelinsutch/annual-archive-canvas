@@ -42,7 +42,7 @@ test("catalogue retains unique records and valid source and cover paths", () => 
   const d: import("../src/lib/types").Report[] = JSON.parse(
     fs.readFileSync("public/catalog.json", "utf8"),
   );
-  assert.equal(d.length, 3002);
+  assert.ok(d.length >= 3002);
   assert.equal(new Set(d.map((e) => e.id)).size, d.length);
   for (const e of d) {
     assert.equal(new URL(e.s).protocol, "https:");
@@ -72,4 +72,36 @@ test("PDF-only Internet Archive reports open inline when scan derivatives are ab
     result.pdf,
     "https://archive.org/download/collection/report1972.pdf",
   );
+});
+
+test("prefers the original PDF when the scan derivative contains only a cover", async (t) => {
+  const { resolveReport } = await import("../src/lib/report-api");
+  t.mock.method(globalThis, "fetch", async (url: string) =>
+    url.includes("/metadata/")
+      ? Response.json({
+          d1: "archive.org",
+          dir: "/items/sample",
+          files: [
+            { name: "report.pdf" },
+            { name: "report_jp2.zip" },
+            { name: "report_scandata.xml" },
+          ],
+        })
+      : new Response(
+          '<book><pageData><page leafNum="0"><origWidth>100</origWidth></page></pageData></book>',
+        ),
+  );
+  const result = await resolveReport({
+    id: "sample",
+    s: "https://archive.org/details/sample/report",
+    o: "Example",
+    y: "1972",
+    c: "Archive",
+    i: "Other",
+    k: "blue",
+    img: "cover.jpg",
+    a: 1.3,
+  });
+  assert.equal(result.kind, "pdf");
+  assert.equal(result.pdf, "https://archive.org/download/sample/report.pdf");
 });

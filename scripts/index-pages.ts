@@ -28,8 +28,12 @@ for(const file of files){
  if(manifest.kind==='pdf'&&process.env.INCLUDE_PDFS==='1'&&manifest.pdf){
   const folder=`work/page-index/pdf-${reportId}`;await mkdir(folder,{recursive:true});
   try{
-   const response=await fetch(manifest.pdf,{signal:AbortSignal.timeout(60000)});if(!response.ok)throw new Error(`PDF HTTP ${response.status}`);
-   await writeFile(folder+'/report.pdf',new Uint8Array(await response.arrayBuffer()));
+   const cached=await readFile(folder+'/source-url.txt','utf8').catch(()=>null);
+   if(cached!==manifest.pdf){
+    const response=await fetch(manifest.pdf,{signal:AbortSignal.timeout(60000)});if(!response.ok)throw new Error(`PDF HTTP ${response.status}`);
+    const bytes=Buffer.from(await response.arrayBuffer());if(bytes.subarray(0,5).toString()!=='%PDF-')throw new Error('Source did not return a PDF');
+    await writeFile(folder+'/report.pdf',bytes);await writeFile(folder+'/source-url.txt',manifest.pdf);
+   }
    await execute('pdftoppm',['-jpeg','-scale-to','600',folder+'/report.pdf',folder+'/page'],{timeout:120000});
    const names=(await readdir(folder)).filter(f=>/^page-\d+\.jpg$/.test(f)).sort((a,b)=>Number(a.match(/\d+/)![0])-Number(b.match(/\d+/)![0]));
    await mkdir('public/search/page-thumbnails',{recursive:true});

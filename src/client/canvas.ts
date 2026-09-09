@@ -24,6 +24,19 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
   root: HTMLElement;
   items: T[];
   pages: boolean;
+  pageLayout: "pages" | "strip" | "read" = "pages";
+  selectedPage = 0;
+  readBackground = new Map<
+    number,
+    { x: number; y: number; width: number; height: number }
+  >();
+  gridCamera = { x: 0, y: 0, zoom: 1 };
+  pagePositions = new Map<
+    number,
+    { x: number; y: number; width: number; height: number }
+  >();
+  stripCenters: number[] = [];
+
   onSelect: CanvasOptions<T>["onSelect"];
   onZoom?: CanvasOptions<T>["onZoom"];
   cards = new Map<string, Card<T>>();
@@ -48,6 +61,8 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
   resize: ResizeObserver;
   abort: AbortController;
   frame = 0;
+  lastTick = performance.now();
+  frameRatio = 1;
   w = 0;
   h = 0;
   drag = false;
@@ -119,6 +134,8 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
             e.clientX,
             e.clientY,
           );
+        else if (this.pages && this.pageLayout === "strip")
+          this.tx += (e.deltaX || e.deltaY) / this.zoom;
         else {
           this.tx += e.deltaX / this.zoom;
           this.ty += e.deltaY / this.zoom;
@@ -200,6 +217,9 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
     );
     this.tick = this.tick.bind(this);
     this.frame = requestAnimationFrame(this.tick);
+    const now = performance.now();
+    this.frameRatio = Math.min(4, (now - this.lastTick) / (1000 / 60));
+    this.lastTick = now;
   }
   distance() {
     const p = [...this.pointers.values()];
@@ -294,7 +314,7 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
       }
       promise
         .then((texture) => {
-          if (this.disposed || !el.isConnected) return;
+          if (this.disposed || !el.isConnected || img.src !== url) return;
           material.uniforms.uTexture.value = texture;
           card.mesh!.visible = true;
           img.style.opacity = "0";
@@ -311,17 +331,26 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
   tick() {
     if (this.disposed) return;
     this.frame = requestAnimationFrame(this.tick);
+    const now = performance.now();
+    this.frameRatio = Math.min(4, (now - this.lastTick) / (1000 / 60));
+    this.lastTick = now;
     if (this.paused || document.hidden || !this.root.offsetParent) return;
     if (!this.w || !this.items.length) {
       this.renderer?.clear();
       return;
     }
-    const ease = this.reduced ? 1 : motion.cameraEase;
+    const ease = this.reduced
+      ? 1
+      : 1 - Math.pow(1 - motion.cameraEase, this.frameRatio);
     const vx = this.tx - this.x,
       vy = this.ty - this.y;
     this.x += vx * ease;
     this.y += vy * ease;
     this.zoom += (this.tz - this.zoom) * ease;
+    if (this.pages) {
+      this.tickPages();
+      return;
+    }
     const cellW = this.pages ? 270 : 285,
       cellH = this.pages ? 380 : 345;
     const startC = Math.floor((this.x - 240) / cellW),
@@ -390,6 +419,179 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
           promise.then((t) => t.dispose()).catch(() => {});
           if (this.textures.size <= 90) break;
         }
+      }
+    }
+    this.renderer?.render(this.scene, this.camera);
+  }
+  nearestPage() {
+    let nearest = this.selectedPage,
+      distance = Infinity;
+    for (const [index, position] of this.pagePositions) {
+      const d = Math.hypot(position.x - this.w / 2, position.y - this.h / 2);
+      if (d < distance) {
+        nearest = index;
+        distance = d;
+      }
+    }
+    return nearest;
+  }
+  setPageLayout(layout: "pages" | "strip" | "read", selected: number) {
+    if (!this.pages) return;
+    const previous = this.pageLayout;
+    if (previous === "pages" && layout !== "pages")
+      this.gridCamera = { x: this.tx, y: this.ty, zoom: this.tz };
+    if (layout === "read" && previous !== "read")
+      this.readBackground = new Map(
+        [...this.pagePositions].map(([index, p]) => [index, { ...p }]),
+      );
+    this.pageLayout = layout;
+    this.selectedPage = selected;
+    if (layout === "pages" && previous !== "pages") {
+      this.tx = this.gridCamera.x;
+      this.ty = this.gridCamera.y;
+      this.tz = this.gridCamera.zoom;
+      const selectedX = ((selected % 5) * 270 + 145 - this.tx) * this.tz;
+      const selectedY =
+        (Math.floor(selected / 5) * 380 + 150 - this.ty) * this.tz;
+      if (
+        previous === "strip" ||
+        selectedX < 0 ||
+        selectedX > this.w ||
+        selectedY < 0 ||
+        selectedY > this.h
+      ) {
+        this.tx = (selected % 5) * 270 + 145 - this.w / (2 * this.tz);
+        this.ty = Math.floor(selected / 5) * 380 + 150 - this.h / (2 * this.tz);
+      }
+    }
+    if (layout === "strip") {
+      this.tx = this.stripCenters[selected] || 0;
+      this.ty = 0;
+      this.tz = 1;
+    }
+    if (layout === "read") {
+      this.tx = 0;
+      this.ty = 0;
+      this.tz = 1;
+    }
+    if (previous !== layout) {
+      this.x = this.tx;
+      this.y = this.ty;
+      this.zoom = this.tz;
+    }
+    this.root.classList.toggle("page-focus", layout === "read");
+    this.root.dataset.layout = layout;
+  }
+  async upgradePage(index: number, url: string) {
+    const item = this.items[index];
+    if (!item) return;
+    const key = Math.floor(index / 5) + ":" + (index % 5);
+    const card = this.cards.get(key) || this.create(key, item);
+    const img = card.el.querySelector("img")!;
+    if (img.src === url) return;
+    const full = new Image();
+    full.src = url;
+    await full.decode();
+    if (this.disposed || !card.el.isConnected) return;
+    img.src = url;
+    if (card.mesh) {
+      let texture = this.textures.get(url);
+      if (!texture) {
+        texture = new THREE.TextureLoader().loadAsync(url);
+        this.textures.set(url, texture);
+      }
+      const value = await texture;
+      if (!this.disposed) card.mesh.material.uniforms.uTexture.value = value;
+    }
+  }
+  tickPages() {
+    const stripHeight = Math.min(this.h - 140, 620);
+    let cursor = 0;
+    this.stripCenters = this.items.map((item) => {
+      const aspect = "height" in item ? item.height / item.width : 1.3;
+      const width = stripHeight / aspect;
+      const center = cursor + width / 2;
+      cursor += width + 56;
+      return center;
+    });
+    for (let index = 0; index < this.items.length; index++) {
+      const item = this.items[index];
+      const key = Math.floor(index / 5) + ":" + (index % 5);
+      let card = this.cards.get(key);
+      const aspect = card
+        ? cardAspect(card, item)
+        : "height" in item
+          ? item.height / item.width
+          : 1.3;
+      let height = Math.min(300, 210 * aspect),
+        width = height / aspect;
+      let x = ((index % 5) * 270 + 145 - this.x) * this.zoom,
+        y = (Math.floor(index / 5) * 380 + 150 - this.y) * this.zoom;
+      width *= this.zoom;
+      height *= this.zoom;
+      if (this.pageLayout === "strip") {
+        height = stripHeight * this.zoom;
+        width = height / aspect;
+        x = (this.stripCenters[index] - this.x) * this.zoom + this.w / 2;
+        y = this.h / 2 - 25;
+      }
+      if (this.pageLayout === "read") {
+        if (index === this.selectedPage) {
+          height = Math.min(this.h - 130, (this.w - 64) * aspect) * this.zoom;
+          width = height / aspect;
+          x = this.w / 2 - this.x;
+          y = (this.h - 50) / 2 - this.y;
+        } else {
+          const background = this.readBackground.get(index);
+          if (background) {
+            ({ x, y, width, height } = background);
+          } else {
+            x = -1000;
+            y = -1000;
+          }
+        }
+      }
+      const onScreen =
+        x + width / 2 > -300 &&
+        x - width / 2 < this.w + 300 &&
+        y + height / 2 > -300 &&
+        y - height / 2 < this.h + 300;
+      const current = this.pagePositions.get(index) || { x, y, width, height };
+      const ease = this.reduced ? 1 : 1 - Math.pow(0.84, this.frameRatio);
+      current.x += (x - current.x) * ease;
+      current.y += (y - current.y) * ease;
+      current.width += (width - current.width) * ease;
+      current.height += (height - current.height) * ease;
+      this.pagePositions.set(index, current);
+      const visible =
+        current.x + current.width / 2 > 0 &&
+        current.x - current.width / 2 < this.w &&
+        current.y + current.height / 2 > 0 &&
+        current.y - current.height / 2 < this.h;
+      if (!card && !onScreen && !visible && index !== this.selectedPage)
+        continue;
+      if (!card) card = this.create(key, item);
+      const focused = this.pageLayout === "read" && index === this.selectedPage;
+      card.el.classList.toggle("focused-page", focused);
+      card.el.tabIndex =
+        visible && (this.pageLayout !== "read" || focused) ? 0 : -1;
+      card.el.style.visibility = visible ? "visible" : "hidden";
+      card.el.style.width = current.width + "px";
+      card.el.style.height = current.height + "px";
+      card.el.style.transform = `translate3d(${current.x - current.width / 2}px,${current.y - current.height / 2}px,0)`;
+      const img = card.el.querySelector<HTMLImageElement>("img");
+      if (img)
+        img.style.opacity =
+          focused || !card.mesh?.material.uniforms.uTexture.value ? "1" : "0";
+      if (card.mesh) {
+        card.mesh.position.set(
+          current.x - this.w / 2,
+          this.h / 2 - current.y,
+          0,
+        );
+        card.mesh.scale.set(current.width, current.height, 1);
+        card.mesh.visible =
+          visible && !focused && !!card.mesh.material.uniforms.uTexture.value;
       }
     }
     this.renderer?.render(this.scene, this.camera);

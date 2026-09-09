@@ -1,6 +1,6 @@
 # Annual Archive
 
-A spatial archive of 3,002 annual reports, inspired by [annualreport.gallery](https://annualreport.gallery/). Built with Astro, TypeScript, StyleX, and Three.js.
+A spatial archive of 3,007 annual reports, inspired by [annualreport.gallery](https://annualreport.gallery/). Built with Astro, TypeScript, StyleX, and Three.js.
 
 ## Run
 
@@ -33,9 +33,9 @@ Production listens on `PORT` (default 3000). Deploy as a Node service with build
 
 ## Sources and availability
 
-The catalogue and cover images originate from Phil Hedayatnia's [Annual Report Archive](https://annualreport.gallery/). Each entry retains its original collection and source link. Report imagery and catalogue descriptions remain the property of their respective rights holders; inclusion here does not grant a new license to those materials.
+The original catalogue and cover images originate from Phil Hedayatnia's [Annual Report Archive](https://annualreport.gallery/). Five additional New York Airways reports (1954–1958) come from Columbia University Libraries, with verified edition boundaries and locally cached covers. Each entry retains its original collection and source link. Report imagery and catalogue descriptions remain the property of their respective rights holders; inclusion here does not grant a new license to those materials.
 
-The reader retrieves public Internet Archive scan manifests and displays actual page images. UW CONTENTdm downloads, Texas History IIIF manifests, Paul Rand image galleries, and direct PDF sources open inline. A verified cache contains 315 Washington PDFs plus 81 scanned galleries with 2,356 images. UW record 4039 has a broken upstream child; SVA and AIGA/Wayback records remain external. PDFs render through PDF.js. Records from collections without publicly available page scans show an attributed cover and a link to the source instead of invented pages. Source availability and loading speed depend on the external collections.
+The reader retrieves public Internet Archive scan manifests and displays actual page images. UW CONTENTdm downloads, Texas History IIIF manifests, Paul Rand image galleries, and direct PDF sources open inline. A verified cache contains 315 Washington PDFs, five recovered IBM PDFs with 244 pages, and 81 scanned reports with 2,435 images. UW record 4039 has a broken upstream child; SVA and AIGA/Wayback records remain external. PDFs render through PDF.js. Records from collections without publicly available page scans show an attributed cover and a link to the source instead of invented pages. Source availability and loading speed depend on the external collections.
 
 The server proxies only cover paths and PDF URLs belonging to known catalogue records. Arbitrary remote URLs are not accepted. No account, API key, database, or analytics service is required.
 
@@ -53,7 +53,7 @@ The server proxies only cover paths and PDF URLs belonging to known catalogue re
 
 ## Semantic search
 
-All 3,002 catalogue descriptions, designers, industries, and colors are embedded with BGE-small-en-v1.5 (384 dimensions, quantized ONNX encoder). Search combines cosine similarity with lexical matches. These are text embeddings of the existing descriptions, not visual embeddings of the original page images. Query inference runs on the Node server; the model downloads on first use and is cached in `MODEL_CACHE_DIR` (default `work/models`). No API key is required.
+All 3,007 catalogue descriptions, designers, industries, and colors are embedded with BGE-small-en-v1.5 (384 dimensions, quantized ONNX encoder). Search combines cosine similarity with lexical matches. These are text embeddings of the existing descriptions, not visual embeddings of the original page images. Query inference runs on the Node server; the model downloads on first use and is cached in `MODEL_CACHE_DIR` (default `work/models`). No API key is required.
 
 Regenerate after catalogue changes with `npx tsx scripts/embed-catalog.ts`. Run the retrieval benchmark with `npx tsx scripts/benchmark-search.ts`.
 
@@ -63,7 +63,7 @@ The Pages & design search scope uses CLIP image/text embeddings from actual page
 
 `npm run index:pages` indexes the verified scan manifests, checkpointing every 20 pages. It resumes from the committed index. `INCLUDE_PDFS=1 REPORT_IDS=uw43767 npm run index:pages` also downloads and renders PDF pages; this offline job requires Poppler (`pdftoppm`) on PATH. `REPORT_IDS` and `PAGE_LIMIT` optionally bound a batch. Query inference runs on the Node server; bulk indexing is a separate background process. Cloud deployment of indexing is not configured.
 
-The visual index covers successfully processed pages only; the search interface reports the current count. It does not imply that every page of every catalogue record has been indexed.
+The current visual index contains 2,692 pages across 87 reports, including all 244 pages of the recovered IBM PDFs and all 84 new Columbia pages. The visual index covers successfully processed pages only; the search interface reports the current count. It does not imply that every page of every catalogue record has been indexed.
 
 ## Search checks and evaluations
 
@@ -76,6 +76,8 @@ The visual index covers successfully processed pages only; the search interface 
 
 Machine-readable results and fixed held-out queries live in `benchmarks/`. These small editorial evaluations are regression checks, not a comprehensive human relevance or style-classification study. Warm query timings exclude initial model loading. The full text benchmark still contains difficult misses; overall hybrid and lexical MRR are approximately equal, while hybrid improves the held-out split.
 
-The initial splash has an 800 ms minimum and fades once visible images settle. Opening a report expands its selected cover above a blurred archive while pages load. Individual pages expand from their canvas position into a fitted reader over the blurred page grid; Escape returns them to the canvas. Controls share sizing, radius, typography, and keyboard focus styles. Off-screen canvas items are excluded from the tab order. Reduced motion skips spatial animation. Thumbnails remain visible while higher-resolution images load.
+The initial splash has an 800 ms minimum and fades once visible images settle. Opening a report expands its selected cover above a blurred archive while pages load. Scroll, All pages, and Read share persistent page objects and image nodes: layout changes move existing artwork, and Read brings the selected page forward above a softly blurred scene. Escape returns it to the canvas. The archive backdrop animates clear before the report dialog closes. Controls share sizing, radius, typography, and keyboard focus styles. Off-screen canvas items are excluded from the tab order. Reduced motion skips spatial animation. Thumbnails remain visible while higher-resolution images load.
 
 Pill controls use a shared glass material, keyboard ring, and mouse proximity response capped at 2.5 pixels per axis. Pointer attraction resets for keyboard focus and is disabled on touch and with reduced motion. Report loading carries the selected cover into a large preview, shows restrained progress, and settles it into the loaded page grid.
+
+The bottom dock uses equal-width segments and one sliding active pill. Its outer width interpolates from the current size when controls change; rapid reversals continue from the current animation position. Source verification and remaining discovery candidates are documented in [source discovery](docs/source-discovery.md).

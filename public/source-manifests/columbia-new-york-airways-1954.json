@@ -1,0 +1,150 @@
+{
+  "kind": "scans",
+  "pages": [
+    {
+      "index": 0,
+      "leaf": 0,
+      "label": "Cover",
+      "width": 1525,
+      "height": 2001,
+      "thumb": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0000.jp2&scale=4&rotate=0",
+      "image": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0000.jp2&scale=1&rotate=0"
+    },
+    {
+      "index": 1,
+      "leaf": 1,
+      "label": "2",
+      "width": 1525,
+      "height": 2001,
+      "thumb": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0001.jp2&scale=4&rotate=0",
+      "image": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0001.jp2&scale=1&rotate=0"
+    },
+    {
+      "index": 2,
+      "leaf": 2,
+      "label": "3",
+      "width": 1517,
+      "height": 2001,
+      "thumb": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0002.jp2&scale=4&rotate=0",
+      "image": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0002.jp2&scale=1&rotate=0"
+    },
+    {
+      "index": 3,
+      "leaf": 3,
+      "label": "4",
+      "width": 1525,
+      "height": 2001,
+      "thumb": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0003.jp2&scale=4&rotate=0",
+      "image": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0003.jp2&scale=1&rotate=0"
+    },
+    {
+      "index": 4,
+      "leaf": 4,
+      "label": "5",
+      "width": 1504,
+      "height": 2001,
+      "thumb": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0004.jp2&scale=4&rotate=0",
+      "image": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0004.jp2&scale=1&rotate=0"
+    },
+    {
+      "index": 5,
+      "leaf": 5,
+      "label": "6",
+      "width": 1533,
+      "height": 2001,
+      "thumb": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0005.jp2&scale=4&rotate=0",
+      "image": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0005.jp2&scale=1&rotate=0"
+    },
+    {
+      "index": 6,
+      "leaf": 6,
+      "label": "7",
+      "width": 1517,
+      "height": 2001,
+      "thumb": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0006.jp2&scale=4&rotate=0",
+      "image": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0006.jp2&scale=1&rotate=0"
+    },
+    {
+      "index": 7,
+      "leaf": 7,
+      "label": "8",
+      "width": 1550,
+      "height": 2001,
+      "thumb": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0007.jp2&scale=4&rotate=0",
+      "image": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0007.jp2&scale=1&rotate=0"
+    },
+    {
+      "index": 8,
+      "leaf": 8,
+      "label": "9",
+      "width": 1560,
+      "height": 1997,
+      "thumb": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0008.jp2&scale=4&rotate=0",
+      "image": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0008.jp2&scale=1&rotate=0"
+    },
+    {
+      "index": 9,
+      "leaf": 9,
+      "label": "10",
+      "width": 1546,
+      "height": 2001,
+      "thumb": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0009.jp2&scale=4&rotate=0",
+      "image": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0009.jp2&scale=1&rotate=0"
+    },
+    {
+      "index": 10,
+      "leaf": 10,
+      "label": "11",
+      "width": 1550,
+      "height": 2001,
+      "thumb": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0010.jp2&scale=4&rotate=0",
+      "image": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0010.jp2&scale=1&rotate=0"
+    },
+    {
+      "index": 11,
+      "leaf": 11,
+      "label": "12",
+      "width": 1521,
+      "height": 2001,
+      "thumb": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0011.jp2&scale=4&rotate=0",
+      "image": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0011.jp2&scale=1&rotate=0"
+    },
+    {
+      "index": 12,
+      "leaf": 12,
+      "label": "13",
+      "width": 1517,
+      "height": 2001,
+      "thumb": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0012.jp2&scale=4&rotate=0",
+      "image": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0012.jp2&scale=1&rotate=0"
+    },
+    {
+      "index": 13,
+      "leaf": 13,
+      "label": "14",
+      "width": 1508,
+      "height": 2001,
+      "thumb": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0013.jp2&scale=4&rotate=0",
+      "image": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0013.jp2&scale=1&rotate=0"
+    },
+    {
+      "index": 14,
+      "leaf": 14,
+      "label": "15",
+      "width": 1517,
+      "height": 2001,
+      "thumb": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0014.jp2&scale=4&rotate=0",
+      "image": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0014.jp2&scale=1&rotate=0"
+    },
+    {
+      "index": 15,
+      "leaf": 15,
+      "label": "Back cover",
+      "width": 1529,
+      "height": 2001,
+      "thumb": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0015.jp2&scale=4&rotate=0",
+      "image": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?id=ldpd_6283902_000&zip=%2F17%2Fitems%2Fldpd_6283902_000%2Fldpd_6283902_000_jp2.zip&file=ldpd_6283902_000_jp2%2Fldpd_6283902_000_0015.jp2&scale=1&rotate=0"
+    }
+  ],
+  "source": "https://archive.org/details/ldpd_6283902_000/page/n0/mode/1up"
+}

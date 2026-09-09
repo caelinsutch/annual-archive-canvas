@@ -85,6 +85,7 @@ export async function resolveReport(report: Report): Promise<ReportManifest> {
     dir: m.dir,
     zip: zip.name,
   });
+  if (pages.length <= 1 && pdfFile) return fallback;
   return {
     kind: "scans",
     pages,

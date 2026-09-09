@@ -165,3 +165,52 @@ test("unknown source stays external without inventing document URLs", async () =
     null,
   );
 });
+
+test("visually verified IBM1979 full report replaces the single gallery cover", async () => {
+  const r = {
+    ...report("https://paulrand.design/work/IBM.html#annualReports"),
+    id: "paulrand-ibm-1979",
+    y: "1979",
+  };
+  const m = await resolveExternalReport(r, jsonFetch({}));
+  assert.equal(m?.kind, "pdf");
+  assert.equal(
+    m?.pdf,
+    "https://public-content.library.mcgill.ca/digitization/634063.pdf",
+  );
+  assert.equal(m?.source, r.s);
+});
+
+test("IBM1985 uses the verified52-page McGill original", async () => {
+  const r = {
+    ...report("https://paulrand.design/work/IBM.html#annualReports"),
+    id: "paulrand-ibm-1985",
+    y: "1985",
+  };
+  const m = await resolveExternalReport(r, jsonFetch({}));
+  assert.equal(m?.kind, "pdf");
+  assert.equal(
+    m?.pdf,
+    "https://public-content.library.mcgill.ca/digitization/634061.pdf",
+  );
+});
+
+for (const [year, file] of [
+  ["1980", "634062"],
+  ["1986", "634060"],
+  ["1989", "634059"],
+]) {
+  test(`IBM${year} resolves its exact verified full original`, async () => {
+    const r = {
+      ...report("https://paulrand.design/work/IBM.html#annualReports"),
+      id: `paulrand-ibm-${year}`,
+      y: year,
+    };
+    const m = await resolveExternalReport(r, jsonFetch({}));
+    assert.equal(m?.kind, "pdf");
+    assert.equal(
+      m?.pdf,
+      `https://public-content.library.mcgill.ca/digitization/${file}.pdf`,
+    );
+  });
+}

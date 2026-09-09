@@ -202,6 +202,26 @@ export async function resolveExternalReport(
   request: Fetcher = fetch,
 ): Promise<ReportManifest | null> {
   const source = new URL(report.s);
+  // Exact IBM editions visually matched against their Paul Rand covers.
+  const verifiedIbmPdfs: Record<string, string> = {
+    "1979": "https://public-content.library.mcgill.ca/digitization/634063.pdf", // 44 pages
+    "1980": "https://public-content.library.mcgill.ca/digitization/634062.pdf", // 48 pages
+    "1985": "https://public-content.library.mcgill.ca/digitization/634061.pdf", // 52 pages
+    "1986": "https://public-content.library.mcgill.ca/digitization/634060.pdf", // 48 pages
+    "1989": "https://public-content.library.mcgill.ca/digitization/634059.pdf", // 52 pages
+  };
+  if (
+    source.hostname === "paulrand.design" &&
+    report.id === `paulrand-ibm-${report.y}` &&
+    verifiedIbmPdfs[report.y]
+  ) {
+    return {
+      kind: "pdf",
+      source: report.s,
+      pages: [],
+      pdf: verifiedIbmPdfs[report.y],
+    };
+  }
   if (/\.pdf$/i.test(source.pathname))
     return { kind: "pdf", pages: [], source: report.s, pdf: report.s };
   if (contentDmIdentity(report.s)) return contentDm(report, request);
