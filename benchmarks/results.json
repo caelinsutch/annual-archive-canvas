@@ -1,0 +1,297 @@
+{
+  "scope": "20 editorial known-item paraphrases (10 development + 10 held out); not a comprehensive human relevance evaluation. Warm CPU latency excludes model loading.",
+  "metrics": {
+    "hybridMRR10": 0.8,
+    "lexicalMRR10": 0.8016666666666665,
+    "hybridRecall10": 0.85,
+    "lexicalRecall10": 0.9,
+    "meanWarmLatencyMs": 9.881754249999997
+  },
+  "heldOutMetrics": {
+    "MRR10": 0.85,
+    "Recall10": 0.9,
+    "lexicalMRR10": 0.7033333333333334
+  },
+  "results": [
+    {
+      "query": "interlocking optical blue and white shapes",
+      "target": "daytonhudsontargetannualreports__dayton1967",
+      "rank": 1,
+      "lexicalRank": 1,
+      "latencyMs": 11.809624999999983,
+      "top5": [
+        "daytonhudsontargetannualreports__dayton1967",
+        "woolworthvenatorfootlockerannualreports__woolworth1992",
+        "nationaltoolcompanyannualreports__nationaltool1945a",
+        "McGillLibrary-636465-33304",
+        "paulrand-westinghouse-1971"
+      ]
+    },
+    {
+      "query": "oversized colorful overlapping numbers",
+      "target": "paulrand-cummins-1966",
+      "rank": 13,
+      "lexicalRank": 1,
+      "latencyMs": 14.224041999999997,
+      "top5": [
+        "McGillLibrary-631870-24061",
+        "uw15648",
+        "cromptonandknowlescorporationannualreports__cromptonandknowles1953",
+        "archiveofannualreports_misc_201911__rutlandrailway1957",
+        "generalmillsincannualreports__generalmills1981"
+      ]
+    },
+    {
+      "query": "concentric bright circular wedges",
+      "target": "generalelectriccompanyannualreports__generalelectric1972",
+      "rank": 1,
+      "lexicalRank": 1,
+      "latencyMs": 12.149791999999934,
+      "top5": [
+        "generalelectriccompanyannualreports__generalelectric1972",
+        "McGillLibrary-639923-41731",
+        "babcockandwilcoxannualreports__babcockandwilcox1973",
+        "bannerindustriesincannualreports__bannerindustries1975",
+        "unionpremierfoodfairpantryprideannualreports__foodfairprop1965"
+      ]
+    },
+    {
+      "query": "orange numerals cropped into abstract shapes",
+      "target": "McGillLibrary-633092-42460",
+      "rank": 2,
+      "lexicalRank": 1,
+      "latencyMs": 11.048959000000082,
+      "top5": [
+        "archiveofannualreports_misc_201911__ussteel1980",
+        "McGillLibrary-633092-42460",
+        "McGillLibrary-634901-41182",
+        "McGillLibrary-633388-32788",
+        "manpowerincannualreports__manpowerinc1973"
+      ]
+    },
+    {
+      "query": "repeating circles and bars on a dark blue grid",
+      "target": "McGillLibrary-638502-31519",
+      "rank": 1,
+      "lexicalRank": 1,
+      "latencyMs": 11.123833999999988,
+      "top5": [
+        "McGillLibrary-638502-31519",
+        "McGillLibrary-634098-39995",
+        "McGillLibrary-631730-31597",
+        "addressographmultigraphcorporationannualreports__addressograph1962",
+        "McGillLibrary-631936-29417"
+      ]
+    },
+    {
+      "query": "silvery coils in monochrome industrial photography",
+      "target": "McGillLibrary-637328-32323",
+      "rank": 323,
+      "lexicalRank": 209,
+      "latencyMs": 9.99791700000003,
+      "top5": [
+        "McGillLibrary-635299-38596",
+        "McGillLibrary-631731-31600",
+        "bethlehemsteelcompanyannualreports__bethlehemsteel1962",
+        "bannerindustriesincannualreports__bannerindustries1977",
+        "McGillLibrary-639525-44327"
+      ]
+    },
+    {
+      "query": "architectural office photography beside a dark strip",
+      "target": "McGillLibrary-630610-30787",
+      "rank": 1,
+      "lexicalRank": 1,
+      "latencyMs": 10.074166999999989,
+      "top5": [
+        "McGillLibrary-630610-30787",
+        "McGillLibrary-638779-33955",
+        "weinbergergraydrugstoresannualreports__graydrug1958",
+        "uw43674",
+        "southlandcorp7elevenannualreports__southland1972"
+      ]
+    },
+    {
+      "query": "sculpture with a golden ball on white",
+      "target": "generalelectriccompanyannualreports__generalelectric1965",
+      "rank": 1,
+      "lexicalRank": 1,
+      "latencyMs": 7.298584000000005,
+      "top5": [
+        "generalelectriccompanyannualreports__generalelectric1965",
+        "McGillLibrary-631722-31573",
+        "uw44314",
+        "castleandcookeltdannualreports__castleandcooke1973",
+        "neisnerbrothersannualreports__neisner1971"
+      ]
+    },
+    {
+      "query": "paint rollers arranged like abstract rectangles",
+      "target": "McGillLibrary-635085-40246",
+      "rank": 1,
+      "lexicalRank": 1,
+      "latencyMs": 10.405124999999998,
+      "top5": [
+        "McGillLibrary-635085-40246",
+        "McGillLibrary-631733-31606",
+        "castleandcookeltdannualreports__castleandcooke1973",
+        "wrgracecoannualreports__wrgrace1988",
+        "McGillLibrary-630609-30790"
+      ]
+    },
+    {
+      "query": "orbital lines connecting photographic spheres",
+      "target": "generalelectriccompanyannualreports__generalelectric1951",
+      "rank": 1,
+      "lexicalRank": 1,
+      "latencyMs": 10.688791999999921,
+      "top5": [
+        "generalelectriccompanyannualreports__generalelectric1951",
+        "shkressgeneralshoegenescoannualreports__genesco1971",
+        "cromptonandknowlescorporationannualreports__cromptonandknowles1960",
+        "archiveofannualreports_misc_201911__dairyqueen1975",
+        "americantelephoneandtelegraphannualreports__att1960"
+      ]
+    },
+    {
+      "query": "large colorful digits containing a nighttime city photograph",
+      "target": "paulrand-westinghouse-1974",
+      "rank": 53,
+      "lexicalRank": 142,
+      "latencyMs": 9.688582999999994,
+      "top5": [
+        "southlandcorp7elevenannualreports__southland1983",
+        "southlandcorp7elevenannualreports__southland1972",
+        "uw43811",
+        "bethlehemcorpannualreports__bethlehem1970",
+        "citystorescompanyannualreports__citystores1969"
+      ]
+    },
+    {
+      "query": "a royal cartoon character climbing piles of money",
+      "target": "mammothmartkingsstoresannualreports__kingsdeptstores1964",
+      "rank": 1,
+      "lexicalRank": 1,
+      "latencyMs": 9.695958000000019,
+      "top5": [
+        "mammothmartkingsstoresannualreports__kingsdeptstores1964",
+        "funco-land-1998-annual-report",
+        "uw17014",
+        "mammothmartkingsstoresannualreports__kingsdeptstores1967",
+        "wdp-annual-report-1974"
+      ]
+    },
+    {
+      "query": "metal tubes against black with a white lightning symbol",
+      "target": "McGillLibrary-639558-44792",
+      "rank": 1,
+      "lexicalRank": 1,
+      "latencyMs": 9.519833000000062,
+      "top5": [
+        "McGillLibrary-639558-44792",
+        "McGillLibrary-636211-28820",
+        "bethlehemsteelcompanyannualreports__bethlehemsteel1987",
+        "interstatestorestoysrusannualreports__interstatestores1965",
+        "babcockandwilcoxannualreports__babcockandwilcox1971"
+      ]
+    },
+    {
+      "query": "textile machinery icons connected in a diagram",
+      "target": "cromptonandknowlescorporationannualreports__cromptonandknowles1956",
+      "rank": 1,
+      "lexicalRank": 3,
+      "latencyMs": 7.641583000000082,
+      "top5": [
+        "cromptonandknowlescorporationannualreports__cromptonandknowles1956",
+        "McGillLibrary-633392-32794",
+        "cromptonandknowlescorporationannualreports__cromptonandknowles1959",
+        "McGillLibrary-630256-28274",
+        "boeingairplanecompanyannualreports__boeing1961"
+      ]
+    },
+    {
+      "query": "traditional pharmacy mortar and pestle engraving",
+      "target": "walgreensWBAannualreports__walgreens1965",
+      "rank": 1,
+      "lexicalRank": 1,
+      "latencyMs": 7.738583000000062,
+      "top5": [
+        "walgreensWBAannualreports__walgreens1965",
+        "walgreensWBAannualreports__walgreens1969",
+        "walgreensWBAannualreports__walgreens1966",
+        "walgreensWBAannualreports__walgreens1968",
+        "walgreensWBAannualreports__walgreens1967"
+      ]
+    },
+    {
+      "query": "collage of cheese pizza vegetables and grocery shoppers",
+      "target": "nationaldairykraftcounitedrexalldrugdartannualreports__kraftco1970",
+      "rank": 1,
+      "lexicalRank": 1,
+      "latencyMs": 9.748625000000061,
+      "top5": [
+        "nationaldairykraftcounitedrexalldrugdartannualreports__kraftco1970",
+        "redowlstoresannualreports__redowl1952",
+        "economygrocerystopandshopannualreports__stopandshop1978",
+        "generalmillsincannualreports__generalmills1973",
+        "wtgrantcoannualreports__wtgrant1969"
+      ]
+    },
+    {
+      "query": "four employee portraits with magazine style statements",
+      "target": "wrgracecoannualreports__wrgrace1974",
+      "rank": 1,
+      "lexicalRank": 1,
+      "latencyMs": 9.61749999999995,
+      "top5": [
+        "wrgracecoannualreports__wrgrace1974",
+        "McGillLibrary-634278-44207",
+        "generalmillsincannualreports__generalmills1970",
+        "searsannualreports__sears1976",
+        "McGillLibrary-634115-40001"
+      ]
+    },
+    {
+      "query": "blue line drawings of consumer products",
+      "target": "McGillLibrary-633431-32413",
+      "rank": 1,
+      "lexicalRank": 1,
+      "latencyMs": 8.079332999999906,
+      "top5": [
+        "McGillLibrary-633431-32413",
+        "uw4363",
+        "uw4075",
+        "unionpremierfoodfairpantryprideannualreports__foodfair1962",
+        "McGillLibrary-632118-42865"
+      ]
+    },
+    {
+      "query": "dark blue tessellation of three dimensional blocks",
+      "target": "tandyradioshackannualreports__tandy1974",
+      "rank": 1,
+      "lexicalRank": 5,
+      "latencyMs": 8.946124999999938,
+      "top5": [
+        "tandyradioshackannualreports__tandy1974",
+        "paulrand-westinghouse-1970",
+        "intel-history-1989-annual-report",
+        "mccroryrapidamericanannualreports__rapidamerican-1969",
+        "mccroryrapidamericanannualreports__rapidamerican-1971"
+      ]
+    },
+    {
+      "query": "overhead photograph of a salmon and seafood buffet",
+      "target": "uw39535",
+      "rank": 2,
+      "lexicalRank": 2,
+      "latencyMs": 8.138124999999945,
+      "top5": [
+        "uw25045",
+        "uw39535",
+        "luckystoresannualreports__lucky1966",
+        "wrgracecoannualreports__wrgrace1989",
+        "winnlovettwinndixieannualreports__winndixie1972"
+      ]
+    }
+  ]
+}

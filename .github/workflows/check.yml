@@ -14,3 +14,8 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+      - uses: actions/cache@v4
+        with:
+          path: work/models
+          key: retrieval-models-bge-small-clip-base-v1
+      - run: npm run eval:check

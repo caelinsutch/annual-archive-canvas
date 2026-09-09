@@ -4,12 +4,24 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node server.js",
-    "build": "vite build",
-    "start": "NODE_ENV=production node server.js",
-    "test": "node --test tests/*.test.js"
+    "dev": "astro dev",
+    "check": "astro check",
+    "build": "astro check && astro build",
+    "start": "HOST=0.0.0.0 PORT=${PORT:-3000} node dist/server/entry.mjs",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "format": "prettier --write src tests astro.config.ts",
+    "eval:search": "node --import tsx scripts/benchmark-search.ts",
+    "eval:pages": "node --import tsx scripts/evaluate-pages.ts",
+    "eval:check": "node --import tsx scripts/benchmark-search.ts --check && node --import tsx scripts/evaluate-pages.ts --check",
+    "test:browser": "node --import tsx scripts/browser-smoke.ts",
+    "index:pages": "node --import tsx scripts/index-pages.ts",
+    "index:catalog": "node --import tsx scripts/embed-catalog.ts"
   },
   "dependencies": {
+    "@astrojs/node": "^11.1.5",
+    "@huggingface/transformers": "^4.2.0",
+    "@stylexjs/stylex": "^0.19.0",
+    "astro": "^7.3.2",
     "fast-xml-parser": "^5.2.5",
     "lucide": "^0.468.0",
     "pdfjs-dist": "^6.3.289",
@@ -17,6 +29,20 @@
     "vite": "^7.1.5"
   },
   "devDependencies": {
-    "prettier": "^3.9.6"
+    "@astrojs/check": "^0.9.10",
+    "@stylexjs/unplugin": "^0.19.0",
+    "@types/node": "^22.20.2",
+    "@types/three": "^0.185.4",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^1.0.0",
+    "tsx": "^4.23.13",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "overrides": {
+    "sharp": "^0.35.4",
+    "adm-zip": "0.6.0"
   }
 }
