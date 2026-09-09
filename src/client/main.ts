@@ -1,5 +1,12 @@
+import { initMagneticControls } from "./magnetic-controls";
 import { matchesFilters, SearchGeneration } from "../search/control";
-import { createSplash, manageSplash } from "./loading";
+import { manageSplash, waitForArtwork, frame } from "./loading";
+import {
+  imageGhost,
+  moveImage,
+  fitArtwork,
+  reducedMotion,
+} from "./image-transition";
 import { cx, syncStyles } from "../styles/ui";
 import { motion } from "../lib/motion";
 import type {
@@ -644,9 +651,9 @@ async function openReport(report: Report | undefined, origin?: CoverRect) {
       readerCanvas = new ArchiveCanvas($("#page-canvas"), {
         items: manifest.pages,
         pages: true,
-        onSelect: (p) => {
+        onSelect: (p, origin) => {
           page = p.index;
-          setReaderMode("read");
+          setReaderMode("read", origin);
         },
         onZoom: (z) =>
           ($("#page-reset").textContent = Math.round(z * 100) + "%"),
@@ -725,7 +732,32 @@ async function loadPDF(report: Report, current: number) {
       `Preparing page ${i + 1} of ${pdf.numPages}…`;
   }
 }
-function setReaderMode(mode: ReaderView) {
+let pageMotion = 0;
+function setReaderMode(mode: ReaderView, origin?: CoverRect) {
+  const run = ++pageMotion;
+  const previousMode = readerMode;
+  const previousImage = $("#page-reader img");
+  const card = [...(readerCanvas?.cards.values() || [])].find(
+    (card) => card.item.index === page,
+  )?.el;
+  const start =
+    origin ||
+    (previousMode === "read"
+      ? previousImage?.getBoundingClientRect()
+      : card?.getBoundingClientRect());
+  const source = manifest?.pages[page]?.thumb;
+  $("#reader")
+    .querySelectorAll(".page-transition")
+    .forEach((el) => el.remove());
+  const ghost =
+    previousMode !== mode &&
+    source &&
+    start &&
+    start.width > 0 &&
+    !reducedMotion()
+      ? imageGhost(source, start, $("#reader"))
+      : null;
+  ghost?.classList.add("page-transition");
   readerMode = mode;
   for (const option of ["strip", "pages", "read"]) {
     $("#" + option + "-mode").setAttribute(
@@ -736,7 +768,10 @@ function setReaderMode(mode: ReaderView) {
   $("#page-strip").classList.toggle("hidden", mode !== "strip");
   $("#strip-mode").classList.toggle("selected", mode === "strip");
   $("#strip-mode").disabled = !manifest?.pages.length;
-  $("#page-canvas").classList.toggle("hidden", mode !== "pages");
+  $("#page-canvas").classList.toggle("hidden", mode === "strip");
+  $("#page-canvas").inert = mode !== "pages";
+  $("#reader").classList.toggle("reading-page", mode === "read");
+  if (readerCanvas) readerCanvas.paused = mode === "read";
   $("#page-reader").classList.toggle("hidden", mode !== "read");
   $("#pages-mode").classList.toggle("selected", mode === "pages");
   $("#read-mode").classList.toggle("selected", mode === "read");
@@ -746,6 +781,29 @@ function setReaderMode(mode: ReaderView) {
   if (mode === "read") renderPage();
   updatePageDesign();
   syncStyles();
+  if (ghost && start) {
+    const target = mode === "read" ? $("#page-reader img") : card;
+    if (mode === "read" && target) target.style.visibility = "hidden";
+    void (async () => {
+      await frame();
+      if (run !== pageMotion || !ghost.isConnected) return;
+      if (target instanceof HTMLImageElement)
+        await target.decode().catch(() => {});
+      if (run !== pageMotion || !ghost.isConnected) return;
+      if (target)
+        await moveImage(
+          ghost,
+          start,
+          target.getBoundingClientRect(),
+          mode === "read" ? 460 : 320,
+        );
+      if (run === pageMotion && target) {
+        target.style.visibility = "";
+        if (mode !== "read") target.focus({ preventScroll: true });
+      }
+      ghost.remove();
+    })();
+  }
 }
 function updatePageDesign() {
   const container = $("#page-design");
@@ -836,7 +894,7 @@ function renderStrip() {
     (b) =>
       (b.onclick = () => {
         page = Number(b.dataset.page);
-        setReaderMode("read");
+        setReaderMode("read", b.querySelector("img")?.getBoundingClientRect());
       }),
   );
   paintIcons();
@@ -877,7 +935,9 @@ async function closeReader() {
   closingReader = true;
   const report = active;
   const destination = report ? visibleCovers(view).get(report.id) : undefined;
+  const openingHero = $("#reader").querySelector<HTMLElement>(".report-hero");
   const pageElement =
+    openingHero ||
     $("#page-canvas").querySelector<HTMLElement>('[data-tile="0:0"]') ||
     $("#page-reader img");
   const from = pageElement?.getBoundingClientRect();
@@ -903,6 +963,7 @@ async function closeReader() {
   });
   const dialog = $("#reader");
   dialog.append(ghost);
+  if (openingHero) openingHero.style.visibility = "hidden";
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
     const transform = destination
       ? `translate(${destination.left - start.left}px,${destination.top - start.top}px) scale(${destination.width / start.width})`
@@ -929,7 +990,8 @@ async function closeReader() {
 $("#close-reader").onclick = closeReader;
 $("#reader").addEventListener("cancel", (e) => {
   e.preventDefault();
-  closeReader();
+  if (readerMode === "read") setReaderMode("pages");
+  else closeReader();
 });
 $("#report-details").onclick = () => {
   const expanded = $("#reader").classList.toggle("details-open");
@@ -938,7 +1000,15 @@ $("#report-details").onclick = () => {
 };
 $("#reader").addEventListener("close", () => {
   if ($("#reader").open) return;
-  $("#reader").classList.remove("transitioning");
+  $("#reader").classList.remove(
+    "transitioning",
+    "opening-report",
+    "reading-page",
+  );
+  ++pageMotion;
+  $("#reader")
+    .querySelectorAll(".image-transition,.report-loading")
+    .forEach((el) => el.remove());
   $("#reader")
     .querySelectorAll(".splash")
     .forEach((el) => el.remove());
@@ -1011,25 +1081,99 @@ window.addEventListener("hashchange", () => {
   else if (!id && $("#reader").open) $("#reader").close();
 });
 
-function beginReportTransition(report: Report, _origin?: CoverRect) {
+function beginReportTransition(report: Report, origin?: CoverRect) {
   const dialog = $("#reader");
-  dialog.querySelectorAll(".splash").forEach((el) => el.remove());
-  const splash = createSplash(
-    dialog,
+  dialog.classList.add("opening-report");
+  const end = fitArtwork(report.a || 1.3);
+  const start = origin && origin.width > 0 ? origin : end;
+  const hero = imageGhost(
     "/api/cover?id=" + encodeURIComponent(report.id),
+    start,
+    dialog,
   );
-  const cancel = document.createElement("button");
-  cancel.className = cx("readerBack");
-  cancel.textContent = "← Back to archive";
-  Object.assign(cancel.style, {
-    position: "absolute",
-    top: "24px",
-    left: "28px",
+  hero.classList.add("report-hero");
+  const loading = document.createElement("span");
+  loading.className = "report-loading " + cx("splashCaption");
+  loading.innerHTML =
+    '<span>Opening report</span><span class="loading-line"><span></span></span>';
+  loading.setAttribute("role", "status");
+  dialog.append(loading);
+  const indicator = loading.querySelector<HTMLElement>(".loading-line span")!;
+  const pulse = !reducedMotion()
+    ? indicator.animate(
+        [{ transform: "translateX(-110%)" }, { transform: "translateX(310%)" }],
+        { duration: 1300, iterations: Infinity, easing: "ease-in-out" },
+      )
+    : null;
+  const observer = new MutationObserver(() => {
+    const text = $("#report-status").textContent || "";
+    const progress = text.match(/Preparing page (\d+) of (\d+)/);
+    if (progress) {
+      loading.firstElementChild!.textContent = `${progress[1]} / ${progress[2]} pages`;
+      pulse?.cancel();
+      indicator.style.width = "100%";
+      indicator.style.transformOrigin = "left";
+      indicator.style.transform = `scaleX(${Number(progress[1]) / Number(progress[2])})`;
+    }
   });
-  cancel.onclick = closeReader;
-  splash.el.append(cancel);
-  return { finish: () => splash.finish($("#page-canvas")) };
+  observer.observe($("#report-status"), {
+    subtree: true,
+    characterData: true,
+    childList: true,
+  });
+  const cleanup = () => {
+    observer.disconnect();
+    pulse?.cancel();
+  };
+  dialog.addEventListener("close", cleanup, { once: true });
+  const entered = moveImage(hero, start, end, 520);
+  const began = performance.now();
+  return {
+    async finish() {
+      await Promise.all([
+        entered,
+        waitForArtwork($("#page-canvas")),
+        new Promise((resolve) =>
+          setTimeout(resolve, Math.max(0, 650 - (performance.now() - began))),
+        ),
+      ]);
+      if (!hero.isConnected || !dialog.open) return;
+      cleanup();
+      dialog.removeEventListener("close", cleanup);
+      const from = hero.getBoundingClientRect();
+      hero.getAnimations().forEach((animation) => animation.cancel());
+      Object.assign(hero.style, {
+        left: from.left + "px",
+        top: from.top + "px",
+        width: from.width + "px",
+        height: from.height + "px",
+      });
+      const target = [...(readerCanvas?.cards.values() || [])].find(
+        (card) => card.item.index === 0,
+      )?.el;
+      dialog.classList.remove("opening-report");
+      loading.remove();
+      const content = $(".reader-body");
+      if (!reducedMotion())
+        content.animate(
+          [{ opacity: 0 }, { opacity: 0, offset: 0.1 }, { opacity: 1 }],
+          { duration: 380, easing: motion.ease },
+        );
+      if (target)
+        await moveImage(hero, from, target.getBoundingClientRect(), 380);
+      if (!reducedMotion())
+        await hero
+          .animate([{ opacity: 1 }, { opacity: 0 }], {
+            duration: 100,
+            fill: "forwards",
+          })
+          .finished.catch(() => {});
+      hero.remove();
+    },
+  };
 }
+
+initMagneticControls();
 
 const macKeyboard = /Mac|iPhone|iPad/.test(navigator.platform);
 $("#open-search kbd").textContent = macKeyboard ? "⌘ K" : "Ctrl K";

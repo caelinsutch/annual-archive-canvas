@@ -49,13 +49,6 @@ svg {
   flex-shrink: 0;
   vertical-align: middle;
 }
-button:focus-visible,
-a:focus-visible,
-select:focus-visible,
-[tabindex]:focus-visible {
-  outline: 2px solid #555;
-  outline-offset: 4px;
-}
 .hidden {
   display: none !important;
 }
@@ -162,16 +155,101 @@ dialog::backdrop {
 .skip-link:focus {
   transform: none;
 }
-button:focus-visible,
-a:focus-visible,
-[tabindex]:focus-visible {
-  outline: 2px solid #242424;
-  outline-offset: 5px;
-  box-shadow: 0 0 0 3px white;
+
+:where(a, select, input, [tabindex]):focus-visible {
+  outline: 2px solid #343434;
+  outline-offset: 3px;
 }
-button:hover:not(:disabled) {
-  filter: brightness(0.94);
+:where(.artifact, .grid-card, .strip-page):focus-visible {
+  outline: 2px solid #343434;
+  outline-offset: 6px;
+  border-radius: 2px;
 }
-button:active:not(.artifact):not(.search-trigger) {
-  scale: 0.98;
+.reader::backdrop {
+  background: #ffffff60;
+  backdrop-filter: blur(18px);
+}
+.reader.opening-report {
+  background: transparent;
+}
+.opening-report .reader-body {
+  opacity: 0;
+  pointer-events: none;
+}
+.opening-report .reader-header {
+  background: none;
+}
+.report-loading {
+  position: fixed;
+  bottom: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 102;
+}
+.reading-page #page-canvas {
+  pointer-events: none;
+}
+#page-reader {
+  transition:
+    backdrop-filter 260ms ease,
+    background-color 260ms ease;
+}
+@media (hover: none) {
+  button:hover {
+    filter: none;
+  }
+}
+
+.reader::backdrop {
+  transition:
+    backdrop-filter 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+@starting-style {
+  .reader[open]::backdrop {
+    backdrop-filter: blur(0);
+    background-color: transparent;
+  }
+  .reading-page #page-reader {
+    backdrop-filter: blur(0);
+    background-color: transparent;
+  }
+}
+.search-line:focus-within {
+  box-shadow: inset 0 -2px 0 #b9b9b9;
+}
+
+.glass-control {
+  background-image: radial-gradient(
+    90px circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+    rgb(255 255 255 / calc(var(--proximity, 0) * 0.3)),
+    transparent
+  );
+  will-change: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .glass-control {
+    translate: none !important;
+  }
+}
+
+.report-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.loading-line {
+  display: block;
+  width: 84px;
+  height: 1px;
+  background: #00000012;
+  overflow: hidden;
+}
+.loading-line > span {
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: #555;
+  transition: transform 160ms ease;
 }

@@ -1,4 +1,3 @@
-import { cx } from "../styles/ui";
 import { motion } from "../lib/motion";
 const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 export const frame = () =>
@@ -27,20 +26,6 @@ export async function waitForArtwork(root: HTMLElement) {
     delay(12000),
   ]);
   await frame();
-}
-export function createSplash(parent: HTMLElement, cover?: string) {
-  const el = document.createElement("div");
-  el.className = "splash " + cx("splash");
-  el.setAttribute("role", "status");
-  el.setAttribute("aria-live", "polite");
-  el.innerHTML = `<div class="${cx("splashInner")}">${cover ? `<span class="${cx("splashBrand")}">annual</span><img class="${cx("splashCover")}" src="${cover}" alt="">` : `<span class="${cx("splashBrand")}">annual</span>`}<span class="${cx("splashCaption")}">${cover ? "Opening the report" : "An archive of good design"}</span><span class="${cx("splashTrack")}"><span class="${cx("splashProgress")}"></span></span></div>`;
-  parent.append(el);
-  if (!reduced())
-    el.animate([{ opacity: 0 }, { opacity: 1 }], {
-      duration: motion.loaderEnter,
-      easing: "ease-out",
-    });
-  return manageSplash(el);
 }
 export function manageSplash(el: HTMLElement) {
   const started = performance.now();
@@ -71,17 +56,11 @@ export function manageSplash(el: HTMLElement) {
       animation?.cancel();
       if (!reduced())
         await el
-          .animate(
-            [
-              { clipPath: "inset(0 0 0 0)", opacity: 1 },
-              { clipPath: "inset(0 0 100% 0)", opacity: 1 },
-            ],
-            {
-              duration: motion.loaderReveal,
-              easing: motion.ease,
-              fill: "forwards",
-            },
-          )
+          .animate([{ opacity: 1 }, { opacity: 0 }], {
+            duration: 240,
+            easing: motion.ease,
+            fill: "forwards",
+          })
           .finished.catch(() => {});
       performance.measure(
         el.id === "app-splash" ? "archive-loader" : "report-loader",

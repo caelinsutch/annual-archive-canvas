@@ -1,7 +1,55 @@
 import * as stylex from "@stylexjs/stylex";
-import { colors, space, type, radii, shadows, timing } from "./tokens.stylex";
+import {
+  colors,
+  space,
+  type,
+  radii,
+  shadows,
+  timing,
+  controls,
+} from "./tokens.stylex";
 const mobile = "@media (max-width: 700px)";
 export const styles = stylex.create({
+  control: {
+    height: controls.height,
+    minHeight: controls.height,
+    borderRadius: controls.radius,
+    fontSize: controls.text,
+    fontWeight: 450,
+    lineHeight: "1",
+    paddingBlock: 0,
+    paddingInline: 12,
+    gap: 8,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "#ffffff90",
+    backdropFilter: "blur(14px)",
+    boxShadow: "inset 0 1px 0 #ffffff99, 0 1px 3px #00000006",
+    backgroundColor: {
+      default: "#ffffff70",
+      ":hover": controls.hover,
+      ":active": controls.pressed,
+    },
+    color: colors.text,
+    outlineStyle: { default: "none", ":focus-visible": "solid" },
+    outlineWidth: 2,
+    outlineColor: controls.focus,
+    outlineOffset: 2,
+    transitionProperty: "background-color, color, box-shadow, translate",
+    transitionDuration: timing.fast,
+  },
+  controlAccent: {
+    backgroundColor: {
+      default: "#242424e8",
+      ":hover": "#414141",
+      ":active": "#111",
+    },
+    color: colors.onSolid,
+    borderColor: "#ffffff20",
+    boxShadow: "inset 0 1px 0 #ffffff18, 0 1px 4px #00000010",
+  },
+  controlIcon: { width: controls.height, paddingInline: 0, flexShrink: 0 },
+
   pageResults: {
     display: "grid",
     gridTemplateColumns: "repeat(4,minmax(0,1fr))",
@@ -249,7 +297,11 @@ export const styles = stylex.create({
     borderRadius: radii.pill,
     whiteSpace: "nowrap",
   },
-  selected: { backgroundColor: colors.hover },
+  selected: {
+    backgroundColor: controls.hover,
+    color: colors.text,
+    fontWeight: 550,
+  },
   dockLine: { height: 19, width: 1, backgroundColor: colors.border },
   zoom: {
     display: { default: "flex", [mobile]: "none" },
@@ -565,14 +617,18 @@ export const styles = stylex.create({
     position: "absolute",
     inset: 0,
     overflow: "auto",
-    padding: { default: "35px 50px 100px", [mobile]: "25px 18px 100px" },
+    zIndex: 3,
+    backgroundColor: "#ffffff80",
+    backdropFilter: "blur(16px)",
+    padding: { default: "28px 32px 100px", [mobile]: "20px 16px 100px" },
     textAlign: "center",
   },
   pageImage: {
     display: "block",
     width: "auto",
     maxWidth: "100%",
-    height: "auto",
+    height: "calc(100dvh - 200px)",
+    objectFit: "contain",
     marginInline: "auto",
     boxShadow: shadows.paper,
     minHeight: 200,
@@ -642,10 +698,43 @@ export const styles = stylex.create({
   },
 });
 export type Slot = keyof typeof styles;
+const controlSlots = new Set<Slot>([
+  "solidButton",
+  "primary",
+  "switchButton",
+  "zoomButton",
+  "navButton",
+  "iconButton",
+  "readerBack",
+  "detailsButton",
+  "aboutButton",
+  "suggestion",
+  "clear",
+  "searchTrigger",
+]);
+const iconSlots = new Set<Slot>([
+  "zoomButton",
+  "navButton",
+  "iconButton",
+  "detailsButton",
+  "aboutButton",
+]);
+function controlStyles(slots: Slot[]): Slot[] {
+  const result = [...slots];
+  if (slots.some((s) => controlSlots.has(s))) {
+    result.push("control");
+    if (slots.some((s) => iconSlots.has(s))) result.push("controlIcon");
+    if (slots.includes("solidButton") || slots.includes("primary"))
+      result.push("controlAccent");
+    if (slots.includes("selected")) result.push("selected");
+  }
+  return result;
+}
 export function cx(slot: Slot, ...variants: Slot[]): string {
   return (
-    stylex.props(styles[slot], ...variants.map((v) => styles[v])).className ||
-    ""
+    (controlSlots.has(slot) ? "glass-control " : "") +
+    (stylex.props(...controlStyles([slot, ...variants]).map((s) => styles[s]))
+      .className || "")
   );
 }
 
@@ -756,8 +845,13 @@ export function syncStyles(root: ParentNode = document): void {
       slots.push("toastVisible");
     if (el.classList.contains("report-info") && el.closest(".details-open"))
       slots.push("infoOpen");
+    if (slots.some((slot) => controlSlots.has(slot)))
+      el.classList.add("glass-control");
     const previous = applied.get(el) || [];
-    const next = (stylex.props(...slots.map((s) => styles[s])).className || "")
+    const next = (
+      stylex.props(...controlStyles(slots).map((s) => styles[s])).className ||
+      ""
+    )
       .split(" ")
       .filter(Boolean);
     el.classList.remove(...previous);

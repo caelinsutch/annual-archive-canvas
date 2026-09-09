@@ -355,6 +355,13 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
         const dw = width * this.zoom * scale,
           dh = height * this.zoom * scale;
         c.el.style.visibility = cy + dh / 2 < 0 ? "hidden" : "visible";
+        const tabbable =
+          cx + dw / 2 > 0 &&
+          cx - dw / 2 < this.w &&
+          cy + dh / 2 > 0 &&
+          cy - dh / 2 < this.h;
+        if (c.el.tabIndex !== (tabbable ? 0 : -1))
+          c.el.tabIndex = tabbable ? 0 : -1;
         c.el.style.width = dw + "px";
         c.el.style.height = dh + "px";
         c.el.style.transform = `translate3d(${cx - dw / 2}px,${cy - dh / 2}px,0)`;

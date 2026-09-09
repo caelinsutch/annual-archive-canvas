@@ -50,12 +50,26 @@ test("catalogue retains unique records and valid source and cover paths", () => 
   }
 });
 
-
-test("PDF-only Internet Archive reports open inline when scan derivatives are absent",async(t)=>{
- const {resolveReport}=await import('../src/lib/report-api');
- t.mock.method(globalThis,'fetch',async()=>Response.json({files:[{name:'report1972.pdf'}]}));
- const report={id:'sample',s:'https://archive.org/details/collection/report1972',o:'Example',y:'1972',c:'Archive',i:'Other',k:'blue',img:'cover.jpg',a:1.3};
- const result=await resolveReport(report);
- assert.equal(result.kind,'pdf');
- assert.equal(result.pdf,'https://archive.org/download/collection/report1972.pdf');
+test("PDF-only Internet Archive reports open inline when scan derivatives are absent", async (t) => {
+  const { resolveReport } = await import("../src/lib/report-api");
+  t.mock.method(globalThis, "fetch", async () =>
+    Response.json({ files: [{ name: "report1972.pdf" }] }),
+  );
+  const report = {
+    id: "sample",
+    s: "https://archive.org/details/collection/report1972",
+    o: "Example",
+    y: "1972",
+    c: "Archive",
+    i: "Other",
+    k: "blue",
+    img: "cover.jpg",
+    a: 1.3,
+  };
+  const result = await resolveReport(report);
+  assert.equal(result.kind, "pdf");
+  assert.equal(
+    result.pdf,
+    "https://archive.org/download/collection/report1972.pdf",
+  );
 });

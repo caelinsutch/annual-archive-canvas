@@ -45,3 +45,12 @@ export const timing = stylex.defineVars({
   normal: "240ms",
   ease: "cubic-bezier(.22,1,.36,1)",
 });
+
+export const controls = stylex.defineVars({
+  height: "40px",
+  radius: "999px",
+  text: "12px",
+  focus: "#343434",
+  hover: "#ffffffd9",
+  pressed: "#e8e8e8d9",
+});

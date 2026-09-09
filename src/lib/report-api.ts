@@ -53,8 +53,19 @@ export async function resolveReport(report: Report): Promise<ReportManifest> {
   if (!response.ok) throw new Error("Metadata unavailable");
   const m = (await response.json()) as ArchiveMetadata;
   const files = m.files || [];
-  const pdfFile=files.find(file=>identity.book?file.name===identity.book+'.pdf':/\.pdf$/i.test(file.name));
-  const fallback:ReportManifest=pdfFile?{kind:'pdf',pages:[],source:report.s,pdf:`https://archive.org/download/${encodeURIComponent(identity.item)}/${encodeURIComponent(pdfFile.name)}`}:{kind:'external',pages:[],source:report.s};
+  const pdfFile = files.find((file) =>
+    identity.book
+      ? file.name === identity.book + ".pdf"
+      : /\.pdf$/i.test(file.name),
+  );
+  const fallback: ReportManifest = pdfFile
+    ? {
+        kind: "pdf",
+        pages: [],
+        source: report.s,
+        pdf: `https://archive.org/download/${encodeURIComponent(identity.item)}/${encodeURIComponent(pdfFile.name)}`,
+      }
+    : { kind: "external", pages: [], source: report.s };
   const zip = files.find(
     (f) =>
       f.name.endsWith("_jp2.zip") &&
