@@ -181,6 +181,11 @@ export const styles = stylex.create({
     color: colors.muted,
     pointerEvents: "auto",
   },
+  searchAlignment: {
+    justifyContent: { default: "flex-start", [mobile]: "center" },
+    paddingInline: { default: 12, [mobile]: 0 },
+    gap: { default: space.sm, [mobile]: 0 },
+  },
   searchText: {
     display: { default: "inline", [mobile]: "none" },
     overflow: "hidden",
@@ -685,6 +690,7 @@ function controlStyles(slots: Slot[]): Slot[] {
   if (slots.includes("pageNumber")) result.push("pageNumber");
   if (slots.includes("segmentButton")) result.push("segmentButton");
   if (slots.includes("gallerySegment")) result.push("gallerySegment");
+  if (slots.includes("searchTrigger")) result.push("searchAlignment");
   return result;
 }
 export function cx(slot: Slot, ...variants: Slot[]): string {
