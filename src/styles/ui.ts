@@ -102,7 +102,9 @@ export const styles = stylex.create({
     display: "block",
   },
   splashProgress: {
-    width: 30,
+    width: "100%",
+    transformOrigin: "left",
+    transform: "scaleX(0)",
     height: 1,
     backgroundColor: colors.text,
     display: "block",
@@ -113,7 +115,15 @@ export const styles = stylex.create({
     top: 18,
     left: { default: 28, [mobile]: 12 },
     right: { default: 28, [mobile]: 12 },
-    height: 46,
+    height: 60,
+    paddingInline: 8,
+    backgroundColor: colors.floating,
+    backdropFilter: "blur(18px)",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: colors.border,
+    borderRadius: radii.pill,
+    boxShadow: shadows.dock,
     zIndex: 8,
     display: "flex",
     alignItems: "center",
@@ -155,6 +165,7 @@ export const styles = stylex.create({
     fontSize: type.small,
   },
   savedCount: {
+    display: { default: "inline", "@media(max-width:360px)": "none" },
     fontSize: type.micro,
     color: colors.subtle,
     paddingLeft: 10,
@@ -167,7 +178,10 @@ export const styles = stylex.create({
     left: "50%",
     transform: "translateX(-50%)",
     height: { default: 46, [mobile]: 40 },
-    width: { default: 350, [mobile]: 40 },
+    width: {
+      default: "clamp(180px, calc(100vw - 520px), 350px)",
+      [mobile]: 40,
+    },
     justifyContent: "flex-start",
     paddingInline: { default: 17, [mobile]: 11 },
     gap: space.sm,
@@ -277,7 +291,11 @@ export const styles = stylex.create({
     fontWeight: 550,
   },
   segmentButton: {
-    width: { default: 112, [mobile]: 68 },
+    width: {
+      default: 112,
+      "@media (min-width:361px) and (max-width:700px)": 68,
+      "@media(max-width:360px)": 58,
+    },
     flexShrink: 0,
     backgroundColor: {
       default: "transparent",
@@ -296,7 +314,9 @@ export const styles = stylex.create({
     justifyContent: "center",
     outlineOffset: -3,
   },
-  gallerySegment: { width: { default: 112, [mobile]: 96 } },
+  gallerySegment: {
+    width: { default: 112, [mobile]: 96, "@media(max-width:360px)": 96 },
+  },
   compactNavigation: {
     width: { default: 40, [mobile]: 26 },
     minWidth: { default: 40, [mobile]: 26 },

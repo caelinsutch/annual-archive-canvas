@@ -1,7 +1,7 @@
 import { changeDock, initDockMotion } from "./dock-motion";
 import { initMagneticControls } from "./magnetic-controls";
 import { matchesFilters, SearchGeneration } from "../search/control";
-import { manageSplash, waitForArtwork } from "./loading";
+import { manageSplash, waitForArtwork, frame } from "./loading";
 import {
   imageGhost,
   moveImage,
@@ -119,34 +119,65 @@ function toast(message: string) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => $("#toast").classList.remove("show"), 2600);
 }
+const dialogExits = new WeakMap<
+  HTMLDialogElement,
+  { timer: ReturnType<typeof setTimeout>; resolve: () => void }
+>();
 function showDialog(id: string) {
-  (document.getElementById(id) as HTMLDialogElement).showModal();
+  const dialog = document.getElementById(id) as HTMLDialogElement;
+  const pending = dialogExits.get(dialog);
+  if (pending) {
+    clearTimeout(pending.timer);
+    pending.resolve();
+    dialogExits.delete(dialog);
+  }
+  dialog.classList.remove("dialog-exiting");
+  if (!dialog.open) dialog.showModal();
+}
+function closeDialog(dialog: HTMLDialogElement): Promise<void> {
+  if (!dialog.open || dialogExits.has(dialog)) return Promise.resolve();
+  dialog.classList.add("dialog-exiting");
+  return new Promise((resolve) => {
+    const timer = setTimeout(
+      () => {
+        dialog.close();
+        dialog.classList.remove("dialog-exiting");
+        dialogExits.delete(dialog);
+        resolve();
+      },
+      reducedMotion() ? 0 : 220,
+    );
+    dialogExits.set(dialog, { timer, resolve });
+  });
 }
 document
   .querySelectorAll<HTMLElement>("[data-close]")
   .forEach(
-    (b) =>
-      (b.onclick = () =>
-        (
-          document.getElementById(b.dataset.close!) as HTMLDialogElement
-        ).close()),
+    (button) =>
+      (button.onclick = () =>
+        void closeDialog(
+          document.getElementById(button.dataset.close!) as HTMLDialogElement,
+        )),
   );
 document
   .querySelectorAll<HTMLDialogElement>("dialog:not(#reader)")
-  .forEach((d) =>
-    d.addEventListener("click", (e) => {
-      if (e.target === d) {
-        const r = d.getBoundingClientRect();
-        if (
-          e.clientX < r.left ||
-          e.clientX > r.right ||
-          e.clientY < r.top ||
-          e.clientY > r.bottom
-        )
-          d.close();
-      }
-    }),
-  );
+  .forEach((dialog) => {
+    dialog.addEventListener("cancel", (event) => {
+      event.preventDefault();
+      void closeDialog(dialog);
+    });
+    dialog.addEventListener("click", (event) => {
+      if (event.target !== dialog) return;
+      const r = dialog.getBoundingClientRect();
+      if (
+        event.clientX < r.left ||
+        event.clientX > r.right ||
+        event.clientY < r.top ||
+        event.clientY > r.bottom
+      )
+        void closeDialog(dialog);
+    });
+  });
 $("#about").onclick = () => showDialog("about-dialog");
 function openSearch() {
   showDialog("search-dialog");
@@ -154,7 +185,7 @@ function openSearch() {
   $("#search-input").focus();
 }
 $("#open-search").onclick = openSearch;
-$("#search-done").onclick = () => $("#search-dialog").close();
+$("#search-done").onclick = () => closeDialog($("#search-dialog"));
 $("#search-input").oninput = (e) => {
   query = (e.target as HTMLInputElement).value;
   applyFilters();
@@ -162,7 +193,7 @@ $("#search-input").oninput = (e) => {
 $("#search-input").onkeydown = (e) => {
   if (e.key === "Enter") {
     if (searchScope === "pages") $("#page-search-results button")?.focus();
-    else $("#search-dialog").close();
+    else closeDialog($("#search-dialog"));
   }
 };
 document.querySelectorAll<HTMLElement>("[data-search]").forEach(
@@ -171,7 +202,7 @@ document.querySelectorAll<HTMLElement>("[data-search]").forEach(
       query = b.dataset.search || "";
       $("#search-input").value = query;
       applyFilters();
-      if (searchScope === "reports") $("#search-dialog").close();
+      if (searchScope === "reports") closeDialog($("#search-dialog"));
     }),
 );
 for (const name of ["decade", "industry", "color"] as const)
@@ -262,7 +293,7 @@ function searchPages() {
         image.loading = "lazy";
         button.append(image);
         button.onclick = async () => {
-          $("#search-dialog").close();
+          await closeDialog($("#search-dialog"));
           await openReport(report);
           if (active?.id === report.id && manifest?.pages[hit.pageIndex]) {
             page = hit.pageIndex;
@@ -709,6 +740,7 @@ let closingReader = false;
 async function closeReader() {
   if (closingReader || !$("#reader").open) return;
   closingReader = true;
+  ++requestId;
   const report = active;
   const destination = report ? visibleCovers(view).get(report.id) : undefined;
   const openingHero = $("#reader").querySelector<HTMLElement>(".report-hero");
@@ -728,8 +760,9 @@ async function closeReader() {
     );
   const from = pageElement?.getBoundingClientRect();
   const ghost = document.createElement("img");
-  ghost.className = cx("transitionCover");
+  ghost.className = "report-return " + cx("transitionCover");
   ghost.alt = "";
+  ghost.draggable = false;
   const visibleImage = pageElement?.querySelector<HTMLImageElement>("img");
   if (report)
     ghost.src =
@@ -754,29 +787,41 @@ async function closeReader() {
   dialog.classList.add("closing-report");
   dialog.append(ghost);
   if (openingHero) openingHero.style.visibility = "hidden";
-  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  if (pageElement && !openingHero) readerCanvas?.concealForExit(pageElement);
+  const animations: Animation[] = [];
+  if (!reducedMotion()) {
     const transform = destination
       ? `translate(${destination.left - start.left}px,${destination.top - start.top}px) scale(${destination.width / start.width})`
-      : "scale(.94)";
-    const fade = dialog.animate(
-      [{ opacity: 1 }, { opacity: 1, offset: 0.12 }, { opacity: 0 }],
-      { duration: motion.readerClose, easing: motion.ease, fill: "forwards" },
+      : "translateY(16px) scale(.96)";
+    for (const section of dialog.querySelectorAll<HTMLElement>(
+      ".reader-body,.reader-header",
+    )) {
+      animations.push(
+        section.animate(
+          [{ opacity: getComputedStyle(section).opacity }, { opacity: 0 }],
+          {
+            duration: 280,
+            easing: motion.ease,
+            fill: "forwards",
+          },
+        ),
+      );
+    }
+    animations.push(
+      ghost.animate(
+        [
+          { transform: "none", opacity: 1 },
+          { transform, opacity: 1, offset: 0.85 },
+          { transform, opacity: 0 },
+        ],
+        { duration: motion.readerClose, easing: motion.ease, fill: "forwards" },
+      ),
     );
-    await Promise.allSettled([
-      fade.finished,
-      ghost.animate([{ transform: "none" }, { transform }], {
-        duration: motion.readerClose,
-        easing: motion.ease,
-        fill: "forwards",
-      }).finished,
-    ]);
-    dialog.close();
-    dialog.classList.remove("closing-report");
-    fade.cancel();
-  } else {
-    dialog.close();
-    dialog.classList.remove("closing-report");
+    await Promise.allSettled(animations.map((a) => a.finished));
   }
+  dialog.close();
+  dialog.classList.remove("closing-report");
+  animations.forEach((a) => a.cancel());
   ghost.remove();
   closingReader = false;
 }
@@ -824,7 +869,11 @@ document.addEventListener("keydown", (e) => {
   );
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k" && !e.altKey) {
     e.preventDefault();
-    if ($("#search-dialog").open) $("#search-dialog").close();
+    if (
+      $("#search-dialog").open &&
+      !$("#search-dialog").classList.contains("dialog-exiting")
+    )
+      void closeDialog($("#search-dialog"));
     else openSearch();
     return;
   }
@@ -871,7 +920,7 @@ window.addEventListener("hashchange", () => {
   const id = new URLSearchParams(location.hash.slice(1)).get("report");
   if (id && id !== active?.id)
     openReport(data.find((report) => report.id === id));
-  else if (!id && $("#reader").open) $("#reader").close();
+  else if (!id && $("#reader").open) void closeReader();
 });
 
 function beginReportTransition(report: Report, origin?: CoverRect) {
@@ -894,10 +943,18 @@ function beginReportTransition(report: Report, origin?: CoverRect) {
   const indicator = loading.querySelector<HTMLElement>(".loading-line span")!;
   const pulse = !reducedMotion()
     ? indicator.animate(
-        [{ transform: "translateX(-110%)" }, { transform: "translateX(310%)" }],
+        [{ opacity: 0.25 }, { opacity: 0.75 }, { opacity: 0.25 }],
         { duration: 1300, iterations: Infinity, easing: "ease-in-out" },
       )
     : null;
+  let loadingFrame = 0;
+  const followCover = () => {
+    const r = hero.getBoundingClientRect();
+    loading.style.left = r.left + r.width / 2 + "px";
+    loading.style.top = Math.min(innerHeight - 48, r.bottom + 18) + "px";
+    loadingFrame = requestAnimationFrame(followCover);
+  };
+  followCover();
   const observer = new MutationObserver(() => {
     const text = $("#report-status").textContent || "";
     const progress = text.match(/Preparing page (\d+) of (\d+)/);
@@ -916,6 +973,7 @@ function beginReportTransition(report: Report, origin?: CoverRect) {
   });
   const cleanup = () => {
     observer.disconnect();
+    cancelAnimationFrame(loadingFrame);
     pulse?.cancel();
   };
   dialog.addEventListener("close", cleanup, { once: true });
@@ -930,7 +988,7 @@ function beginReportTransition(report: Report, origin?: CoverRect) {
           setTimeout(resolve, Math.max(0, 650 - (performance.now() - began))),
         ),
       ]);
-      if (!hero.isConnected || !dialog.open) return;
+      if (!hero.isConnected || !dialog.open || closingReader) return;
       cleanup();
       dialog.removeEventListener("close", cleanup);
       const from = hero.getBoundingClientRect();
@@ -945,7 +1003,16 @@ function beginReportTransition(report: Report, origin?: CoverRect) {
         (card) => card.item.index === 0,
       )?.el;
       dialog.classList.remove("opening-report");
-      loading.remove();
+      if (!reducedMotion())
+        void loading
+          .animate([{ opacity: 1 }, { opacity: 0 }], {
+            duration: 180,
+            fill: "forwards",
+          })
+          .finished.then(() => loading.remove())
+          .catch(() => {});
+      else loading.remove();
+      if (target) readerCanvas?.concealForExit(target);
       const content = $(".reader-body");
       if (!reducedMotion())
         content.animate(
@@ -954,6 +1021,11 @@ function beginReportTransition(report: Report, origin?: CoverRect) {
         );
       if (target)
         await moveImage(hero, from, target.getBoundingClientRect(), 380);
+      if (closingReader || !dialog.open || !hero.isConnected) return;
+      if (readerCanvas) {
+        readerCanvas.paused = false;
+        await frame();
+      }
       if (!reducedMotion())
         await hero
           .animate([{ opacity: 1 }, { opacity: 0 }], {

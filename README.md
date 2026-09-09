@@ -83,3 +83,5 @@ Pill controls use a shared glass material, keyboard ring, and mouse proximity re
 The bottom dock uses equal-width segments and one sliding active pill. Its outer width interpolates from the current size when controls change; rapid reversals continue from the current animation position. Source verification and remaining discovery candidates are documented in [source discovery](docs/source-discovery.md).
 
 Archive Canvas and Grid also use the same persistent cover scene: every report retains its button, image node, and WebGL mesh during layout changes. Grid browsing scrolls that scene vertically; there is no duplicated grid DOM or cloned transition layer.
+
+- `npm run test:motion`: checks responsive control alignment from 320–1440px, persistent reader modes, image selection, and reduced motion. Samples intermediate return-transition animation states to verify the backdrop clears before the dialog closes. Saves results to `outputs/motion-qa.json`.

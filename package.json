@@ -15,7 +15,8 @@
     "eval:check": "node --import tsx scripts/benchmark-search.ts --check && node --import tsx scripts/evaluate-pages.ts --check",
     "test:browser": "node --import tsx scripts/browser-smoke.ts",
     "index:pages": "node --import tsx scripts/index-pages.ts",
-    "index:catalog": "node --import tsx scripts/embed-catalog.ts"
+    "index:catalog": "node --import tsx scripts/embed-catalog.ts",
+    "test:motion": "node --import tsx scripts/qa-motion.ts"
   },
   "dependencies": {
     "@astrojs/node": "^11.1.5",

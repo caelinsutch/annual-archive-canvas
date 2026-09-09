@@ -710,6 +710,15 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
     }
     this.renderer?.render(this.scene, this.camera);
   }
+  concealForExit(element: HTMLElement) {
+    this.paused = true;
+    const card = [...this.cards.values()].find((card) => card.el === element);
+    if (card) {
+      card.el.style.visibility = "hidden";
+      if (card.mesh) card.mesh.visible = false;
+    }
+    this.renderer?.render(this.scene, this.camera);
+  }
   destroy() {
     this.disposed = true;
     cancelAnimationFrame(this.frame);

@@ -12,6 +12,7 @@ export function imageGhost(
   image.className = "image-transition " + cx("transitionCover");
   image.src = source;
   image.alt = "";
+  image.draggable = false;
   Object.assign(image.style, {
     left: rect.left + "px",
     top: rect.top + "px",

@@ -24,7 +24,7 @@ try{
  assert.equal(await evaluate(`window.archiveNodes.every((node,index)=>node.isConnected&&node.querySelector('img')===window.archiveImages[index])`),true);
  assert.equal(await evaluate(`getComputedStyle(document.querySelector('#gallery')).opacity`),'1');checks.push('Canvas and Grid retain the exact same report and image nodes through interrupted transitions, with no duplicate grid or ghosts');
  assert.equal(await evaluate(`[...document.querySelectorAll('.dock .view-switch button')].every(b=>b.scrollWidth<=b.clientWidth)`),true);checks.push('Archive toggle labels fit within their segments');
- await browser('press','Meta+k');assert.equal(await evaluate(`document.activeElement.id`),'search-input');checks.push('Command-K focuses search');await browser('press','Escape');
+ await browser('press','Meta+k');assert.equal(await evaluate(`document.activeElement.id`),'search-input');await until(`getComputedStyle(document.querySelector('#search-dialog'),'::backdrop').backdropFilter==='blur(18px)'`);checks.push('Command-K focuses search and blurs the background');await browser('press','Escape');await until(`!document.querySelector('#search-dialog').open`);
  await browser('eval',`[...document.querySelectorAll('#gallery button')].find(button=>button.getAttribute('aria-label')==='Open Cummins, 1966').click()`);
  assert.ok(await evaluate(`document.querySelector('.report-hero')!==null`));checks.push('Report opening carries the selected cover into the reader');
  await until(`document.querySelector('#reader').open&&!document.querySelector('#reader .splash')&&!document.querySelector('#reader.opening-report')&&[...document.querySelectorAll('#page-canvas img')].some(i=>i.naturalWidth>0)`);checks.push('Report reveals real decoded pages');
