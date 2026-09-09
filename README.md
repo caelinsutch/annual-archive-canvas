@@ -41,9 +41,9 @@ The server proxies only cover paths and PDF URLs belonging to known catalogue re
 
 ## Implementation
 
-- Virtualized Three.js plane meshes with velocity-driven vertex distortion, eased movement, and bounded texture caching.
+- Virtualized, undistorted Three.js image planes with eased panning, cursor-centered zoom, and bounded texture caching.
 - DOM buttons provide semantic, keyboard-operable equivalents and cover-image fallback if WebGL is unavailable.
-- Native dialogs manage focus and Escape dismissal; reduced-motion preferences disable animated deformation and easing.
+- Native dialogs manage focus and Escape dismissal; reduced-motion preferences disable spatial transitions and easing.
 - Scan manifests preserve original leaf identifiers and exclude pages marked inaccessible.
 - PDF.js loads separately from the initial gallery bundle.
 

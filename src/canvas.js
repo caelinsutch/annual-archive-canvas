@@ -1,5 +1,7 @@
 import * as THREE from "three";
 const mod = (n, m) => ((n % m) + m) % m;
+const cardAspect = (card, item, pages) =>
+  card.aspect || (pages ? item.height / item.width : item.a || 1.3);
 export class ArchiveCanvas {
   constructor(root, { items = [], pages = false, onSelect, onZoom }) {
     this.root = root;
@@ -11,9 +13,9 @@ export class ArchiveCanvas {
     this.textures = new Map();
     this.disposed = false;
     this.x = 0;
-    this.y = 0;
+    this.y = pages ? 0 : -60;
     this.tx = 0;
-    this.ty = 0;
+    this.ty = this.pages ? 0 : -60;
     this.defaultZoom = !pages && innerWidth < 700 ? 0.72 : 1;
     this.zoom = this.defaultZoom;
     this.tz = this.defaultZoom;
@@ -33,7 +35,7 @@ export class ArchiveCanvas {
       this.renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
       this.scene = new THREE.Scene();
       this.camera = new THREE.OrthographicCamera(0, 0, 0, 0, -1000, 1000);
-      this.geometry = new THREE.PlaneGeometry(1, 1, 16, 20);
+      this.geometry = new THREE.PlaneGeometry(1, 1);
     } catch {
       root.classList.add("no-webgl");
     }
@@ -116,7 +118,7 @@ export class ArchiveCanvas {
           .elementFromPoint(e.clientX, e.clientY)
           ?.closest("[data-tile]");
         const card = el && this.cards.get(el.dataset.tile);
-        if (card) this.onSelect(card.item);
+        if (card) this.onSelect(card.item, card.el.getBoundingClientRect());
       }
       if (!this.pointers.size) {
         this.drag = false;
@@ -163,7 +165,7 @@ export class ArchiveCanvas {
   reset() {
     this.setZoom(this.defaultZoom);
     this.tx = 0;
-    this.ty = 0;
+    this.ty = this.pages ? 0 : -60;
   }
   setItems(items) {
     this.items = items;
@@ -200,31 +202,27 @@ export class ArchiveCanvas {
       ? item.thumb
       : "/api/cover?id=" + encodeURIComponent(item.id);
     picture.append(img);
-    const label = document.createElement("span");
-    label.className = "artifact-label";
-    const title = document.createElement("span");
-    title.textContent = this.pages ? "Page " + item.label : item.o;
-    const year = document.createElement("span");
-    year.textContent = this.pages ? "↗" : item.y || "—";
-    label.append(title, year);
-    el.append(picture, label);
+    el.append(picture);
     this.layer.append(el);
     const card = { el, item, hover: 0, target: 0, mesh: null };
+    img.addEventListener("load", () => {
+      card.aspect = img.naturalHeight / img.naturalWidth;
+    });
+    if (img.complete && img.naturalWidth)
+      card.aspect = img.naturalHeight / img.naturalWidth;
     el.addEventListener("pointerenter", () => (card.target = 1));
     el.addEventListener("pointerleave", () => (card.target = 0));
     el.addEventListener("focus", () => (card.target = 1));
     el.addEventListener("blur", () => (card.target = 0));
     el.addEventListener("click", (e) => {
-      if (e.detail === 0) this.onSelect(item);
+      if (e.detail === 0) this.onSelect(item, el.getBoundingClientRect());
     });
     if (this.renderer) {
       const material = new THREE.ShaderMaterial({
         uniforms: {
           uTexture: { value: null },
-          uVelocity: { value: new THREE.Vector2() },
-          uHover: { value: 0 },
         },
-        vertexShader: `varying vec2 vUv; uniform vec2 uVelocity; uniform float uHover; void main(){vUv=uv;vec3 p=position;float wave=sin(uv.x*3.14159)*sin(uv.y*3.14159);p.x+=wave*uVelocity.x*.0007;p.y-=wave*uVelocity.y*.0007;p.x+=(uv.y-.5)*uHover*.015;gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.);}`,
+        vertexShader: `varying vec2 vUv; void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
         fragmentShader: `uniform sampler2D uTexture; varying vec2 vUv; void main(){gl_FragColor=texture2D(uTexture,vUv);}`,
       });
       card.mesh = new THREE.Mesh(this.geometry, material);
@@ -290,15 +288,15 @@ export class ArchiveCanvas {
         const key = row + ":" + col;
         visible.add(key);
         const c = this.cards.get(key) || this.create(key, item);
-        const aspect = this.pages ? item.height / item.width : item.a || 1.3;
+        const aspect = cardAspect(c, item, this.pages);
         const maxW = this.pages ? 210 : 202;
         const height = Math.min(this.pages ? 300 : 250, maxW * aspect);
         const width = height / aspect;
-        const stagger = this.pages ? 0 : mod(col, 3) * 27;
+        const stagger = 0;
         const cx = (col * cellW + 145 - this.x) * this.zoom,
           cy = (row * cellH + 150 + stagger - this.y) * this.zoom;
         c.hover += (c.target - c.hover) * (this.reduced ? 1 : 0.16);
-        const scale = 1 + c.hover * 0.045;
+        const scale = 1;
         const dw = width * this.zoom * scale,
           dh = height * this.zoom * scale;
         c.el.style.visibility = cy + dh / 2 < 0 ? "hidden" : "visible";
@@ -309,11 +307,6 @@ export class ArchiveCanvas {
         if (c.mesh) {
           c.mesh.position.set(cx - this.w / 2, this.h / 2 - cy, c.hover);
           c.mesh.scale.set(dw, dh, 1);
-          c.mesh.material.uniforms.uVelocity.value.set(
-            this.reduced ? 0 : Math.max(-50, Math.min(50, vx)),
-            this.reduced ? 0 : Math.max(-50, Math.min(50, vy)),
-          );
-          c.mesh.material.uniforms.uHover.value = c.hover;
         }
       }
     for (const [key, c] of this.cards)

@@ -82,10 +82,10 @@ app.innerHTML = `<header class="masthead"><a class="wordmark" href="/" aria-labe
 <section class="filterbar" aria-label="Filter archive"><div class="filter-left"><span id="result-count" aria-live="polite">Loading the archive</span><span class="filter-divider"></span><label class="select-wrap"><select id="decade" aria-label="Decade"><option value="">All decades</option>${[1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020].map((d) => `<option value="${d}">${d}s</option>`).join("")}</select>${icon("chevron-down")}</label><label class="select-wrap"><select id="industry" aria-label="Industry"><option value="">All industries</option></select>${icon("chevron-down")}</label><label class="select-wrap color-filter"><select id="color" aria-label="Color"><option value="">Any color</option>${["red", "orange", "yellow", "green", "blue", "neutral"].map((c) => `<option value="${c}">${c[0].toUpperCase() + c.slice(1)}</option>`).join("")}</select>${icon("chevron-down")}</label><button id="clear" class="clear hidden">Clear filters ${icon("x")}</button></div><button class="shuffle" id="shuffle">A little serendipity ${icon("shuffle")}</button></section>
 <section id="gallery" class="gallery" tabindex="0" aria-label="Infinite report canvas. Drag or use arrow keys to explore. Select a cover to read."></section><section id="grid" class="grid-view hidden" aria-label="Report grid"></section><div id="empty" class="empty hidden"><span>Nothing here. Yet.</span><p>Try a different company, decade, or design detail.</p><button class="primary" id="empty-clear">Reset the archive ${icon("arrow-right")}</button></div>
 <div class="canvas-caption"><span class="tiny-cross">✳</span> A NEW PERSPECTIVE ON OLD PAGES</div><div class="explore-hint">${icon("move")} Drag to explore <span>·</span> Scroll to wander</div>
-<div class="dock"><div class="view-switch" aria-label="Gallery layout"><button id="canvas-view" class="selected" aria-label="Canvas view" aria-pressed="true">${icon("move")}<span>Canvas</span></button><button id="grid-view" aria-label="Grid view" aria-pressed="false">${icon("grid-2x2")}<span>Grid</span></button></div><span class="dock-line"></span><button id="open-search" class="search-trigger">${icon("search")}<span>Find something good</span><kbd>/</kbd></button><span class="dock-line zoom-controls"></span><div class="zoom-controls"><button id="zoom-out" aria-label="Zoom out">${icon("minus")}</button><button id="zoom-value" aria-label="Reset canvas">100%</button><button id="zoom-in" aria-label="Zoom in">${icon("plus")}</button></div></div></main>
+<div class="dock"><div class="view-switch" aria-label="Gallery layout"><button id="canvas-view" class="selected" aria-label="Canvas view" aria-pressed="true">${icon("move")}<span>Canvas</span></button><button id="grid-view" aria-label="Grid view" aria-pressed="false">${icon("grid-2x2")}<span>Grid</span></button></div><span class="dock-line"></span><button id="open-search" class="search-trigger">${icon("search")}<span>Search the archive</span><kbd>/</kbd></button><span class="dock-line zoom-controls"></span><div class="zoom-controls"><button id="zoom-out" aria-label="Zoom out">${icon("minus")}</button><button id="zoom-value" aria-label="Reset canvas">100%</button><button id="zoom-in" aria-label="Zoom in">${icon("plus")}</button></div></div></main>
 <dialog id="search-dialog" class="search-dialog" aria-label="Search the archive"><div class="search-line">${icon("search")}<input id="search-input" placeholder="A company, a year, a feeling…" aria-label="Search reports" autocomplete="off"><button class="icon-button" data-close="search-dialog" aria-label="Close search">${icon("x")}</button></div><div class="search-body"><div class="eyebrow">FOLLOW YOUR CURIOSITY</div><div class="suggestions">${["Geometric", "IBM", "1972", "Illustration", "Photography", "Paul Rand"].map((t) => `<button data-search="${t}">${t} ${icon("arrow-up-right")}</button>`).join("")}</div><p id="search-count">Search all 3,002 artifacts</p><button id="search-done" class="primary">Explore results ${icon("arrow-right")}</button></div></dialog>
 <dialog id="about-dialog" class="about-dialog" aria-label="About Annual Archive"><button class="icon-button dialog-close" data-close="about-dialog" aria-label="Close about">${icon("x")}</button><div class="eyebrow">ANNUAL ARCHIVE / A DESIGN FIELD TRIP</div><h2>Even business<br>had an <em>art department.</em></h2><p>For decades, the annual report was a canvas for extraordinary graphic design. Artists, photographers, and typographers turned company stories into objects worth keeping.</p><p>This is a place to wander through that history. Explore the covers, unfold the pages, and collect what catches your eye.</p><div class="about-stats"><span><strong>3,002</strong>artifacts</span><span><strong>1945–2023</strong>years of design</span></div><p class="source-note">Catalogue and cover images from <a href="https://annualreport.gallery/" target="_blank" rel="noreferrer">Annual Report Archive by Phil Hedayatnia ↗</a>. Original documents are credited to their source collections. Rights remain with their respective owners.</p><p class="source-note">Full-page reading is available when the source provides public scans or a PDF. Other entries link to their original collection. Your collection is saved in this browser.</p></dialog>
-<dialog id="reader" class="reader" aria-label="Report reading room"><header class="reader-header"><button id="close-reader">${icon("arrow-left")} <span>Back to archive</span></button><span class="reader-breadcrumb">ANNUAL ARCHIVE <span>/</span> READING ROOM</span><button id="save-report">${icon("bookmark")} Save report</button></header><div class="reader-body"><aside class="report-info" id="report-info"></aside><section class="report-stage"><div id="page-canvas" class="page-canvas" tabindex="0" aria-label="Report pages canvas. Drag or use arrow keys to browse."></div><div id="page-strip" class="page-strip hidden" aria-label="Horizontal report pages"></div><div id="page-reader" class="page-reader hidden"></div><div id="report-status" class="report-status" role="status"></div><div class="reader-dock"><div class="view-switch"><button id="strip-mode">${icon("book-open")} Scroll</button><button id="pages-mode" class="selected">${icon("grid-2x2")} All pages</button><button id="read-mode">${icon("book-open")} Read</button></div><span class="dock-line"></span><div id="page-navigation"><button id="prev-page" aria-label="Previous page">${icon("arrow-left")}</button><span id="page-number">—</span><button id="next-page" aria-label="Next page">${icon("arrow-right")}</button></div><div id="page-zoom"><button id="page-minus" aria-label="Zoom out pages">${icon("minus")}</button><button id="page-reset" aria-label="Reset pages canvas">100%</button><button id="page-plus" aria-label="Zoom in pages">${icon("plus")}</button></div></div></section></div></dialog><div id="toast" class="toast" role="status"></div>`;
+<dialog id="reader" class="reader" aria-label="Report reading room"><header class="reader-header"><button id="close-reader">${icon("arrow-left")} <span>Back to archive</span></button><button id="report-details" aria-label="Report information" aria-expanded="false">${icon("info")}</button><button id="save-report">${icon("bookmark")} Save report</button></header><div class="reader-body"><aside class="report-info" id="report-info"></aside><section class="report-stage"><div id="page-canvas" class="page-canvas" tabindex="0" aria-label="Report pages canvas. Drag or use arrow keys to browse."></div><div id="page-strip" class="page-strip hidden" aria-label="Horizontal report pages"></div><div id="page-reader" class="page-reader hidden"></div><div id="report-status" class="report-status" role="status"></div><div class="reader-dock"><div class="view-switch"><button id="strip-mode">${icon("book-open")} Scroll</button><button id="pages-mode" class="selected">${icon("grid-2x2")} All pages</button><button id="read-mode">${icon("book-open")} Read</button></div><span class="dock-line"></span><div id="page-navigation"><button id="prev-page" aria-label="Previous page">${icon("arrow-left")}</button><span id="page-number">—</span><button id="next-page" aria-label="Next page">${icon("arrow-right")}</button></div><div id="page-zoom"><button id="page-minus" aria-label="Zoom out pages">${icon("minus")}</button><button id="page-reset" aria-label="Reset pages canvas">100%</button><button id="page-plus" aria-label="Zoom in pages">${icon("plus")}</button></div></div></section></div></dialog><div id="toast" class="toast" role="status"></div>`;
 paintIcons();
 const $ = (s) => document.querySelector(s);
 function toast(message) {
@@ -184,7 +184,7 @@ function applyFilters() {
   if (canvas) canvas.setItems(filtered);
   if (view === "grid") renderGrid();
   $("#open-search").classList.toggle("has-query", !!query);
-  $("#open-search span").textContent = query || "Find something good";
+  $("#open-search span").textContent = query || "Search the archive";
 }
 function renderGrid() {
   const grid = $("#grid");
@@ -193,7 +193,7 @@ function renderGrid() {
       .slice(0, gridLimit)
       .map(
         (e) =>
-          `<button class="grid-card" data-id="${esc(e.id)}"><img src="/api/cover?id=${encodeURIComponent(e.id)}" loading="lazy" alt="${esc(e.o)} annual report cover, ${esc(e.y)}"><span><span>${esc(e.o)}</span><span>${esc(e.y || "—")}</span></span></button>`,
+          `<button class="grid-card" data-id="${esc(e.id)}"><img src="/api/cover?id=${encodeURIComponent(e.id)}" loading="lazy" alt="${esc(e.o)} annual report cover, ${esc(e.y)}"></button>`,
       )
       .join("") +
     (filtered.length > gridLimit
@@ -271,7 +271,7 @@ $("#save-report").onclick = () => {
   updateSaved();
   if (savedOnly) applyFilters();
 };
-async function openReport(report) {
+async function openReport(report, origin) {
   if (!report) return;
   const current = ++requestId;
   manifest?.pdfDocument?.destroy();
@@ -286,7 +286,9 @@ async function openReport(report) {
   $("#page-reader").innerHTML = "";
   $("#page-strip").innerHTML = "";
   $("#page-canvas").innerHTML = "";
+  $("#reader").classList.remove("details-open", "transitioning");
   $("#reader").showModal();
+  const arrival = beginReportTransition(report, origin);
   $("#report-info").innerHTML =
     `<div class="eyebrow">THE ANNUAL REPORT / ${esc(report.y || "UNDATED")}</div><h2>${esc(report.o)}</h2><span class="report-industry">${esc(report.i)}</span><div class="report-cover"><img src="/api/cover?id=${encodeURIComponent(report.id)}" alt="${esc(report.o)} cover"></div><p class="report-description">${esc(report.d)}</p>${report.dsg ? `<div class="info-pair"><span>DESIGN</span><strong>${esc(report.dsg)}</strong></div>` : ""}<div class="info-pair"><span>COLLECTION</span><strong>${esc(report.c)}</strong></div><a class="source-link" href="${esc(report.s)}" target="_blank" rel="noreferrer">Visit original source ${icon("arrow-up-right")}</a><p class="availability" id="availability">Finding the original pages…</p>`;
   updateSaved();
@@ -326,7 +328,9 @@ async function openReport(report) {
       if (innerWidth < 700) readerCanvas.setZoom(0.7);
       renderStrip();
       setReaderMode("pages");
+      arrival.finish();
     } else {
+      arrival.finish();
       $("#availability").textContent =
         "This collection provides a cover and source record; full page scans are not available here.";
       $("#report-status").innerHTML =
@@ -335,6 +339,7 @@ async function openReport(report) {
       paintIcons();
     }
   } catch {
+    arrival.finish();
     if (current !== requestId) return;
     $("#availability").textContent =
       "The original collection is temporarily unavailable.";
@@ -486,9 +491,32 @@ $("#next-page").onclick = () => {
 $("#page-minus").onclick = () => readerCanvas?.setZoom(readerCanvas.tz - 0.15);
 $("#page-plus").onclick = () => readerCanvas?.setZoom(readerCanvas.tz + 0.15);
 $("#page-reset").onclick = () => readerCanvas?.reset();
-$("#close-reader").onclick = () => $("#reader").close();
+async function closeReader() {
+  const dialog = $("#reader");
+  const token = requestId;
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    await dialog.animate([{ opacity: 1 }, { opacity: 0 }], {
+      duration: 160,
+      easing: "ease-out",
+    }).finished;
+  }
+  if (token === requestId) dialog.close();
+}
+$("#close-reader").onclick = closeReader;
+$("#reader").addEventListener("cancel", (e) => {
+  e.preventDefault();
+  closeReader();
+});
+$("#report-details").onclick = () => {
+  const expanded = $("#reader").classList.toggle("details-open");
+  $("#report-details").setAttribute("aria-expanded", expanded);
+};
 $("#reader").addEventListener("close", () => {
   if ($("#reader").open) return;
+  $("#reader").classList.remove("transitioning");
+  $("#reader")
+    .querySelectorAll(".transition-cover")
+    .forEach((el) => el.remove());
   ++requestId;
   readerCanvas?.destroy();
   readerCanvas = null;
@@ -552,3 +580,74 @@ window.addEventListener("hashchange", () => {
     openReport(data.find((report) => report.id === id));
   else if (!id && $("#reader").open) $("#reader").close();
 });
+
+// Keep secondary controls available without occupying the canvas.
+$(".search-body").prepend($(".filterbar"));
+function beginReportTransition(report, origin) {
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const dialog = $("#reader");
+  dialog.querySelectorAll(".transition-cover").forEach((el) => el.remove());
+  if (!origin || reduced) return { finish() {} };
+  const cover = document.createElement("img");
+  cover.className = "transition-cover";
+  cover.alt = "";
+  cover.src = "/api/cover?id=" + encodeURIComponent(report.id);
+  Object.assign(cover.style, {
+    left: origin.left + "px",
+    top: origin.top + "px",
+    width: origin.width + "px",
+    height: origin.height + "px",
+  });
+  dialog.append(cover);
+  const height = Math.min(innerHeight * 0.48, 420);
+  const scale = height / origin.height;
+  const x = (innerWidth - origin.width * scale) / 2 - origin.left;
+  const y = (innerHeight - height) / 2 - origin.top;
+  const centered = `translate(${x}px, ${y}px) scale(${scale})`;
+  const enter = cover.animate(
+    [{ transform: "translate(0,0) scale(1)" }, { transform: centered }],
+    { duration: 480, easing: "cubic-bezier(.22,1,.36,1)", fill: "forwards" },
+  );
+  dialog.classList.add("transitioning");
+  return {
+    async finish() {
+      await enter.finished;
+      await new Promise((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve)),
+      );
+      if (!cover.isConnected) return;
+      const target = $(
+        '#page-canvas [data-tile="0:0"]',
+      )?.getBoundingClientRect();
+      const end = target
+        ? `translate(${target.left - origin.left}px,${target.top - origin.top}px) scale(${target.width / origin.width})`
+        : centered;
+      dialog.classList.remove("transitioning");
+      $("#page-canvas").animate(
+        [
+          { opacity: 0, transform: "translateY(12px)" },
+          { opacity: 1, transform: "translateY(0)" },
+        ],
+        { duration: 520, easing: "cubic-bezier(.22,1,.36,1)" },
+      );
+      await cover.animate(
+        [
+          { transform: centered, opacity: 1 },
+          { transform: end, opacity: 1, offset: 0.78 },
+          { transform: end, opacity: 0 },
+        ],
+        {
+          duration: 480,
+          easing: "cubic-bezier(.22,1,.36,1)",
+          fill: "forwards",
+        },
+      ).finished;
+      cover.remove();
+    },
+  };
+}
+
+$(".wordmark").innerHTML =
+  '<svg class="archive-symbol" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" stroke="currentColor" stroke-width="1.5"/></svg><span>annual</span>';
+$(".masthead").append($("#open-search"));
+$(".dock > .dock-line").remove();
