@@ -91,3 +91,5 @@ The home dock separates **Covers / Pages** from **Canvas / Grid**. Pages combine
 - `npm run test:command`: verifies the minimal command menu, keyboard navigation, content toggles, persistent page layouts, responsive controls, exact-page opening, and returning to covers.
 
 Catalogue names were audited against cover text across all 3,007 reports. The [name audit](docs/catalog-name-audit.md) describes coverage and limits; the [correction log](docs/catalog-name-corrections.json) preserves source attribution for all corrected or normalized names. Regression tests prevent placeholder headings and stale name embeddings from returning.
+
+- `npm run test:loader`: checks the artwork intro on desktop and mobile, decoded-image readiness, exact DOM-node handoff to the canvas, and reduced-motion behavior.

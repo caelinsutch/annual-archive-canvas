@@ -4,7 +4,7 @@ import Icon from './Icon.astro';
 import catalogue from '../../public/catalog.json';
 const reportCount=catalogue.length.toLocaleString('en-US');
 ---
-<div id="app-splash" class={cx('splash')} role="status"><div class={cx('splashInner')}><span class={cx('splashBrand')}>annual</span><span class={cx('splashCaption')}>An archive of good design</span><span class={cx('splashTrack')}><span data-progress class={cx('splashProgress')}></span></span></div></div>
+<div id="app-splash" class={cx('splash')} role="status" aria-label="Loading the annual archive"><div data-intro-surface class={cx('splashSurface')}></div><div data-intro-title class={cx('splashInner')}><span class={cx('splashBrand')}>annual<span class={cx('splashSubtitle')}>archive</span></span></div><div data-intro-stage class={cx('splashStage')} aria-hidden="true"></div></div>
 <a class="skip-link" href="#gallery">Skip to archive</a>
 <header class:list={['masthead',cx('masthead')]}>
  <a class:list={['wordmark',cx('wordmark')]} href="/" aria-label="Annual Archive home"><svg class:list={['archive-symbol',cx('symbol')]} viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" stroke="currentColor" stroke-width="1.5"/></svg><span>annual</span></a>

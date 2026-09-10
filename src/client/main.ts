@@ -1001,6 +1001,7 @@ $("#reader").addEventListener("close", () => {
   previousFocus?.focus();
 });
 document.addEventListener("keydown", (e) => {
+  if (document.querySelector("#app-splash")) return;
   const input = /INPUT|SELECT|TEXTAREA/.test(
     document.activeElement?.tagName || "",
   );
@@ -1036,7 +1037,7 @@ try {
   data = await r.json();
   applyArchiveFilter();
   initCanvas();
-  await appSplash.finish($("#gallery"));
+  await appSplash.finish($("#gallery"), canvas);
   const id = new URLSearchParams(location.hash.slice(1)).get("report");
   if (id) openReport(data.find((e) => e.id === id));
 } catch {

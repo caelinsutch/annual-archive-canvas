@@ -17,7 +17,8 @@
     "index:pages": "node --import tsx scripts/index-pages.ts",
     "index:catalog": "node --import tsx scripts/embed-catalog.ts",
     "test:motion": "node --import tsx scripts/qa-motion.ts",
-    "test:command": "node --import tsx scripts/qa-command.ts"
+    "test:command": "node --import tsx scripts/qa-command.ts",
+    "test:loader": "node --import tsx scripts/qa-loader.ts"
   },
   "dependencies": {
     "@astrojs/node": "^11.1.5",

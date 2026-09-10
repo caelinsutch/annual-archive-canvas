@@ -320,12 +320,12 @@ img,
   bottom: auto;
   flex-direction: row;
   gap: 12px;
-  padding: 10px 14px;
-  border: 1px solid #e8e8e870;
-  border-radius: 999px;
-  background: #ffffffbf;
-  backdrop-filter: blur(14px);
-  box-shadow: 0 3px 18px #00000004;
+  padding: 6px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
   white-space: nowrap;
 }
 .report-loading > span:first-child {
@@ -410,4 +410,12 @@ dialog.dialog-exiting:not(.reader)::backdrop {
   .dock > .dock-line {
     display: none;
   }
+}
+
+/* Keep the same DOM covers visible while the intro temporarily owns them. */
+.intro-borrowing .webgl {
+  visibility: hidden;
+}
+.intro-borrowing .artifact img {
+  opacity: 1 !important;
 }
