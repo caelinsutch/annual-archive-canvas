@@ -1,5 +1,6 @@
 import { cx } from "../styles/ui";
 import { motion } from "../lib/motion";
+import { constrainPageCamera } from "../lib/page-bounds";
 import { waitForTextureCoverage } from "./texture-readiness";
 import type { Report, ArchiveItem, ReportPage, CoverRect } from "../lib/types";
 type CanvasItem = ArchiveItem | ReportPage;
@@ -148,6 +149,7 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
           this.tx += e.deltaX / this.zoom;
           this.ty += e.deltaY / this.zoom;
         }
+        this.constrainPages();
       },
       { passive: false, signal },
     );
@@ -185,6 +187,7 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
           this.tx -= dx / this.zoom;
           this.ty -= dy / this.zoom;
         }
+        this.constrainPages();
       },
       { signal },
     );
@@ -219,6 +222,7 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
           e.preventDefault();
           this.tx += directions[e.key][0];
           this.ty += directions[e.key][1];
+          this.constrainPages();
         }
       },
       { signal },
@@ -241,6 +245,7 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
     this.tx += anchorX / this.tz - anchorX / next;
     this.ty += anchorY / this.tz - anchorY / next;
     this.tz = next;
+    this.constrainPages();
     this.onZoom?.(this.tz);
   }
   reset() {
@@ -386,6 +391,7 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
       this.renderer?.clear();
       return;
     }
+    this.constrainPages();
     const ease = this.reduced
       ? 1
       : 1 - Math.pow(1 - motion.cameraEase, this.frameRatio);
@@ -626,6 +632,7 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
       this.ty = 0;
       this.tz = 1;
     }
+    this.constrainPages();
     if (previous !== layout) {
       this.x = this.tx;
       this.y = this.ty;
@@ -655,6 +662,33 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
       const value = await texture;
       if (!this.disposed) card.mesh.material.uniforms.uTexture.value = value;
     }
+  }
+  constrainPages() {
+    if (!this.pages || this.pageLayout !== "pages") return;
+    const rectangles = this.items.map((item, index) => {
+      const key = Math.floor(index / 5) + ":" + (index % 5);
+      const aspect = cardAspect(this.cards.get(key) || {}, item);
+      const height = Math.min(300, 210 * aspect);
+      const width = height / aspect;
+      return {
+        x: (index % 5) * 270 + 145 - width / 2,
+        y: Math.floor(index / 5) * 380 + 150 - height / 2,
+        width,
+        height,
+      };
+    });
+    const bounded = constrainPageCamera(
+      this.tx,
+      this.ty,
+      this.tz,
+      {
+        width: this.w,
+        height: this.h,
+      },
+      rectangles,
+    );
+    this.tx = bounded.x;
+    this.ty = bounded.y;
   }
   tickPages() {
     const stripHeight = Math.min(this.h - 140, 620);

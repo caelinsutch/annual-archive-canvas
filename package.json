@@ -21,7 +21,8 @@
     "test:loader": "node --import tsx scripts/qa-loader.ts",
     "cache:pages": "node --import tsx scripts/cache-pdf-pages.ts",
     "eval:expansion": "node --import tsx scripts/evaluate-page-expansion.ts",
-    "expand:pages": "node --import tsx scripts/expand-pages.ts"
+    "expand:pages": "node --import tsx scripts/expand-pages.ts",
+    "test:bounds": "node --import tsx scripts/qa-page-bounds.ts"
   },
   "dependencies": {
     "@astrojs/node": "^11.1.5",
