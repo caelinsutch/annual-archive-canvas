@@ -38,6 +38,7 @@ export async function waitForArtwork(
   await frame();
 }
 type IntroCanvas = {
+  waitForVisibleTextures: () => Promise<void>;
   paused: boolean;
   cards: Map<
     string,
@@ -220,6 +221,7 @@ export function manageSplash(el: HTMLElement) {
         root ? waitForArtwork(root) : Promise.resolve(),
       ]);
       if (!el.isConnected) return;
+      await canvas?.waitForVisibleTextures();
       const revealed =
         !reduced() && root && canvas && (await revealCovers(el, root, canvas));
       if (!revealed && !reduced())

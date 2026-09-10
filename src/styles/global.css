@@ -416,6 +416,7 @@ dialog.dialog-exiting:not(.reader)::backdrop {
 .intro-borrowing .webgl {
   visibility: hidden;
 }
-.intro-borrowing .artifact img {
+.intro-borrowing .artifact img,
+[data-intro-stage] .artifact img {
   opacity: 1 !important;
 }

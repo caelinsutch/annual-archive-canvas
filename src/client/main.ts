@@ -1128,6 +1128,7 @@ function beginReportTransition(
           setTimeout(resolve, Math.max(0, 650 - (performance.now() - began))),
         ),
       ]);
+      await readerCanvas?.waitForVisibleTextures();
       if (!hero.isConnected || !dialog.open || closingReader) return;
       cleanup();
       dialog.removeEventListener("close", cleanup);

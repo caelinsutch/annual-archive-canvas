@@ -37,6 +37,20 @@ try {
     await until(`window.introCards?.length > 0`);
     assert.equal(
       await evaluate(
+        `document.querySelector('#gallery').dataset.textureReadiness`,
+      ),
+      "ready",
+      "Intro waits for uploaded and rendered WebGL textures",
+    );
+    assert.equal(
+      await evaluate(
+        `(()=>{const d=document.querySelector('#gallery').dataset;const total=Number(d.texturesTotal);return Number(d.texturesReady)>=Math.min(total,Math.max(12,Math.ceil(total*.85)));})()`,
+      ),
+      true,
+      "Visible texture coverage meets the readiness threshold",
+    );
+    assert.equal(
+      await evaluate(
         `window.introImages.every(i=>i.complete&&i.naturalWidth>0)`,
       ),
       true,

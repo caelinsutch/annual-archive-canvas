@@ -1,5 +1,6 @@
 import { cx } from "../styles/ui";
 import { motion } from "../lib/motion";
+import { waitForTextureCoverage } from "./texture-readiness";
 import type { Report, ArchiveItem, ReportPage, CoverRect } from "../lib/types";
 type CanvasItem = ArchiveItem | ReportPage;
 interface Card<T> {
@@ -336,6 +337,43 @@ export class ArchiveCanvas<T extends CanvasItem = Report> {
     };
     this.cards.set(key, card);
     return card;
+  }
+  async waitForVisibleTextures() {
+    const nextFrame = () =>
+      new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+    if (!this.renderer || this.renderer.getContext().isContextLost()) {
+      this.root.dataset.textureReadiness = "fallback";
+      return;
+    }
+    this.root.dataset.textureReadiness = "waiting";
+    await nextFrame();
+    const result = await waitForTextureCoverage(() => {
+      const visible = [...this.cards.values()].filter((card) => {
+        const r = card.el.getBoundingClientRect();
+        return (
+          r.width > 0 &&
+          r.right > 0 &&
+          r.left < innerWidth &&
+          r.bottom > 0 &&
+          r.top < innerHeight
+        );
+      });
+      const ready = visible.filter(
+        (card) => !!card.mesh?.material.uniforms.uTexture.value,
+      ).length;
+      this.root.dataset.texturesReady = String(ready);
+      this.root.dataset.texturesTotal = String(visible.length);
+      return { ready, total: visible.length };
+    }, nextFrame);
+    if (this.disposed) return;
+    // A TextureLoader resolution is only a CPU-side image. Upload before the handoff.
+    for (const card of this.cards.values()) {
+      const texture = card.mesh?.material.uniforms.uTexture.value;
+      if (texture) this.renderer.initTexture(texture);
+    }
+    this.renderer.render(this.scene, this.camera);
+    await nextFrame();
+    this.root.dataset.textureReadiness = result.complete ? "ready" : "fallback";
   }
   tick() {
     if (this.disposed) return;
