@@ -40,6 +40,13 @@ export interface ReportManifest {
   source: string;
   pdf?: string;
   design?: Record<number, DesignTag[]>;
+  download?: {
+    url: string;
+    sha256: string;
+    bytes: number;
+    pageCount: number;
+    cachedAt: string;
+  };
 }
 export interface ReaderManifest extends ReportManifest {
   pdfDocument?: PDFDocumentProxy;

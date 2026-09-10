@@ -45,7 +45,7 @@ Deploy as a **Node service**, using `npm ci && npm run build` as the build comma
 
 **Report search** combines lexical matching with BGE-small-en-v1.5 text embeddings of catalogue names, descriptions, designers, industries, and colors. All 3,007 reports are indexed.
 
-**Page search** uses CLIP image/text embeddings of actual scans, with suggested tags for page role, layout, typography, imagery, palette, and style. The committed visual index contains **2,692 pages across 87 reports**. It covers processed scans, not every page in the catalogue; tags are suggestions rather than verified classifications.
+**Page search** uses CLIP image/text embeddings of actual scans, with suggested tags for page role, layout, typography, imagery, palette, and style. The committed visual index contains **4,951 pages across 187 reports**. This includes 2,259 newly downloaded pages from 100 additional reports. It covers processed scans, not every page in the catalogue; tags are suggestions rather than verified classifications.
 
 Query inference runs on the Node server. Bulk indexing is a separate job:
 
@@ -76,7 +76,7 @@ npm run test:loader
 
 Browser checks require the [agent-browser CLI](https://github.com/vercel-labs/agent-browser) and its Chromium installation. They cover persistent image nodes, report transitions, keyboard navigation, responsive controls, reduced motion, and WebGL loading readiness.
 
-Search fixtures and results live in [`benchmarks/`](benchmarks/). Text evaluation uses 20 editorial queries split into development and held-out sets. Visual evaluation uses ten inspected queries within the Cummins 1966 report. These are small regression benchmarks, not a comprehensive relevance study. Run `npm run eval:search` or `npm run eval:pages` for individual results.
+Search fixtures and results live in [`benchmarks/`](benchmarks/). Text evaluation uses 20 editorial queries split into development and held-out sets. Visual evaluation uses ten inspected queries within the Cummins 1966 report, plus four known-page queries across four newly downloaded reports. These are small regression benchmarks, not a comprehensive relevance study. Run `npm run eval:search` or `npm run eval:pages` for individual results.
 
 ## Project structure
 
@@ -100,3 +100,17 @@ Readers resolve public scans and PDFs from sources including Internet Archive, U
 Report names received a machine-assisted cover-text audit across all 3,007 entries. See the [name audit](docs/catalog-name-audit.md), [correction log](docs/catalog-name-corrections.json), and [source discovery notes](docs/source-discovery.md) for evidence and remaining limitations.
 
 Report artwork, scans, and catalogue descriptions belong to their respective rights holders. Their inclusion here does not grant a new license to those materials.
+
+### Expand downloaded page coverage
+
+```sh
+# Download a diverse batch of up to 100 unindexed PDF reports, then embed their pages.
+npm run cache:pages
+npm run index:pages
+npm run eval:expansion
+
+# Or select specific existing catalogue reports.
+REPORT_IDS=uw43767,paulrand-ibm-1980 REPORT_LIMIT=2 npm run cache:pages
+```
+
+The cache job requires Poppler (`pdfinfo` and `pdftoppm`). It validates PDF signatures and page counts, saves 1,600-pixel reading images plus 600-pixel thumbnails, and records the original URL and SHA-256 checksum. Cached scans retain their aspect ratios and open inline without another upstream PDF request. Original PDFs stay in the ignored `work/pdf-cache/` directory; deployable page images and source manifests live in `public/`. Indexing remains a separate resumable step.

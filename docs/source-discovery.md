@@ -81,3 +81,13 @@ The candidate inventory in `work/source-discovery/hp/` records 1,111 pages claim
 ## Validation
 
 Twelve source-adapter tests pass, covering UW PDF and compound resolution, IIIF v2/v3, report/year filtering, actual WebP dimensions, unknown-source fallback, and all five exact IBM PDF replacements. Source discovery scripts, response metadata, downloaded evidence and visual contact sheets are retained in `work/source-discovery/` for reproduction.
+
+## September 10 expansion: downloaded reading pages
+
+A round-robin batch across issuers downloaded **100 additional University of Washington PDF reports**, producing **2,259 real page scans**. Two transient download failures were retried successfully; the second original was a 238 MB, 28-page PDF. No report was replaced with a cover-only approximation.
+
+Each original was checked for a PDF signature and parsed with `pdfinfo`. Poppler rendered every page, and the rendered file count had to match the PDF's page count before its manifest was updated. The original page aspect ratio is retained in 1,600-pixel reading images and 600-pixel thumbnails. First/last-page geometry and every asset path are covered by automated integrity checks; selected interior scans were also inspected visually.
+
+The reader serves cached pages from `public/report-pages/` through the existing report-bound page endpoint. The manifest keeps the original PDF URL, SHA-256 checksum, byte size, page count, and download date. Original PDFs remain in ignored `work/pdf-cache/`; deployable page images and manifests are committed. The acquisition log is [page-cache-expansion.json](page-cache-expansion.json).
+
+Run `npm run cache:pages` to acquire another diverse batch of unindexed PDF reports, followed by `npm run index:pages`. `REPORT_IDS`, `REPORT_LIMIT`, and `PDF_TIMEOUT_MS` can target or bound acquisition. A four-query known-page retrieval set across four of these reports supplements the original Cummins evaluation; it is intentionally scoped within each report and does not measure global relevance or taxonomy accuracy.

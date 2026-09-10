@@ -1,0 +1,25 @@
+{
+  "scope": "Four visually inspected known pages from four newly cached reports; rankings are evaluated within each report. This is a small acquisition regression set, not global relevance ground truth.",
+  "cases": [
+    {
+      "reportId": "uw15941",
+      "pageIndex": 3,
+      "query": "a directory of officers and administrative committees in centered columns of names"
+    },
+    {
+      "reportId": "uw2290",
+      "pageIndex": 10,
+      "query": "a tree farming process diagram with circular forest photographs and arrows"
+    },
+    {
+      "reportId": "uw43569",
+      "pageIndex": 9,
+      "query": "a black and white photograph of airplanes in flight beside two columns of text"
+    },
+    {
+      "reportId": "uw43762",
+      "pageIndex": 7,
+      "query": "a blue vertical sidebar with a company logo and blue headings above paragraphs"
+    }
+  ]
+}

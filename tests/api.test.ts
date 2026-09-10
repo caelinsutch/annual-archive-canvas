@@ -121,3 +121,30 @@ test(
     );
   },
 );
+
+test(
+  "downloaded report pages are served locally with their original page geometry",
+  options,
+  async () => {
+    const report = await (await fetch(base + "/api/report?id=uw15941")).json();
+    assert.equal(report.kind, "scans");
+    assert.equal(report.pages.length, 15);
+    assert.ok(
+      report.pages.every(
+        (p: { width: number; height: number }) => p.width > 0 && p.height > 0,
+      ),
+    );
+    for (const page of [report.pages[0], report.pages.at(-1)]) {
+      const response = await fetch(base + page.image);
+      assert.equal(response.status, 200);
+      assert.match(response.headers.get("content-type") || "", /image\/jpeg/);
+      const bytes = new Uint8Array(await response.arrayBuffer());
+      assert.equal(bytes[0], 0xff);
+      assert.equal(bytes[1], 0xd8);
+    }
+    assert.equal(
+      (await fetch(base + "/api/page?id=uw15941&page=99999")).status,
+      404,
+    );
+  },
+);

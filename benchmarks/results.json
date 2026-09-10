@@ -5,7 +5,7 @@
     "lexicalMRR10": 0.8016666666666665,
     "hybridRecall10": 0.85,
     "lexicalRecall10": 0.9,
-    "meanWarmLatencyMs": 384.97349155000006
+    "meanWarmLatencyMs": 11.349429199999989
   },
   "heldOutMetrics": {
     "MRR10": 0.85,
@@ -18,7 +18,7 @@
       "target": "daytonhudsontargetannualreports__dayton1967",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 213.1272909999998,
+      "latencyMs": 14.581041000000027,
       "top5": [
         "daytonhudsontargetannualreports__dayton1967",
         "woolworthvenatorfootlockerannualreports__woolworth1992",
@@ -32,7 +32,7 @@
       "target": "paulrand-cummins-1966",
       "rank": 15,
       "lexicalRank": 1,
-      "latencyMs": 263.17133300000023,
+      "latencyMs": 18.736833999999988,
       "top5": [
         "cromptonandknowlescorporationannualreports__cromptonandknowles1953",
         "McGillLibrary-631870-24061",
@@ -46,7 +46,7 @@
       "target": "generalelectriccompanyannualreports__generalelectric1972",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 262.108166,
+      "latencyMs": 8.526082999999971,
       "top5": [
         "generalelectriccompanyannualreports__generalelectric1972",
         "McGillLibrary-639923-41731",
@@ -60,7 +60,7 @@
       "target": "McGillLibrary-633092-42460",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 335.43174999999974,
+      "latencyMs": 11.942042000000015,
       "top5": [
         "McGillLibrary-633092-42460",
         "McGillLibrary-634901-41182",
@@ -74,7 +74,7 @@
       "target": "McGillLibrary-638502-31519",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 369.4230829999997,
+      "latencyMs": 13.411041999999952,
       "top5": [
         "McGillLibrary-638502-31519",
         "McGillLibrary-634098-39995",
@@ -88,7 +88,7 @@
       "target": "McGillLibrary-637328-32323",
       "rank": 348,
       "lexicalRank": 209,
-      "latencyMs": 465.3951670000006,
+      "latencyMs": 10.072999999999979,
       "top5": [
         "McGillLibrary-635299-38596",
         "McGillLibrary-631731-31600",
@@ -102,7 +102,7 @@
       "target": "McGillLibrary-630610-30787",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 544.6423340000001,
+      "latencyMs": 10.552374999999984,
       "top5": [
         "McGillLibrary-630610-30787",
         "McGillLibrary-638779-33955",
@@ -116,7 +116,7 @@
       "target": "generalelectriccompanyannualreports__generalelectric1965",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 331.63091600000007,
+      "latencyMs": 10.021082999999976,
       "top5": [
         "generalelectriccompanyannualreports__generalelectric1965",
         "McGillLibrary-631722-31573",
@@ -130,7 +130,7 @@
       "target": "McGillLibrary-635085-40246",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 342.4606670000012,
+      "latencyMs": 12.083999999999946,
       "top5": [
         "McGillLibrary-635085-40246",
         "McGillLibrary-631733-31606",
@@ -144,7 +144,7 @@
       "target": "generalelectriccompanyannualreports__generalelectric1951",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 89.23104199999943,
+      "latencyMs": 9.879916999999978,
       "top5": [
         "generalelectriccompanyannualreports__generalelectric1951",
         "shkressgeneralshoegenescoannualreports__genesco1971",
@@ -158,7 +158,7 @@
       "target": "paulrand-westinghouse-1974",
       "rank": 53,
       "lexicalRank": 143,
-      "latencyMs": 866.891791,
+      "latencyMs": 10.79200000000003,
       "top5": [
         "southlandcorp7elevenannualreports__southland1983",
         "southlandcorp7elevenannualreports__southland1972",
@@ -172,7 +172,7 @@
       "target": "mammothmartkingsstoresannualreports__kingsdeptstores1964",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 505.6773750000011,
+      "latencyMs": 10.94708300000002,
       "top5": [
         "mammothmartkingsstoresannualreports__kingsdeptstores1964",
         "funco-land-1998-annual-report",
@@ -186,7 +186,7 @@
       "target": "McGillLibrary-639558-44792",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 536.1850000000013,
+      "latencyMs": 10.908624999999915,
       "top5": [
         "McGillLibrary-639558-44792",
         "McGillLibrary-636211-28820",
@@ -200,7 +200,7 @@
       "target": "cromptonandknowlescorporationannualreports__cromptonandknowles1956",
       "rank": 1,
       "lexicalRank": 3,
-      "latencyMs": 287.54683300000033,
+      "latencyMs": 10.508624999999938,
       "top5": [
         "cromptonandknowlescorporationannualreports__cromptonandknowles1956",
         "McGillLibrary-633392-32794",
@@ -214,7 +214,7 @@
       "target": "walgreensWBAannualreports__walgreens1965",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 170.69316699999945,
+      "latencyMs": 11.639625000000024,
       "top5": [
         "walgreensWBAannualreports__walgreens1965",
         "walgreensWBAannualreports__walgreens1969",
@@ -228,7 +228,7 @@
       "target": "nationaldairykraftcounitedrexalldrugdartannualreports__kraftco1970",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 323.03049999999894,
+      "latencyMs": 11.527291999999989,
       "top5": [
         "nationaldairykraftcounitedrexalldrugdartannualreports__kraftco1970",
         "redowlstoresannualreports__redowl1952",
@@ -242,7 +242,7 @@
       "target": "wrgracecoannualreports__wrgrace1974",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 407.1804579999989,
+      "latencyMs": 9.82929200000001,
       "top5": [
         "wrgracecoannualreports__wrgrace1974",
         "McGillLibrary-634278-44207",
@@ -256,7 +256,7 @@
       "target": "McGillLibrary-633431-32413",
       "rank": 1,
       "lexicalRank": 1,
-      "latencyMs": 43.03837500000009,
+      "latencyMs": 9.255042000000003,
       "top5": [
         "McGillLibrary-633431-32413",
         "uw4363",
@@ -270,7 +270,7 @@
       "target": "tandyradioshackannualreports__tandy1974",
       "rank": 1,
       "lexicalRank": 5,
-      "latencyMs": 633.3327080000017,
+      "latencyMs": 11.216415999999981,
       "top5": [
         "tandyradioshackannualreports__tandy1974",
         "paulrand-westinghouse-1970",
@@ -284,7 +284,7 @@
       "target": "uw39535",
       "rank": 2,
       "lexicalRank": 2,
-      "latencyMs": 709.2718749999985,
+      "latencyMs": 10.55716700000005,
       "top5": [
         "uw25045",
         "uw39535",

@@ -21,6 +21,17 @@ function manifest(report: Report) {
   return result;
 }
 async function proxy(source: string, type: string, timeout: number) {
+  if (/^\/report-pages\/[a-zA-Z0-9_-]+\/\d+(?:-thumb)?\.jpg$/.test(source)) {
+    const bytes = await readFile(`public${source}`).catch(() =>
+      readFile(`dist/client${source}`),
+    );
+    return new Response(new Uint8Array(bytes), {
+      headers: {
+        "Content-Type": "image/jpeg",
+        "Cache-Control": "public, max-age=604800",
+      },
+    });
+  }
   const response = await fetch(source, {
     signal: AbortSignal.timeout(timeout),
   });

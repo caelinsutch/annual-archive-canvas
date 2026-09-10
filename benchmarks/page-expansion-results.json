@@ -1,0 +1,141 @@
+{
+  "scope": "Four visually inspected known pages from four newly cached reports; rankings are evaluated within each report. This is a small acquisition regression set, not global relevance ground truth.",
+  "metrics": {
+    "MRR10": 0.675,
+    "Hit10": 1
+  },
+  "rows": [
+    {
+      "reportId": "uw15941",
+      "pageIndex": 3,
+      "query": "a directory of officers and administrative committees in centered columns of names",
+      "rank": 1,
+      "top5": [
+        {
+          "reportId": "uw15941",
+          "pageIndex": 3,
+          "score": 0.31931445285702215
+        },
+        {
+          "reportId": "uw15941",
+          "pageIndex": 2,
+          "score": 0.3139388412914153
+        },
+        {
+          "reportId": "uw15941",
+          "pageIndex": 0,
+          "score": 0.30249258650491356
+        },
+        {
+          "reportId": "uw15941",
+          "pageIndex": 13,
+          "score": 0.2915370322815915
+        },
+        {
+          "reportId": "uw15941",
+          "pageIndex": 4,
+          "score": 0.28469436899730494
+        }
+      ]
+    },
+    {
+      "reportId": "uw2290",
+      "pageIndex": 10,
+      "query": "a tree farming process diagram with circular forest photographs and arrows",
+      "rank": 1,
+      "top5": [
+        {
+          "reportId": "uw2290",
+          "pageIndex": 10,
+          "score": 0.3267235027229238
+        },
+        {
+          "reportId": "uw2290",
+          "pageIndex": 4,
+          "score": 0.29484663761601043
+        },
+        {
+          "reportId": "uw2290",
+          "pageIndex": 9,
+          "score": 0.29213642413865604
+        },
+        {
+          "reportId": "uw2290",
+          "pageIndex": 14,
+          "score": 0.2861927494954904
+        },
+        {
+          "reportId": "uw2290",
+          "pageIndex": 20,
+          "score": 0.2828875878136405
+        }
+      ]
+    },
+    {
+      "reportId": "uw43569",
+      "pageIndex": 9,
+      "query": "a black and white photograph of airplanes in flight beside two columns of text",
+      "rank": 2,
+      "top5": [
+        {
+          "reportId": "uw43569",
+          "pageIndex": 0,
+          "score": 0.35615470202620964
+        },
+        {
+          "reportId": "uw43569",
+          "pageIndex": 9,
+          "score": 0.32955646561302815
+        },
+        {
+          "reportId": "uw43569",
+          "pageIndex": 11,
+          "score": 0.3277294836275994
+        },
+        {
+          "reportId": "uw43569",
+          "pageIndex": 13,
+          "score": 0.3209279418652719
+        },
+        {
+          "reportId": "uw43569",
+          "pageIndex": 6,
+          "score": 0.3144198704964754
+        }
+      ]
+    },
+    {
+      "reportId": "uw43762",
+      "pageIndex": 7,
+      "query": "a blue vertical sidebar with a company logo and blue headings above paragraphs",
+      "rank": 5,
+      "top5": [
+        {
+          "reportId": "uw43762",
+          "pageIndex": 4,
+          "score": 0.3405962306516192
+        },
+        {
+          "reportId": "uw43762",
+          "pageIndex": 11,
+          "score": 0.3292215637765403
+        },
+        {
+          "reportId": "uw43762",
+          "pageIndex": 6,
+          "score": 0.3263823808923491
+        },
+        {
+          "reportId": "uw43762",
+          "pageIndex": 9,
+          "score": 0.32490944430354735
+        },
+        {
+          "reportId": "uw43762",
+          "pageIndex": 7,
+          "score": 0.3041566583089648
+        }
+      ]
+    }
+  ]
+}
