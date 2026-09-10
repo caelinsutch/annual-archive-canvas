@@ -104,13 +104,23 @@ Report artwork, scans, and catalogue descriptions belong to their respective rig
 ### Expand downloaded page coverage
 
 ```sh
-# Download a diverse batch of up to 100 unindexed PDF reports, then embed their pages.
-npm run cache:pages
-npm run index:pages
-npm run eval:expansion
+# Download up to 100 more verified PDF reports, embed their pages, and run checks.
+npm run expand:pages
 
-# Or select specific existing catalogue reports.
-REPORT_IDS=uw43767,paulrand-ibm-1980 REPORT_LIMIT=2 npm run cache:pages
+# Process all remaining verified PDFs, or preview a smaller batch.
+npm run expand:pages -- --all
+npm run expand:pages -- --limit 25 --dry-run
+
+# Retry or target particular catalogue reports.
+npm run expand:pages -- --ids uw43767,paulrand-ibm-1980
 ```
 
-The cache job requires Poppler (`pdfinfo` and `pdftoppm`). It validates PDF signatures and page counts, saves 1,600-pixel reading images plus 600-pixel thumbnails, and records the original URL and SHA-256 checksum. Cached scans retain their aspect ratios and open inline without another upstream PDF request. Original PDFs stay in the ignored `work/pdf-cache/` directory; deployable page images and source manifests live in `public/`. Indexing remains a separate resumable step.
+Install Poppler first (`brew install poppler` on macOS); Node dependencies come from `npm install`. Models download on first use, with no API key required. Use `--help` for options, including download concurrency and timeout.
+
+The workflow downloads PDFs from existing verified source manifests, validates their signatures and page counts, and saves 1,600-pixel reading images plus 600-pixel thumbnails. It then resumes CLIP embeddings, runs all three search evaluations and cached-page integrity checks, and updates the coverage count in this README. It does not discover new source URLs or guarantee access to every catalogue report.
+
+Completed downloads and embeddings are reused on subsequent runs. Each run writes logs, download outcomes, and a final summary under `work/expansions/`. Failed sources produce a retry command and exit code 2 after successful pages are indexed and checked. An active lock prevents overlapping workflow runs; after an interrupted run, check that its recorded process has stopped before removing `work/expansions/active.lock`.
+
+Original PDFs stay in the ignored `work/pdf-cache/` directory. Deployable images, manifests, and the visual index live in `public/`; provenance and SHA-256 checksums are recorded in `docs/page-cache-expansion.json`. Review and commit these generated files, then rebuild/restart the production server (`npm run build` followed by `npm start`) or redeploy to serve the expanded collection. The workflow does not commit or deploy automatically.
+
+For individual stages, `npm run cache:pages`, `npm run index:pages`, and `npm run eval:check` remain available.

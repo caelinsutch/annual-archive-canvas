@@ -15,6 +15,10 @@ const indexed = new Set(
 );
 const selected = process.env.REPORT_IDS?.split(",");
 const limit = Number(process.env.REPORT_LIMIT || 100);
+const concurrency = Math.max(
+  1,
+  Math.min(4, Number(process.env.REPORT_CONCURRENCY || 3)),
+);
 const candidates: { report: Report; manifest: ReportManifest }[] = [];
 for (const report of catalog) {
   if (selected && !selected.includes(report.id)) continue;
@@ -52,6 +56,7 @@ const outcomes: {
   source: string;
   error?: string;
 }[] = [];
+let progressWrite = Promise.resolve();
 async function cache({ report, manifest }: (typeof candidates)[number]) {
   const id = report.id,
     folder = `work/pdf-cache/${id}`;
@@ -94,7 +99,10 @@ async function cache({ report, manifest }: (typeof candidates)[number]) {
         folder + "/original.pdf",
         folder + "/page",
       ],
-      { timeout: 180000, maxBuffer: 2e6 },
+      {
+        timeout: Number(process.env.PDF_RENDER_TIMEOUT_MS || 180000),
+        maxBuffer: 2e6,
+      },
     );
     const names = (await readdir(folder))
       .filter((n) => /^page-\d+\.jpg$/.test(n))
@@ -147,13 +155,21 @@ async function cache({ report, manifest }: (typeof candidates)[number]) {
     outcomes.push({ id, source: manifest.pdf!, error: String(error) });
     console.error(id, String(error));
   }
-  await writeFile(
-    process.env.CACHE_PROGRESS_PATH || "work/pdf-cache/progress.json",
-    JSON.stringify(outcomes, null, 2),
-  );
+  const snapshot = JSON.stringify(outcomes, null, 2);
+  const progressPath =
+    process.env.CACHE_PROGRESS_PATH || "work/pdf-cache/progress.json";
+  progressWrite = progressWrite.then(async () => {
+    await writeFile(progressPath + ".tmp", snapshot);
+    await rename(progressPath + ".tmp", progressPath);
+  });
+  await progressWrite;
 }
-for (let i = 0; i < batch.length; i += 3)
-  await Promise.all(batch.slice(i, i + 3).map(cache));
+let cursor = 0;
+await Promise.all(
+  Array.from({ length: concurrency }, async () => {
+    while (cursor < batch.length) await cache(batch[cursor++]);
+  }),
+);
 await mkdir("docs", { recursive: true });
 const reportPath =
   process.env.CACHE_REPORT_PATH || "docs/page-cache-expansion.json";

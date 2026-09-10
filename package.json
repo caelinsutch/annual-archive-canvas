@@ -20,7 +20,8 @@
     "test:command": "node --import tsx scripts/qa-command.ts",
     "test:loader": "node --import tsx scripts/qa-loader.ts",
     "cache:pages": "node --import tsx scripts/cache-pdf-pages.ts",
-    "eval:expansion": "node --import tsx scripts/evaluate-page-expansion.ts"
+    "eval:expansion": "node --import tsx scripts/evaluate-page-expansion.ts",
+    "expand:pages": "node --import tsx scripts/expand-pages.ts"
   },
   "dependencies": {
     "@astrojs/node": "^11.1.5",
