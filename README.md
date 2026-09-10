@@ -45,7 +45,7 @@ Deploy as a **Node service**, using `npm ci && npm run build` as the build comma
 
 **Report search** combines lexical matching with BGE-small-en-v1.5 text embeddings of catalogue names, descriptions, designers, industries, and colors. All 3,007 reports are indexed.
 
-**Page search** uses CLIP image/text embeddings of actual scans, with suggested tags for page role, layout, typography, imagery, palette, and style. The committed visual index contains **4,951 pages across 187 reports**. This includes 2,259 newly downloaded pages from 100 additional reports. It covers processed scans, not every page in the catalogue; tags are suggestions rather than verified classifications.
+**Page search** uses CLIP image/text embeddings of actual scans, with suggested tags for page role, layout, typography, imagery, palette, and style. The committed visual index contains **10,660 pages across 401 reports**. This includes 7,968 downloaded page scans from 314 complete PDF reports. It covers processed scans, not every page in the catalogue; tags are suggestions rather than verified classifications.
 
 Query inference runs on the Node server. Bulk indexing is a separate job:
 

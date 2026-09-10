@@ -6,6 +6,7 @@ test("expansion defaults to a bounded batch", () => {
   assert.equal(result.limit, 100);
   assert.equal(result.all, false);
   assert.equal(result.concurrency, 3);
+  assert.equal(result.timeout, 600);
 });
 test("all and explicit report selection are available", () => {
   assert.equal(parseExpansionOptions(["--all"]).all, true);

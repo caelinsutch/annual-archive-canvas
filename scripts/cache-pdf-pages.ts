@@ -71,6 +71,7 @@ async function cache({ report, manifest }: (typeof candidates)[number]) {
         ? await readFile(folder + "/original.pdf").catch(() => null)
         : null;
     if (!bytes) {
+      console.log(`Downloading ${id}: ${report.o} (${report.y})`);
       const response = await fetch(manifest.pdf!, {
         signal: AbortSignal.timeout(
           Number(process.env.PDF_TIMEOUT_MS || 90000),
@@ -83,11 +84,15 @@ async function cache({ report, manifest }: (typeof candidates)[number]) {
       await writeFile(folder + "/original.pdf", bytes);
       await writeFile(folder + "/source-url.txt", manifest.pdf!);
     }
+    console.log(
+      `${id}: PDF ready (${(bytes.length / 1024 / 1024).toFixed(1)} MB); checking pages`,
+    );
     const info = await exec("pdfinfo", [folder + "/original.pdf"], {
       timeout: 30000,
     });
     const count = Number(info.stdout.match(/^Pages:\s+(\d+)/m)?.[1]);
     if (!count || count > 500) throw Error(`Unexpected page count ${count}`);
+    console.log(`${id}: rendering ${count} pages`);
     await exec(
       "pdftoppm",
       [

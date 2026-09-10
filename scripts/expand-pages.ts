@@ -12,7 +12,7 @@ npm run expand:pages -- --limit 25       Run a smaller batch
 npm run expand:pages -- --ids uw43767    Target specific catalogue IDs (comma-separated)
 npm run expand:pages -- --dry-run        Preview the batch without downloads
 
-Options: --concurrency 1..4 (default 3), --timeout SECONDS (default 180).
+Options: --concurrency 1..4 (default 3), --timeout SECONDS (default 600).
 Requires Poppler (pdfinfo and pdftoppm). Models download on first use.
 Downloads and embeddings resume from existing files. Failed sources are recorded;
 rerun with --ids to retry them. Logs and the summary are saved under work/expansions/.`);

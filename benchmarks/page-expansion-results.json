@@ -1,8 +1,8 @@
 {
-  "scope": "Four visually inspected known pages from four newly cached reports; rankings are evaluated within each report. This is a small acquisition regression set, not global relevance ground truth.",
+  "scope": "Eight visually inspected known pages from eight cached reports; rankings are evaluated within each report. This is a small acquisition regression set, not global relevance ground truth.",
   "metrics": {
-    "MRR10": 0.675,
-    "Hit10": 1
+    "MRR10": 0.6125,
+    "Hit10": 0.875
   },
   "rows": [
     {
@@ -134,6 +134,138 @@
           "reportId": "uw43762",
           "pageIndex": 7,
           "score": 0.3041566583089648
+        }
+      ]
+    },
+    {
+      "reportId": "uw44299",
+      "pageIndex": 8,
+      "query": "a financial table of regional bank results with five numeric columns, footnotes, and a ruled bold heading",
+      "rank": 20,
+      "top5": [
+        {
+          "reportId": "uw44299",
+          "pageIndex": 37,
+          "score": 0.33239798917573077
+        },
+        {
+          "reportId": "uw44299",
+          "pageIndex": 43,
+          "score": 0.33234200221413707
+        },
+        {
+          "reportId": "uw44299",
+          "pageIndex": 47,
+          "score": 0.3292923573439952
+        },
+        {
+          "reportId": "uw44299",
+          "pageIndex": 15,
+          "score": 0.3247217164857878
+        },
+        {
+          "reportId": "uw44299",
+          "pageIndex": 1,
+          "score": 0.3221998222171975
+        }
+      ]
+    },
+    {
+      "reportId": "uw43765",
+      "pageIndex": 5,
+      "query": "two stacked color photographs of a pulp mill, railroad tank cars and factory buildings",
+      "rank": 1,
+      "top5": [
+        {
+          "reportId": "uw43765",
+          "pageIndex": 5,
+          "score": 0.3452179251364521
+        },
+        {
+          "reportId": "uw43765",
+          "pageIndex": 6,
+          "score": 0.3051663008645428
+        },
+        {
+          "reportId": "uw43765",
+          "pageIndex": 8,
+          "score": 0.29559707842398064
+        },
+        {
+          "reportId": "uw43765",
+          "pageIndex": 9,
+          "score": 0.2757627587876599
+        },
+        {
+          "reportId": "uw43765",
+          "pageIndex": 0,
+          "score": 0.26620428211230723
+        }
+      ]
+    },
+    {
+      "reportId": "uw15273",
+      "pageIndex": 7,
+      "query": "three narrow columns of sans serif text with bold headings and a black and white drawing of a retail store",
+      "rank": 5,
+      "top5": [
+        {
+          "reportId": "uw15273",
+          "pageIndex": 0,
+          "score": 0.2947008292846865
+        },
+        {
+          "reportId": "uw15273",
+          "pageIndex": 37,
+          "score": 0.27411829409527616
+        },
+        {
+          "reportId": "uw15273",
+          "pageIndex": 2,
+          "score": 0.2725959946320655
+        },
+        {
+          "reportId": "uw15273",
+          "pageIndex": 18,
+          "score": 0.27207436164735027
+        },
+        {
+          "reportId": "uw15273",
+          "pageIndex": 7,
+          "score": 0.2698709403667886
+        }
+      ]
+    },
+    {
+      "reportId": "uw16839",
+      "pageIndex": 6,
+      "query": "a large central color photograph of an airplane being assembled in a factory, flanked by text columns and small portraits",
+      "rank": 1,
+      "top5": [
+        {
+          "reportId": "uw16839",
+          "pageIndex": 6,
+          "score": 0.3483462125957803
+        },
+        {
+          "reportId": "uw16839",
+          "pageIndex": 7,
+          "score": 0.32588172396076226
+        },
+        {
+          "reportId": "uw16839",
+          "pageIndex": 34,
+          "score": 0.2903948154568857
+        },
+        {
+          "reportId": "uw16839",
+          "pageIndex": 21,
+          "score": 0.28753907940076245
+        },
+        {
+          "reportId": "uw16839",
+          "pageIndex": 31,
+          "score": 0.2829807834837461
         }
       ]
     }

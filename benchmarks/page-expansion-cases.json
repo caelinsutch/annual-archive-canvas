@@ -1,5 +1,5 @@
 {
-  "scope": "Four visually inspected known pages from four newly cached reports; rankings are evaluated within each report. This is a small acquisition regression set, not global relevance ground truth.",
+  "scope": "Eight visually inspected known pages from eight cached reports; rankings are evaluated within each report. This is a small acquisition regression set, not global relevance ground truth.",
   "cases": [
     {
       "reportId": "uw15941",
@@ -20,6 +20,26 @@
       "reportId": "uw43762",
       "pageIndex": 7,
       "query": "a blue vertical sidebar with a company logo and blue headings above paragraphs"
+    },
+    {
+      "reportId": "uw44299",
+      "pageIndex": 8,
+      "query": "a financial table of regional bank results with five numeric columns, footnotes, and a ruled bold heading"
+    },
+    {
+      "reportId": "uw43765",
+      "pageIndex": 5,
+      "query": "two stacked color photographs of a pulp mill, railroad tank cars and factory buildings"
+    },
+    {
+      "reportId": "uw15273",
+      "pageIndex": 7,
+      "query": "three narrow columns of sans serif text with bold headings and a black and white drawing of a retail store"
+    },
+    {
+      "reportId": "uw16839",
+      "pageIndex": 6,
+      "query": "a large central color photograph of an airplane being assembled in a factory, flanked by text columns and small portraits"
     }
   ]
 }

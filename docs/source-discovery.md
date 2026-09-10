@@ -90,4 +90,13 @@ Each original was checked for a PDF signature and parsed with `pdfinfo`. Poppler
 
 The reader serves cached pages from `public/report-pages/` through the existing report-bound page endpoint. The manifest keeps the original PDF URL, SHA-256 checksum, byte size, page count, and download date. Original PDFs remain in ignored `work/pdf-cache/`; deployable page images and manifests are committed. The acquisition log is [page-cache-expansion.json](page-cache-expansion.json).
 
-Run `npm run expand:pages` to acquire another diverse batch of unindexed PDF reports, resume embeddings, run search evaluations and asset checks, and refresh the README count. Use `-- --all` for all remaining verified PDFs, `-- --limit 25` for smaller batches, or `-- --ids uw43767` for a specific source. `-- --dry-run` previews eligibility without writing files. A four-query known-page retrieval set across four of these reports supplements the original Cummins evaluation; it is intentionally scoped within each report and does not measure global relevance or taxonomy accuracy.
+Run `npm run expand:pages` to acquire another diverse batch of unindexed PDF reports, resume embeddings, run search evaluations and asset checks, and refresh the README count. Use `-- --all` for all remaining verified PDFs, `-- --limit 25` for smaller batches, or `-- --ids uw43767` for a specific source. `-- --dry-run` previews eligibility without writing files. An eight-query known-page retrieval set across eight of these reports supplements the original Cummins evaluation; it is intentionally scoped within each report and does not measure global relevance or taxonomy accuracy.
+
+
+## September 10 continuation: all remaining verified PDFs
+
+The next pass processed all **214 previously unindexed verified PDF reports**, adding **5,709 pages**. Four transient failures were retried successfully. The largest retry was Todd Shipyards' 1987 report: a 518 MB PDF with 89 pages. All 214 reports now have complete cached reading images, thumbnails, provenance, and page embeddings.
+
+The cumulative download cache contains **7,968 pages from 314 reports**. Combined with the earlier scan sources, visual search contains **10,660 pages across 401 reports**. This completes the previously unindexed verified PDF backlog; it does not mean that all 3,007 catalogue reports have accessible or indexed full pages. Six already-indexed PDF sources continue using their existing readers.
+
+The final retry ran through the new `npm run expand:pages` workflow, including all three search evaluation suites, complete cached-page integrity checks, and the README coverage update. The expanded eight-page retrieval fixture retains a financial-table miss (rank 20 within its report); it scores MRR@10 0.6125 and Hit@10 0.875. This small, report-scoped fixture remains an acquisition regression check, not a claim of global style-search accuracy.

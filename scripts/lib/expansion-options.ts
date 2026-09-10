@@ -13,7 +13,7 @@ export function parseExpansionOptions(args: string[]) {
     all: false,
     limit: 100,
     concurrency: 3,
-    timeout: 180,
+    timeout: 600,
   };
   for (let i = 0; i < args.length; i++) {
     const flag = args[i];

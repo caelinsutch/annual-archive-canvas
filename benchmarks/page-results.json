@@ -12,7 +12,7 @@
       ],
       "firstRelevantRank": 1,
       "recall5": 1,
-      "latencyMs": 231.63212499999992,
+      "latencyMs": 299.55675,
       "top5": [
         4,
         2,
@@ -28,7 +28,7 @@
       ],
       "firstRelevantRank": 1,
       "recall5": 1,
-      "latencyMs": 3.6930830000000014,
+      "latencyMs": 3.382957999999917,
       "top5": [
         24,
         4,
@@ -45,7 +45,7 @@
       ],
       "firstRelevantRank": 4,
       "recall5": 0.5,
-      "latencyMs": 3.424250000000029,
+      "latencyMs": 3.990332999999964,
       "top5": [
         4,
         21,
@@ -61,7 +61,7 @@
       ],
       "firstRelevantRank": 1,
       "recall5": 1,
-      "latencyMs": 3.534291000000053,
+      "latencyMs": 5.876332999999931,
       "top5": [
         1,
         4,
@@ -77,7 +77,7 @@
       ],
       "firstRelevantRank": 2,
       "recall5": 1,
-      "latencyMs": 2.9437909999999192,
+      "latencyMs": 3.7930000000000064,
       "top5": [
         4,
         2,
@@ -93,7 +93,7 @@
       ],
       "firstRelevantRank": 1,
       "recall5": 1,
-      "latencyMs": 4.558332999999948,
+      "latencyMs": 4.3621250000001055,
       "top5": [
         3,
         17,
@@ -110,7 +110,7 @@
       ],
       "firstRelevantRank": 1,
       "recall5": 1,
-      "latencyMs": 3.653750000000059,
+      "latencyMs": 4.09679200000005,
       "top5": [
         11,
         21,
@@ -126,7 +126,7 @@
       ],
       "firstRelevantRank": 1,
       "recall5": 1,
-      "latencyMs": 3.5944170000000213,
+      "latencyMs": 5.028291999999965,
       "top5": [
         15,
         21,
@@ -142,7 +142,7 @@
       ],
       "firstRelevantRank": 2,
       "recall5": 1,
-      "latencyMs": 3.2128750000000537,
+      "latencyMs": 4.582250000000045,
       "top5": [
         21,
         20,
@@ -163,7 +163,7 @@
       ],
       "firstRelevantRank": 4,
       "recall5": 0.3333333333333333,
-      "latencyMs": 3.741041999999993,
+      "latencyMs": 4.570707999999968,
       "top5": [
         21,
         4,

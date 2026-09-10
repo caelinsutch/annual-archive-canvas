@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-10T16:19:41.995Z",
+  "generatedAt": "2026-09-10T17:05:15.375Z",
   "reports": [
     {
       "id": "uw15941",
@@ -600,15 +600,1290 @@
       "pages": 24,
       "sha256": "64bf838d4b7bdfe83df63ccce263f36da5588a430ddd87428f9d95f6e6d28de4",
       "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44614/download"
+    },
+    {
+      "id": "uw15925",
+      "pages": 14,
+      "sha256": "2a30993d5e35ccae8ff977a14dfbbd1fd017ab2aa5f902fd1ee3c22d65c49cb7",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/15911/download"
+    },
+    {
+      "id": "uw43764",
+      "pages": 14,
+      "sha256": "0c13d2bc371cdf37aa21259ed6767f95560e732fe6611ec98f75434f83760f82",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43764/download"
+    },
+    {
+      "id": "uw43677",
+      "pages": 31,
+      "sha256": "e23ca4122807a1d670f9ef9aaecca2b96be9bb01b9c58b12bcadbcbb9406378d",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43677/download"
+    },
+    {
+      "id": "uw2391",
+      "pages": 24,
+      "sha256": "a68ed372c6ec0378ef43951fc998dd311573d345641c1dbb55c9e150c4864d41",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2367/download"
+    },
+    {
+      "id": "uw2550",
+      "pages": 17,
+      "sha256": "674914634491d42c2c6579c26f1aee7591ab08d18db2d4755ad25cb745315628",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2533/download"
+    },
+    {
+      "id": "uw4090",
+      "pages": 14,
+      "sha256": "62d3e6a074a5de0bf675ed14aee90bc090095fc5cca5c32549d58cf80442cbd7",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44950/download"
+    },
+    {
+      "id": "uw33615",
+      "pages": 19,
+      "sha256": "6378fc44f2e49b317e443ee25d2ebf1b040835a97d9e51f4b48e228a3dda40a6",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/33596/download"
+    },
+    {
+      "id": "uw45040",
+      "pages": 16,
+      "sha256": "5b095cf9c5c74a8e8a02454fa91211d629c7f676b432c77e0b8a63fba410a0ea",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/45040/download"
+    },
+    {
+      "id": "uw20291",
+      "pages": 15,
+      "sha256": "68243f93c6af5999badae0e67cd22ed9502da116111620c351304c17a15e1e53",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/20276/download"
+    },
+    {
+      "id": "uw43739",
+      "pages": 4,
+      "sha256": "4587a656d524b27fc61d288362ecbdcc88d0f319705bfb1965b645f2d1bedfb4",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43739/download"
+    },
+    {
+      "id": "uw43627",
+      "pages": 25,
+      "sha256": "69d0bab5a437d62be44d1f42c30d63c099c77f181fd3b054ab7f8d8ee7f345a6",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43627/download"
+    },
+    {
+      "id": "uw17394",
+      "pages": 11,
+      "sha256": "5eeb69aaf9354138a5ee617ca7431e31b471aefb506c154c8ad46df09f290279",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/17383/download"
+    },
+    {
+      "id": "uw43607",
+      "pages": 21,
+      "sha256": "81a7a9f61c6744a7845b87c332eef016e7b5b4558f5eb909212afeed8c2211c3",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43607/download"
+    },
+    {
+      "id": "uw14890",
+      "pages": 17,
+      "sha256": "40e20d0d565fd9f6df8c36eddad10bcea7a6db9277020d616fb807aa3c47d181",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/14873/download"
+    },
+    {
+      "id": "uw44315",
+      "pages": 19,
+      "sha256": "09011ef7a9c29a82ea68e48c220f3592a374f708218aac6808e47c603e5dbe7b",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44315/download"
+    },
+    {
+      "id": "uw44337",
+      "pages": 20,
+      "sha256": "7cc61402008ce7e7f6a8fad52326f445c0a2de4a85edf600cefe36eb58974ad6",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44337/download"
+    },
+    {
+      "id": "uw15166",
+      "pages": 20,
+      "sha256": "b91d39f1a585b653a631bbcd159902978f018126cfafe10a9895964c99819113",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44945/download"
+    },
+    {
+      "id": "uw20007",
+      "pages": 17,
+      "sha256": "581ddca24afdd7279e86e934872febc3f63973fc06a6acb7a75b4b5f4b236a1d",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/19990/download"
+    },
+    {
+      "id": "uw16677",
+      "pages": 18,
+      "sha256": "6b117d5d55652dae83b0d1b0875c1cf8638a31bb59aa3143f32c1a8348d21b6e",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/16659/download"
+    },
+    {
+      "id": "uw4278",
+      "pages": 22,
+      "sha256": "0a472d4dd9378b500713da2bb816da6f26b40e7fa08b3c292823481fdbf56acf",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/4256/download"
+    },
+    {
+      "id": "uw44598",
+      "pages": 16,
+      "sha256": "ac1cd572ac1a6b12f96d2932b4c5dd1846bf8ff3239b484c5eed4ea1ea098572",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44598/download"
+    },
+    {
+      "id": "uw44150",
+      "pages": 25,
+      "sha256": "79ba3c71a8169b55b886b16e6652843a0cd2465a899e864371d5c43b49f57105",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44150/download"
+    },
+    {
+      "id": "uw37005",
+      "pages": 18,
+      "sha256": "9bf5e98550d64b6b8aad82e1c3ed2c4acb2795322cbfd3f10d446fcbabe98fc7",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44992/download"
+    },
+    {
+      "id": "uw44281",
+      "pages": 20,
+      "sha256": "f63f808c08d1f47cd0ce5cd5fcb09728590342f6f0529919930a256932350c36",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44281/download"
+    },
+    {
+      "id": "uw23596",
+      "pages": 26,
+      "sha256": "64d6bd66636a582313f2427a6c9f9edb3eb34f0f896dd7b0b7caa2f6f505c731",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/23570/download"
+    },
+    {
+      "id": "uw43811",
+      "pages": 28,
+      "sha256": "06c689b851f880ba1e88b092ca2f9cff287072b3cf1099190bf53736b78d17d0",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43811/download"
+    },
+    {
+      "id": "uw44388",
+      "pages": 30,
+      "sha256": "87df38e7fcc893b40ccd55dc7cb62ea8d8b742ecf9d21b3b856d2a3fb16b757b",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44388/download"
+    },
+    {
+      "id": "uw43665",
+      "pages": 28,
+      "sha256": "6b4821b1890da4c49c9643383d57926235e11725c8632df5187d5e89559ef51c",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43665/download"
+    },
+    {
+      "id": "uw16880",
+      "pages": 40,
+      "sha256": "41318169bb434249b596c1862492c3d24745db71a1c0dec320c79e30b823a049",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/16840/download"
+    },
+    {
+      "id": "uw43846",
+      "pages": 15,
+      "sha256": "f6d3c574adc6888a6796dd6a87ef9de65977faa874484e35ccefa7f40013a41b",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43846/download"
+    },
+    {
+      "id": "uw30292",
+      "pages": 4,
+      "sha256": "1b60464c9c5158dca0f79a0341bad113750395f91bb7a5579995b75e46d9f5df",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/45008/download"
+    },
+    {
+      "id": "uw14753",
+      "pages": 30,
+      "sha256": "1517deffb3d97071f1a3ce74eb5480cadf18526cd538e3c228b4b545ea7f4dfe",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/14723/download"
+    },
+    {
+      "id": "uw43513",
+      "pages": 20,
+      "sha256": "0b12260b9da48f3348e6795e59b365f6673fb706a22c98aab9088791d3fdaec3",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43513/download"
+    },
+    {
+      "id": "uw43809",
+      "pages": 31,
+      "sha256": "4f9ee1627b7a1d2e39588f25390028fb6afcfcc8364d786470f8dcf57a4661b1",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43809/download"
+    },
+    {
+      "id": "uw43148",
+      "pages": 35,
+      "sha256": "f91bfb86c6cfe38a86991237a92abd4a52279d9de651019de933dd97760955df",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43148/download"
+    },
+    {
+      "id": "uw44785",
+      "pages": 22,
+      "sha256": "98001dc423f2e8e8ece329b777a6338a51af849dc2a9c699ffa6592096fb2fdc",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44785/download"
+    },
+    {
+      "id": "uw43788",
+      "pages": 57,
+      "sha256": "c5480b919c10e69cc0e5607e41368ac5529374c597492a8b66bba793dd15c2fe",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43788/download"
+    },
+    {
+      "id": "uw34649",
+      "pages": 18,
+      "sha256": "af0ff8c5293a9c4776983b21b289fffc2f3147fd895e4a5eca1cf353553210ab",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/34631/download"
+    },
+    {
+      "id": "uw19327",
+      "pages": 31,
+      "sha256": "1e5978c96c0ba9356dbbb51f14c4fd5a93a7b0480bb2e91576a7a4dc7339838b",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/19296/download"
+    },
+    {
+      "id": "uw44216",
+      "pages": 36,
+      "sha256": "f8bcbc2c4128247135cd31b7b774d619f6923cd11e3caef1bceccb0a8c8778c6",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44216/download"
+    },
+    {
+      "id": "uw39026",
+      "pages": 20,
+      "sha256": "d12803991d1f845073e816cd47d391cee7d04f5e35ae7088826b3b6ca120bf3f",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/39006/download"
+    },
+    {
+      "id": "uw44219",
+      "pages": 24,
+      "sha256": "e873c7b6b9ef3d38b3a3fd0c42c6b9acee549c3bc195db28191e40a49f5f3ca6",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44219/download"
+    },
+    {
+      "id": "uw44097",
+      "pages": 44,
+      "sha256": "8fed03c077e36506921cdeb224a88f466f48ad4377baef86bc5c412df5aed1f6",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44097/download"
+    },
+    {
+      "id": "uw25275",
+      "pages": 40,
+      "sha256": "40c3c0284af946ea3c224097667e51bf898a54fe68b028e78b4932c5e3ebba86",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44984/download"
+    },
+    {
+      "id": "uw36409",
+      "pages": 54,
+      "sha256": "e387a92ed37aa0f06229a048e004bf6a162ebc2dd4cba82605896b50d561cd37",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44994/download"
+    },
+    {
+      "id": "uw43149",
+      "pages": 43,
+      "sha256": "19a1fc9564f8f513fce504a5c98ba82ca313e75bc842fc98cca5dcc556bf0680",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43149/download"
+    },
+    {
+      "id": "uw33274",
+      "pages": 30,
+      "sha256": "ebb045f5ecc43efec389e9cd59e1ee576c4023f9224dd8cfd4dbc1f948e449b8",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/33244/download"
+    },
+    {
+      "id": "uw43490",
+      "pages": 23,
+      "sha256": "80d88076060def2743810c3efc2d588577ababf7a52850961530873f0466b2d6",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43490/download"
+    },
+    {
+      "id": "uw44298",
+      "pages": 65,
+      "sha256": "0cfb4cba77e53525c874c8895a917dd63f2354f87988c51307ca681b9affaa86",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44298/download"
+    },
+    {
+      "id": "uw44271",
+      "pages": 19,
+      "sha256": "b770252452dcc086669236a6e53f9cceb2819f17a59e6177973e297143e8a51b",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44271/download"
+    },
+    {
+      "id": "uw44743",
+      "pages": 38,
+      "sha256": "4e9cd82fed56f7a99b08e031a3b1f3161b7c59845d98268e59233c4c84f7614a",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44743/download"
+    },
+    {
+      "id": "uw36865",
+      "pages": 38,
+      "sha256": "844231cd9ee5e941fa28ca20b2c58ba375d1d8790d132405449f1cad8ba61d5b",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/36827/download"
+    },
+    {
+      "id": "uw43523",
+      "pages": 34,
+      "sha256": "a47146305d924f81ffeaae783472f467b1914747ce86fac8355e680d9faa029a",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43523/download"
+    },
+    {
+      "id": "uw44089",
+      "pages": 21,
+      "sha256": "d80b15e931f220ade19d2f9e18415703bb09865d299278c42e6651c53f7700e3",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44089/download"
+    },
+    {
+      "id": "uw44178",
+      "pages": 25,
+      "sha256": "5e35ce9931016673bbaf38223392e3258e3ab0ccd63a9595c9192ae18e4da54d",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44178/download"
+    },
+    {
+      "id": "uw30524",
+      "pages": 20,
+      "sha256": "830a19a05fbbd9cdb490dcea7f5c939c67c315a1e1f4aad074a6333b5d3f08c8",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/30504/download"
+    },
+    {
+      "id": "uw44278",
+      "pages": 17,
+      "sha256": "c1eac14430cb39fde8ec09173babc3621f7fe9ff48f8d1b053af1bb93e58a930",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44278/download"
+    },
+    {
+      "id": "uw44477",
+      "pages": 21,
+      "sha256": "ba3f2902e86b0c1abde29fb882fe3d88f5aff32cc4c3391e8ae1d12e98236d87",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44477/download"
+    },
+    {
+      "id": "uw15960",
+      "pages": 18,
+      "sha256": "c64bb17ac3acbf2c07867dc7e569c89415130a1a9e1cb935c7e11c587a250b14",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/15942/download"
+    },
+    {
+      "id": "uw43674",
+      "pages": 28,
+      "sha256": "c12bb9fc1f636cb07a53f7bfa60f668119f14a7e8a54a47f277163258858afc8",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43674/download"
+    },
+    {
+      "id": "uw2366",
+      "pages": 22,
+      "sha256": "9384dbdc6448d30aaa7c2f6a920a1db583deba05f10cdb6e8fa91d75415d4fb0",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2344/download"
+    },
+    {
+      "id": "uw43763",
+      "pages": 16,
+      "sha256": "2dd5391a40e56258ff3b77fdb3b98863541bd8beb1e19e9f2900d842de1a5877",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43763/download"
+    },
+    {
+      "id": "uw2570",
+      "pages": 19,
+      "sha256": "6c6cad67ff177c9664f85a1499791f3171815484d3e8c6470e5a9195b0acf4bf",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2551/download"
+    },
+    {
+      "id": "uw4105",
+      "pages": 14,
+      "sha256": "cb869cc22920e16ed20aeaa3c9ce8b905a0b5cff45e67a94ceb7f0b98f148655",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44958/download"
+    },
+    {
+      "id": "uw27182",
+      "pages": 35,
+      "sha256": "99f26ce8a37339c88f3831b310e804b1c1b622a5bf045aa8290f47d551859c2e",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/27147/download"
+    },
+    {
+      "id": "uw45065",
+      "pages": 12,
+      "sha256": "e6f62273c1048225f70ba75277291424ff0960524695d822fe13a1de53192b63",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/45065/download"
+    },
+    {
+      "id": "uw33635",
+      "pages": 9,
+      "sha256": "8513d72ef2bc4aea2da281f01d5482bc4c02514d5f51e82d2eb6793c131ff337",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/33626/download"
+    },
+    {
+      "id": "uw25030",
+      "pages": 13,
+      "sha256": "d180c779f54c2e72912bd4ef4217345833049fe8d074710e53d91196ddfbf484",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/25017/download"
+    },
+    {
+      "id": "uw43738",
+      "pages": 16,
+      "sha256": "39a02e57b6a14b2f6cebddd2e8c5c47022f4148fa76da78eddbc2e3996b01667",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43738/download"
+    },
+    {
+      "id": "uw17407",
+      "pages": 12,
+      "sha256": "0572882e5dc15c51b8b1a1d6e0d47f90d30247a60ce32ed69c6861c5bfea34d9",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/17395/download"
+    },
+    {
+      "id": "uw43626",
+      "pages": 23,
+      "sha256": "b3eee8db49052369fab151866fda75dff22819d40826d21d69b10fe0fa970145",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43626/download"
+    },
+    {
+      "id": "uw14872",
+      "pages": 14,
+      "sha256": "b2da51711076a52213e0c4f202c7f79f22ed6089f6a41bb1f1a52e192adc174c",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/14858/download"
+    },
+    {
+      "id": "uw43600",
+      "pages": 22,
+      "sha256": "218ab9891d5a245a3fac5941e12716da4602ab7101878383b170813948e2b00c",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43600/download"
+    },
+    {
+      "id": "uw4315",
+      "pages": 22,
+      "sha256": "b074d5394202ad51ff9b6ca83e4a912b7923bbe22155ced3086afc62b1e130ed",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/4293/download"
+    },
+    {
+      "id": "uw37026",
+      "pages": 20,
+      "sha256": "0acf060b25c603a7a231f225549ec7219492f2fb1f3eb57a8c60d1ff46610289",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44976/download"
+    },
+    {
+      "id": "uw19989",
+      "pages": 17,
+      "sha256": "4bdc3bdd6b42e7b291d8b8ae6b29faa406981ca3558c07d4b4a1622f662c9017",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/19972/download"
+    },
+    {
+      "id": "uw16658",
+      "pages": 22,
+      "sha256": "7d446c44df625b51935a1c02dc6b52d3e2b25a178bd903b3cd4bd9a1d8c6419d",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/16636/download"
+    },
+    {
+      "id": "uw44283",
+      "pages": 15,
+      "sha256": "e0e2c227e85b29318a0d066278e86a13f865003e63411a95ddf10e7ac338ef7a",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44283/download"
+    },
+    {
+      "id": "uw15273",
+      "pages": 41,
+      "sha256": "8d2b825f48297d6abbb0629e165948dbfab6a7fb6c744948f9de964bf2799621",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44972/download"
+    },
+    {
+      "id": "uw44338",
+      "pages": 30,
+      "sha256": "ce86fdef2eedc4cf6090a2fde78b214b9727525f222e419d53a92e24859b179c",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44338/download"
+    },
+    {
+      "id": "uw43801",
+      "pages": 40,
+      "sha256": "7bf5e86d77458ff159db7997c29f3a2b9428381eb81c020d266f4df5735d8d62",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43801/download"
+    },
+    {
+      "id": "uw43667",
+      "pages": 28,
+      "sha256": "9ec582fd9efe86355c910a44e01e1c787cad5a211d0e8f140d6ba574971aedbe",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43667/download"
+    },
+    {
+      "id": "uw43515",
+      "pages": 23,
+      "sha256": "6ce070d173189d4f1a551e227f448295c23efb869391bea2abd3071370d49fda",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43515/download"
+    },
+    {
+      "id": "uw14722",
+      "pages": 33,
+      "sha256": "82871d2b095d0b921f995e00cd2ed8ed094ea49d71f17c4b129f7c198abf0833",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/14689/download"
+    },
+    {
+      "id": "uw44760",
+      "pages": 23,
+      "sha256": "de0d8d568e5e10ea909a5ddf15d1435ec7370977278c455b8d0d888e1b4489e2",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44760/download"
+    },
+    {
+      "id": "uw16839",
+      "pages": 41,
+      "sha256": "ece6c111ce716559e2843b7bef666da828a477c4065e3c70bee1786021aa3f27",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/16798/download"
+    },
+    {
+      "id": "uw43151",
+      "pages": 36,
+      "sha256": "93736f9467b96d7818eb3c35377e52aa23c54f05099622fb90d5accd21ac5049",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43151/download"
+    },
+    {
+      "id": "uw44323",
+      "pages": 32,
+      "sha256": "f8077ef9c009239d1f18e00e0995c500dfaedd4163b0b3e2b356b4b7f3077851",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44323/download"
+    },
+    {
+      "id": "uw37142",
+      "pages": 20,
+      "sha256": "0590c96c88c2acab11c8a28ec9b1984bba4825dd9477c2bc84c282dc6dedb6db",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/37122/download"
+    },
+    {
+      "id": "uw44218",
+      "pages": 19,
+      "sha256": "3b0d48dabbbfbbf324256de2c7cf08efb524b131e6e1668559291948fbd2ff17",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44218/download"
+    },
+    {
+      "id": "uw44621",
+      "pages": 22,
+      "sha256": "7ef0f42b25eec97034b02e28e91d322ede51ae10773c7a110b5c9e8bf9aa2b94",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44621/download"
+    },
+    {
+      "id": "uw43142",
+      "pages": 54,
+      "sha256": "31cd2f15e95aaf7cf12fbc6a426274777049c68d11dc622e9a4d346389100fa0",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43142/download"
+    },
+    {
+      "id": "uw44299",
+      "pages": 54,
+      "sha256": "0608a1db45a2d55c40767f31fd85978435f9bc1c59f74d539326025587c57e83",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44299/download"
+    },
+    {
+      "id": "uw2419",
+      "pages": 14,
+      "sha256": "6ddf92f9e8a1c6d745cea85e699179f6b94b81d023288afb00a7ed1453c7e73e",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2405/download"
+    },
+    {
+      "id": "uw43683",
+      "pages": 31,
+      "sha256": "3369160f6000c62829b686bbe75a7e060042812c96ac25818897d5107d90af8f",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43683/download"
+    },
+    {
+      "id": "uw43765",
+      "pages": 13,
+      "sha256": "b9441e9eabdced613e0e7af74013101396da73787240f2c19289224bd8b2384f",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43765/download"
+    },
+    {
+      "id": "uw15746",
+      "pages": 34,
+      "sha256": "fd509d6f443de2bbe19434ddb3eedb3aef0951c60eb7ff55b38d372d807e36d2",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/15712/download"
+    },
+    {
+      "id": "uw25045",
+      "pages": 14,
+      "sha256": "1bc203a47c5e0d962646cd08cb1fa1317ba3e4ddd1299466083801183db52691",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/25031/download"
+    },
+    {
+      "id": "uw4119",
+      "pages": 13,
+      "sha256": "28d37a7c7b160c1936556b51a50ebf94c6c1c4736c6c8fd0a9cd215436b339da",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44959/download"
+    },
+    {
+      "id": "uw2591",
+      "pages": 20,
+      "sha256": "d1ce0c314659cd9fb37b19157f72900931fd2f48f04eef62d87ec18f4664a389",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2571/download"
+    },
+    {
+      "id": "uw45047",
+      "pages": 15,
+      "sha256": "18433bde246e06f18db8d6b21e7765cd23e0fa5b105fe4fd026e0a6eedc65844",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/45047/download"
+    },
+    {
+      "id": "uw43742",
+      "pages": 16,
+      "sha256": "2803d5f37f141d1a5e5080990c5d644c0551c740e2a053367780048a57d50f79",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43742/download"
+    },
+    {
+      "id": "uw17369",
+      "pages": 11,
+      "sha256": "de8464d3a0fc2880d812aaaf1e51d08b247649ed9974420d6cc64d88b332e315",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/17358/download"
+    },
+    {
+      "id": "uw43502",
+      "pages": 19,
+      "sha256": "3b8f4e8adeb50da2b5921524cb922a7de7d3f96c2884ad4c06fabe14b1817606",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43502/download"
+    },
+    {
+      "id": "uw43611",
+      "pages": 26,
+      "sha256": "fdc5062a16c819d39556e6747add777f0d7aa8891a20ab05852c816e43883780",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43611/download"
+    },
+    {
+      "id": "uw4339",
+      "pages": 23,
+      "sha256": "116c2712e556fba0bd3b6fda0b8424d89a50b6f536d985ec5afa4bcb9ac004e1",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/4316/download"
+    },
+    {
+      "id": "uw16635",
+      "pages": 22,
+      "sha256": "9ec72fcf6a177c6f3c6ded3cdb1109d0e295301a46b7699c6fa65b61ad0016ef",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/16613/download"
+    },
+    {
+      "id": "uw26791",
+      "pages": 30,
+      "sha256": "50dc0375ce904741b25f15149c371bf30af62850fdfcc90f4a81d5a665344017",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/26761/download"
+    },
+    {
+      "id": "uw13767",
+      "pages": 34,
+      "sha256": "f029fae484897dad81767b393cbc53d8d84e0f91baa1b15e8c415ced0d7fa145",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44970/download"
+    },
+    {
+      "id": "uw44284",
+      "pages": 17,
+      "sha256": "7cdcc60ea337f130116c9d13f46e35f9699a1ad8753495e187b28314ea7f4f38",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44284/download"
+    },
+    {
+      "id": "uw20100",
+      "pages": 17,
+      "sha256": "52a9e7b1002567a0f19e552dee14b2da92e113ce75eca1d0a24b4a24e2cbbe09",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/20083/download"
+    },
+    {
+      "id": "uw43821",
+      "pages": 39,
+      "sha256": "7f265d31621e2b4cf4c80be3e0b12da76046b201651582ef47f03849317c9d2a",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43821/download"
+    },
+    {
+      "id": "uw44798",
+      "pages": 24,
+      "sha256": "0bc96608638aaf4b3d973cfa44acc5e8bc6812abd528327b459316da1ed496df",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44798/download"
+    },
+    {
+      "id": "uw44391",
+      "pages": 35,
+      "sha256": "b9a88ac83b8a879fe2de95c6586fd72065d748055c3a81c004508464ab823430",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44391/download"
+    },
+    {
+      "id": "uw14547",
+      "pages": 35,
+      "sha256": "3af13394c1f377b58e9d5e9f0886c0f9395babbb9aeb60219fc21b3671717bce",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/14512/download"
+    },
+    {
+      "id": "uw44217",
+      "pages": 16,
+      "sha256": "2b8be02b7557bcd2c9f8e65f344d8d16c97cacbbe4198acf52a9c84c951b75ea",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44217/download"
+    },
+    {
+      "id": "uw44324",
+      "pages": 32,
+      "sha256": "c94cded22bbf41cc3362a8104b105e5096feb984b99f75721a4e1dc1d5c22134",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44324/download"
+    },
+    {
+      "id": "uw2436",
+      "pages": 16,
+      "sha256": "99255d6976cded7e2a72411765eee8d5d443c3582540b4a10d7c3083e50c1efd",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2420/download"
+    },
+    {
+      "id": "uw43143",
+      "pages": 50,
+      "sha256": "0939da69a71a68fc0a7c6a80fd0e58cd84ec907c6e69d1fcd5b1edb924867882",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43143/download"
+    },
+    {
+      "id": "uw43685",
+      "pages": 28,
+      "sha256": "dda003da8f976b4df5618840839e6b0aba292eb3d41901536efcf4ef1876f81b",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43685/download"
+    },
+    {
+      "id": "uw43766",
+      "pages": 13,
+      "sha256": "90b511b4bcc19d15f362e3d99130e9bb55b91d0af1e787c4131ce983edb3b9d4",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43766/download"
+    },
+    {
+      "id": "uw44783",
+      "pages": 40,
+      "sha256": "b13f22c685820c2746f5cf53d03e859aa06f15ee75a086fff07c5a41addd679d",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44783/download"
+    },
+    {
+      "id": "uw4133",
+      "pages": 13,
+      "sha256": "11cd5cec6441d8f7cd2bb777e38f0adbcdef80d54baac3f0a40acb4954de4d2d",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44946/download"
+    },
+    {
+      "id": "uw2618",
+      "pages": 26,
+      "sha256": "fdc57d522dd83eb1a8338ce9e0a0beec7d5ceaea595396c3563cf0698fb3a593",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2592/download"
+    },
+    {
+      "id": "uw17304",
+      "pages": 16,
+      "sha256": "5d3ec52df0ca07f028222c96e4699e6867861ea359c7abde4cd27115fd207c15",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/17288/download"
+    },
+    {
+      "id": "uw45041",
+      "pages": 40,
+      "sha256": "71f06773919d84372a44eb6a18ee7ad29b01904c138fbcbf3dabd9a7754a12a7",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/45041/download"
+    },
+    {
+      "id": "uw20082",
+      "pages": 16,
+      "sha256": "24df94c22c22ccf89558cc9b96d3c53fa52cf91d3a7c64fdb63d70a487b261b8",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/20066/download"
+    },
+    {
+      "id": "uw43617",
+      "pages": 11,
+      "sha256": "a2703eba49124292a4d0d019e40584455fe304514d115bee23bc7802dc6ba758",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43617/download"
+    },
+    {
+      "id": "uw14857",
+      "pages": 20,
+      "sha256": "474423b69501f528cfa33bbd00a29ecdd8a9f0c794c017ce448757b3b640b53f",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/14837/download"
+    },
+    {
+      "id": "uw4363",
+      "pages": 23,
+      "sha256": "75b598f9bbc6bfefcf75ab3aa57c530368408e87a07e4f896ce6fc1268ed8414",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/4340/download"
+    },
+    {
+      "id": "uw16612",
+      "pages": 17,
+      "sha256": "71b1d02c8c8771dfb8f44283e12dcfc80d983e85f3bfc3c0543cc0dcf4382bc2",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/16595/download"
+    },
+    {
+      "id": "uw13731",
+      "pages": 35,
+      "sha256": "a23c64262f3e7199a60303db26d02d4760a0e593f0b4b846d624cd3d14fc5407",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44974/download"
+    },
+    {
+      "id": "uw44285",
+      "pages": 20,
+      "sha256": "85fba2fa9de6ca780b6793c3be48a2c37c3a05189f9f4b078f321d8443c810c4",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44285/download"
+    },
+    {
+      "id": "uw43824",
+      "pages": 38,
+      "sha256": "87cb1c44e4abd4e7e9a43eea8b70c86cd7cc10032bc1de60fcd8bbe10a97531a",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43824/download"
+    },
+    {
+      "id": "uw26825",
+      "pages": 33,
+      "sha256": "d0fc94851ac3b0271ea9f1efa30e060dcfe6e549e7219f5a1d9f22098ae77d4a",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/26792/download"
+    },
+    {
+      "id": "uw44397",
+      "pages": 31,
+      "sha256": "0fd32fc49adac9108fbec869b72c113158e8490b8c78e47e2efe8daa90909092",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44397/download"
+    },
+    {
+      "id": "uw44754",
+      "pages": 24,
+      "sha256": "d151cb85bcbd37322281342ee5a28257352db8431a3aee5e068945b3a7657c49",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44754/download"
+    },
+    {
+      "id": "uw14446",
+      "pages": 33,
+      "sha256": "eb1c8aacd377a9fa7aabc20986b81cdec28f6caf567ff11cb13a42041f4e3571",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/14413/download"
+    },
+    {
+      "id": "uw44225",
+      "pages": 44,
+      "sha256": "da7f62ef8a143198e86d9bd472ad338a692ba567202eb6b97275bdedfd2b2e5b",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44225/download"
+    },
+    {
+      "id": "uw2455",
+      "pages": 18,
+      "sha256": "988504136b57a32c71130398e215ac6a439d80782cef0d1475e3ad2507787c93",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2437/download"
+    },
+    {
+      "id": "uw43684",
+      "pages": 24,
+      "sha256": "b0adcea69be44fdf3904636f46ac515a0c95b03b25aecdee96dd25d2d2752634",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43684/download"
+    },
+    {
+      "id": "uw43769",
+      "pages": 13,
+      "sha256": "47a75a9170ca28b8e76b4a2ab494a6c7fcf328259db3dbbec71dbe2205f03d32",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43769/download"
+    },
+    {
+      "id": "uw45029",
+      "pages": 44,
+      "sha256": "00b819777474fc38f61bb1c246768307c52a60d4be3542e693a2e0919d7cc2c7",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/45029/download"
+    },
+    {
+      "id": "uw2651",
+      "pages": 32,
+      "sha256": "a9d50d810c578d827a0c54a454961cb3b1964c44488f070ed15bf631b4040c57",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2619/download"
+    },
+    {
+      "id": "uw43618",
+      "pages": 18,
+      "sha256": "1fa968db3c422832e7dbd85e78a512b328450d212a1f8e081b770e4f1e1d6620",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43618/download"
+    },
+    {
+      "id": "uw15106",
+      "pages": 22,
+      "sha256": "9b38feaa6293b0818b98ac88d18c2fb3886999c62cb68b239f783623163283c5",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/15084/download"
+    },
+    {
+      "id": "uw13347",
+      "pages": 35,
+      "sha256": "51a16e49a5a15b20b5e039e720432d52595160416701bb13caac576199cc0761",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44969/download"
+    },
+    {
+      "id": "uw4392",
+      "pages": 28,
+      "sha256": "e5b21d0894351f268575957dce3f81af0522d28e0bb0cfe91b9ba5c97064222d",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/4364/download"
+    },
+    {
+      "id": "uw16594",
+      "pages": 17,
+      "sha256": "b567655b62b942c48786d10d935e6564d0b08d7d0fe2cecd752adb0c9afd48c2",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/16577/download"
+    },
+    {
+      "id": "uw44287",
+      "pages": 20,
+      "sha256": "158cb930f3ba5928481d14d38ed485a4df144f1dd94ef039ed5594f2fb9c08bb",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44287/download"
+    },
+    {
+      "id": "uw43826",
+      "pages": 42,
+      "sha256": "48960ba5a460d81c72fe461b6fc8336c8ab363e7d1b1dff4852e4e79624cc130",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43826/download"
+    },
+    {
+      "id": "uw14412",
+      "pages": 35,
+      "sha256": "03befb530aa21b67bb5cf759a46d988d10a22615c10f972c8077dc4bfdfcc07c",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/14377/download"
+    },
+    {
+      "id": "uw19942",
+      "pages": 13,
+      "sha256": "b7964a2d2d2c73b86b29a73664c1ee0793bde41a424695043d12eb515266d617",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/19929/download"
+    },
+    {
+      "id": "uw26881",
+      "pages": 27,
+      "sha256": "145b38cc8b98b4ae9e34bd582ab33adbcccbc4bddeaa267e3f5bda5e940e747d",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/26854/download"
+    },
+    {
+      "id": "uw44343",
+      "pages": 34,
+      "sha256": "e5611582cc23daa0517a179904c6d971fbc8230c5cfb318711754031eecebcdc",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44343/download"
+    },
+    {
+      "id": "uw2473",
+      "pages": 17,
+      "sha256": "8f6f93322d308d5fd46b4925392962ab91dc869cae9e01c855fc3032ce54b1b9",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2456/download"
+    },
+    {
+      "id": "uw43680",
+      "pages": 28,
+      "sha256": "805eb8ea0dcd4ad7b2e290680b2903cd0c012a490c4c8b3f69fb520ac48ec668",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43680/download"
+    },
+    {
+      "id": "uw45061",
+      "pages": 44,
+      "sha256": "37a74a09050043472a3403f8b02b57ce9353209267190441d07f2d1fd9fcbe1c",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/45061/download"
+    },
+    {
+      "id": "uw2679",
+      "pages": 27,
+      "sha256": "1e7d411fbdbfb31201fbd6e39a26cc7970a56e1aa96d41baa75ac8466632752c",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2652/download"
+    },
+    {
+      "id": "uw43619",
+      "pages": 16,
+      "sha256": "188fae7c20e7ea98f615adb8c65c3ac84d417e61b7b41067827e053c1544c9a3",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43619/download"
+    },
+    {
+      "id": "uw15083",
+      "pages": 19,
+      "sha256": "7f322b0c4f9cea39ed03aa1c9fb5e7c95514432ce7d754564a73a2c54017aba6",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/15064/download"
+    },
+    {
+      "id": "uw4424",
+      "pages": 29,
+      "sha256": "76c3cab9dd95236437b591aa8d65b10cca2a6f7600717bdb68a892fe1f64b4f1",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/4393/download"
+    },
+    {
+      "id": "uw19928",
+      "pages": 11,
+      "sha256": "3575c75a5668f8f3535aab20b0f5135b31043c987780b0abadc7a6257d4b7b85",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/19917/download"
+    },
+    {
+      "id": "uw16576",
+      "pages": 16,
+      "sha256": "67a5932e4dfa83416fabb72c91fc25d2a5acc7701412a9ce8d1ceff962617047",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/16560/download"
+    },
+    {
+      "id": "uw13654",
+      "pages": 39,
+      "sha256": "6cd3edaee8ba197b41d777dfe2f579e464240761be269143e7728e269fc1a11f",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44967/download"
+    },
+    {
+      "id": "uw2494",
+      "pages": 20,
+      "sha256": "a334f18237c0480ac12270382924be3dbc565b4c730add1d2f59cbb63e7fc6d1",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2474/download"
+    },
+    {
+      "id": "uw43682",
+      "pages": 29,
+      "sha256": "790edf97212049b68af8d8caf3eeb8a1eda0426f8822e5fabe2e4f591ada5392",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43682/download"
+    },
+    {
+      "id": "uw2762",
+      "pages": 26,
+      "sha256": "f7f87bbbb0a59d3d7a1cc5fc083ea4680d528cbce47e7be45736fdab3ff377de",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2736/download"
+    },
+    {
+      "id": "uw45032",
+      "pages": 43,
+      "sha256": "38972c6ad10e5ff7bb85d42d5ce9d5466522ddc156d936a691ddaf85a653af6b",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/45032/download"
+    },
+    {
+      "id": "uw15038",
+      "pages": 20,
+      "sha256": "03d2ebe1789d8fe3862875eaf2cead413e9cf8f7a83d44596ac5b81c85154c19",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/15018/download"
+    },
+    {
+      "id": "uw26917",
+      "pages": 35,
+      "sha256": "48573df3824c83697579789ea1de5997ad080bbda77c28f515e82caede8b6eb5",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/26882/download"
+    },
+    {
+      "id": "uw4452",
+      "pages": 27,
+      "sha256": "f703d912f242f651ba4f7594ecb684fa1b90fa2b5693120172223d03ec8fac82",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/4425/download"
+    },
+    {
+      "id": "uw13532",
+      "pages": 49,
+      "sha256": "16157eca581acbdf0d0b6febc28532980e59cbe77d0df84730c6be5c045cfc46",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/44966/download"
+    },
+    {
+      "id": "uw2513",
+      "pages": 18,
+      "sha256": "4e99e81154c4b96fd333f66ce043e1e19154d6a3c2fac34433d93721bb82a5a7",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2495/download"
+    },
+    {
+      "id": "uw43686",
+      "pages": 31,
+      "sha256": "ab29396a3b0a311aa960d0c1d82206a383d6ac1d877ef523c5bdbcdb3311a373",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43686/download"
+    },
+    {
+      "id": "uw2788",
+      "pages": 25,
+      "sha256": "f672bb4c07da2f3331914ecde3ef491ffadf96a952984442fce9fa9912190a18",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2763/download"
+    },
+    {
+      "id": "uw19916",
+      "pages": 19,
+      "sha256": "8ec64c56f4042dc5d005bac5b140dc5c8c5bffcc01b77c6bb38def0965accfe4",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/19897/download"
+    },
+    {
+      "id": "uw45050",
+      "pages": 43,
+      "sha256": "823de8d7546edec319b0db3dc771ff18c45163e0eb19d0557bac4ffc8bc2a185",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/45050/download"
+    },
+    {
+      "id": "uw14949",
+      "pages": 26,
+      "sha256": "451777c140eb4876ac94ebe3ce8db9bf1d620f33670fd0bb9ca9cf5bb9a75bc8",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/14923/download"
+    },
+    {
+      "id": "uw4478",
+      "pages": 25,
+      "sha256": "f5a535067392f55439e0d4dc6833e072cbffddc6d62341c1876a654ecff17fe0",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/4453/download"
+    },
+    {
+      "id": "uw43687",
+      "pages": 31,
+      "sha256": "abb9cf717cf127d7798276626c10ab3dbf34bf95cdb340b356c1a2c625170a7e",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43687/download"
+    },
+    {
+      "id": "uw4505",
+      "pages": 26,
+      "sha256": "1ce4727888d76a1f83bf4fb713a9306aa0e405d30e185c7363dbd73162fcf528",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/4479/download"
+    },
+    {
+      "id": "uw2867",
+      "pages": 47,
+      "sha256": "2d2184f7cd1ed37d8c1162695ea4c49b9ba8852459c346ce63f27f1f6c576d8c",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2820/download"
+    },
+    {
+      "id": "uw43688",
+      "pages": 33,
+      "sha256": "f5518913813c4e47610de16280e9ba36c9bdd118ff5b903f3ed81b173f759a5b",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43688/download"
+    },
+    {
+      "id": "uw19873",
+      "pages": 15,
+      "sha256": "c7b134e7f70e8a9d3be6f7901f34cb0ffbf68b5f3b51f498f53273690925363f",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/19858/download"
+    },
+    {
+      "id": "uw2936",
+      "pages": 37,
+      "sha256": "fe12ed6547023cc147c72e7896e799a6b5cf4e3af3b9e2e6786b5fc309e666fd",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2899/download"
+    },
+    {
+      "id": "uw43689",
+      "pages": 33,
+      "sha256": "2c35f0d880e20540b6142a90993e3318fe9b56577e604a507d05b3363832e694",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43689/download"
+    },
+    {
+      "id": "uw4536",
+      "pages": 30,
+      "sha256": "a95e13aaca22290e8ebd0e3630540a54b047b47d2dd61342c19fa1e83e23b827",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/4506/download"
+    },
+    {
+      "id": "uw19857",
+      "pages": 20,
+      "sha256": "5dd9ccacb9639ae244cd4bd120799c3f3edd4d7de679432dc404e8e96f30b154",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/19837/download"
+    },
+    {
+      "id": "uw19896",
+      "pages": 22,
+      "sha256": "b5560ab3ea1416c4bbf4b0196f19926614c480551f6c34b92cf9bb4eb755a777",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/19874/download"
+    },
+    {
+      "id": "uw3024",
+      "pages": 87,
+      "sha256": "8ece94cdbb7bbef5baccff714f36c3f79017f1e39fe6b578bab86f55b9423492",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/2937/download"
+    },
+    {
+      "id": "uw4565",
+      "pages": 28,
+      "sha256": "52c6f209a62f53afe1ea20cb5a2558d79a8852dc9a1c53ab5b0cf8e8f0d56e84",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/4537/download"
+    },
+    {
+      "id": "uw43690",
+      "pages": 32,
+      "sha256": "2b6c03d790bf52f428bc5036115afffde5e01ab5df9b955b11d3b1a1129aaa7c",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43690/download"
+    },
+    {
+      "id": "uw43692",
+      "pages": 27,
+      "sha256": "350bc3335049fe5715c81a6cd416b75e0da036491e7f1f3ae2baab5232486cb7",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43692/download"
+    },
+    {
+      "id": "uw3083",
+      "pages": 58,
+      "sha256": "ea3c4f000408909da162521f5d86bb938655ec02f58e6f4ab204e2f37aaadd7e",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/3025/download"
+    },
+    {
+      "id": "uw19836",
+      "pages": 28,
+      "sha256": "108f4c452e06cfe51076fab6e6695e7c2bb71a1121c4ec04a49641f8f2edae54",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/19808/download"
+    },
+    {
+      "id": "uw43694",
+      "pages": 27,
+      "sha256": "c53cb9eff44d732bfbad7ca5e9bb60ac26fd101bd2167add1acc0c970f1d1847",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43694/download"
+    },
+    {
+      "id": "uw19807",
+      "pages": 20,
+      "sha256": "8b255f83bc2ccc655ec1fdf207f05b8dfed7f4d834febc335f18e093fcac6ebd",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/19787/download"
+    },
+    {
+      "id": "uw3415",
+      "pages": 34,
+      "sha256": "9a97401e7c99e7572d119d0a63291f88273144aa56ea2122139116369bce0f9f",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/3381/download"
+    },
+    {
+      "id": "uw3811",
+      "pages": 58,
+      "sha256": "dfa9d54d465e3fdbb027f0769233c41b166b851b1cd3df9ed862cb54116c7229",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/3753/download"
+    },
+    {
+      "id": "uw43696",
+      "pages": 40,
+      "sha256": "a5bee816abcdbf1d0711c44b1b691766d33637d3380098cba0b304569d105acb",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43696/download"
+    },
+    {
+      "id": "uw3449",
+      "pages": 33,
+      "sha256": "d0761b040e784a3572441957e55ae991b7d640d09a45b0194ada9794741862d7",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/3416/download"
+    },
+    {
+      "id": "uw19786",
+      "pages": 20,
+      "sha256": "a14053ed686aba9534e74ac0ec951657e616f8ff4a74e1c177b5db55d042ce20",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/19766/download"
+    },
+    {
+      "id": "uw19765",
+      "pages": 16,
+      "sha256": "5c6c7f811af8469da044875ca3bd9ecef3c54d571f41c0258b088266c82159d9",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/19749/download"
+    },
+    {
+      "id": "uw43697",
+      "pages": 30,
+      "sha256": "5c8630b02375c836237d7ddd40186cbb82c90b840918fba319188fb0145010d0",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43697/download"
+    },
+    {
+      "id": "uw3476",
+      "pages": 26,
+      "sha256": "c90ef952a6f913375c0589fbe6d8ae0ef4f3a826c39ec7a3fe1d30948de661a2",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/3450/download"
+    },
+    {
+      "id": "uw43698",
+      "pages": 32,
+      "sha256": "0c6c7427c41f0279162050e27d171f322afa0325ef557e07874fbe6675a41112",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43698/download"
+    },
+    {
+      "id": "uw3498",
+      "pages": 21,
+      "sha256": "550c0303eb4b05a176d5becca36553d510b4124cf9af94fd5b6934c2058f1600",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/3477/download"
+    },
+    {
+      "id": "uw43699",
+      "pages": 31,
+      "sha256": "f28db769ba31e0f5ecf4e964bd3616ea668d5a8ce8004e51a510063c458e6d5d",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43699/download"
+    },
+    {
+      "id": "uw3520",
+      "pages": 21,
+      "sha256": "830ffd20497fee8971bb0af83ed8e8e22393fec84896151d3660a1297d18aa87",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/3499/download"
+    },
+    {
+      "id": "uw43700",
+      "pages": 36,
+      "sha256": "a0e352945d43e38ed006d0f635cf06bb5f6c4b0aade44229d9c840ca8e475af1",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43700/download"
+    },
+    {
+      "id": "uw43701",
+      "pages": 27,
+      "sha256": "e447570df086877e6a5313335e7b61df7e6f75d9d1d62cc5442588d2bce5b636",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/43701/download"
+    },
+    {
+      "id": "uw19748",
+      "pages": 24,
+      "sha256": "7d20db0086abdfc1f9e7efddf77a75d9265b588f07b9bb13fb83b286569eaebe",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/19724/download"
+    },
+    {
+      "id": "uw19723",
+      "pages": 89,
+      "sha256": "eff3c73104f284f18705067ea316f1a16db71ed734eac346735aeac2b5680ad6",
+      "source": "https://digitalcollections.lib.washington.edu/digital/api/collection/reports/id/19634/download"
     }
-  ],
-  "retriedReports": [
-    "uw17776",
-    "uw26708"
-  ],
-  "summary": {
-    "reports": 100,
-    "pages": 2259,
-    "failures": 0
-  }
+  ]
 }
